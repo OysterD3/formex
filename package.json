@@ -1,0 +1,22 @@
+{
+  "name": "formex",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean:node_modules": "find . -maxdepth 4 -type d -name node_modules | xargs -I {} rm -rf {}"
+  },
+  "keywords": [],
+  "author": "Oyster Lee <oysterd3@gmail.com> (https://linktr.ee/OysterD3)",
+  "license": "ISC",
+  "devDependencies": {
+    "@oysterlee/eslint-config": "^0.4.2",
+    "eslint": "^8.46.0",
+    "prettier": "^3.0.1",
+    "typescript": "^5.1.6",
+    "vite": "^4.4.8"
+  },
+  "eslintConfig": {
+    "extends": "@oysterlee"
+  }
+}
