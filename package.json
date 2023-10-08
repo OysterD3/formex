@@ -11,12 +11,17 @@
   "license": "ISC",
   "devDependencies": {
     "@oysterlee/eslint-config": "^0.4.2",
+    "@unocss/eslint-config": "^0.54.1",
     "eslint": "^8.46.0",
     "prettier": "^3.0.1",
     "typescript": "^5.1.6",
+    "unocss": "^0.54.1",
     "vite": "^4.4.8"
   },
   "eslintConfig": {
-    "extends": "@oysterlee"
+    "extends": [
+      "@unocss",
+      "@oysterlee"
+    ]
   }
 }
