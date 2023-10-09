@@ -1,11 +1,3 @@
-import { useEffect } from 'react';
+import HelloWorld from './HelloWorld';
 
-const ReactC = () => {
-  useEffect(() => {
-    if (true) {
-      return;
-    }
-  }, []);
-};
-
-export default ReactC;
+export { HelloWorld };
