@@ -1,8 +1,4 @@
-import {
-  INPUT_ELEMENTS,
-  LAYOUT_ELEMENTS,
-  STATIC_ELEMENTS,
-} from '../src/constants';
+import { INPUT_ELEMENTS, LAYOUT_ELEMENTS, STATIC_ELEMENTS } from '../src';
 import type { ValuesOf } from './ts-utils';
 
 export type InputElementType = ValuesOf<typeof INPUT_ELEMENTS>['value'];

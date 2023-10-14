@@ -2,9 +2,11 @@
   "name": "@formex/core",
   "version": "0.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "files": ["dist"],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:packages": "tsc --p ./tsconfig.build.json --noEmit && vite build"
   },
   "keywords": [],
   "author": "Oyster Lee <oysterd3@gmail.com> (https://linktr.ee/OysterD3)",

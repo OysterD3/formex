@@ -13,6 +13,9 @@ importers:
       '@unocss/eslint-config':
         specifier: ^0.54.1
         version: 0.54.1(eslint@8.46.0)(typescript@5.1.6)
+      '@unocss/reset':
+        specifier: ^0.56.5
+        version: 0.56.5
       '@vitejs/plugin-react':
         specifier: ^4.1.0
         version: 4.1.0(vite@4.4.8)
@@ -47,6 +50,9 @@ importers:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
     devDependencies:
+      '@formex/core':
+        specifier: workspace:*
+        version: link:../../packages/core
       '@formex/react':
         specifier: workspace:*
         version: link:../../packages/react
@@ -1293,6 +1299,10 @@ packages:
 
   /@unocss/reset@0.54.1:
     resolution: {integrity: sha512-qZcmybayQTX4QP7ya7jteN9IySU/ViK8HcCpixHA1ttUrsQeSURgdy01E74p+TsWDH0SY7vYmOy+HbYfQNycqQ==}
+    dev: true
+
+  /@unocss/reset@0.56.5:
+    resolution: {integrity: sha512-//Pv2ITAdnpWB9FIr0JiQVl1rL1XgISR8mu3OikhCfi6d/4OH+o6/WyE7evF1pOmk1JjsQlznOABIZXQlcpbHQ==}
     dev: true
 
   /@unocss/scope@0.54.1:
