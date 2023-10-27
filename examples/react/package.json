@@ -10,10 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@floating-ui/react-dom": "^2.0.2",
+    "classnames": "^2.3.2",
     "react": "^18.2.0",
+    "react-click-away-listener": "^2.2.3",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
+    "@formex/core": "workspace:*",
+    "@formex/react": "workspace:*",
+    "@julr/unocss-preset-forms": "^0.0.5",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
     "@typescript-eslint/eslint-plugin": "^6.0.0",
@@ -23,8 +29,6 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.3",
     "typescript": "^5.0.2",
-    "vite": "^4.4.5",
-    "@formex/react": "workspace:*",
-    "@formex/core": "workspace:*"
+    "vite": "^4.4.5"
   }
 }

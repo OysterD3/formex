@@ -1,5 +1,5 @@
-import { HelloWorld } from '@formex/react';
 import ElementsPicker from './components/Sidebar/ElementsPicker.tsx';
+import Editor from './components/Editor.tsx';
 
 function App() {
   return (
@@ -7,8 +7,8 @@ function App() {
       <aside className="w-sm border-r border-slate-100">
         <ElementsPicker />
       </aside>
-      <main className="p-4 py-6">
-        <HelloWorld />
+      <main className="p-4 py-6 h-full w-full">
+        <Editor />
       </main>
     </div>
   );
