@@ -1,8 +1,6 @@
 import { useId, useRef, useState } from 'react';
-import { useFloating } from '@floating-ui/react-dom';
-import { createPortal } from 'react-dom';
-import ClickAwayListener from 'react-click-away-listener';
 import InputLayout from '../InputLayout';
+import { Popover, PopoverContent, PopoverTrigger } from '../Popover';
 
 export interface SelectProps {
   label: string;
@@ -14,19 +12,17 @@ export interface SelectProps {
 
 const Select = ({ label, id }: SelectProps) => {
   const _id = useId();
-  const { refs, floatingStyles } = useFloating();
-  const [open, setOpen] = useState(false);
-  const activatorRef = useRef<HTMLButtonElement>(null);
 
   const inputId = id || _id;
+  const activatorRef = useRef<HTMLButtonElement>(null);
+  const [open, setOpen] = useState(false);
 
   return (
     <InputLayout label={label} id={inputId}>
-      <ClickAwayListener onClickAway={() => setOpen(false)}>
-        <div ref={refs.setReference}>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger onClick={() => setOpen((v) => !v)}>
           <button
             ref={activatorRef}
-            onClick={() => setOpen(!open)}
             type="button"
             className="relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
           >
@@ -46,32 +42,19 @@ const Select = ({ label, id }: SelectProps) => {
               </svg>
             </span>
           </button>
-          {open &&
-            createPortal(
-              <ul
-                className="z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm"
-                ref={refs.setFloating}
-                style={{
-                  width: activatorRef.current
-                    ? activatorRef.current.clientWidth
-                    : undefined,
-                  ...floatingStyles,
-                }}
-              >
-                <li
-                  className="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9"
-                  id="listbox-option-0"
-                  role="option"
-                >
-                  <span className="font-normal block truncate">
-                    Wade Cooper
-                  </span>
-                </li>
-              </ul>,
-              document.body,
-            )}
-        </div>
-      </ClickAwayListener>
+        </PopoverTrigger>
+        <PopoverContent style={{ minWidth: activatorRef.current?.clientWidth }}>
+          <ul className="z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+            <li
+              className="text-gray-900 relative cursor-default select-none py-2 pl-3 pr-9"
+              id="listbox-option-0"
+              role="option"
+            >
+              <span className="font-normal block truncate">Wade Cooper</span>
+            </li>
+          </ul>
+        </PopoverContent>
+      </Popover>
     </InputLayout>
   );
 };
