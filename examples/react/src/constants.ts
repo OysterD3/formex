@@ -9,13 +9,7 @@ export const INPUTS = {
   time: 'TIME',
   file: 'FILE',
   richText: 'RICH_TEXT',
-  range: 'RANGE',
-  color: 'COLOR',
   switch: 'SWITCH',
-  password: 'PASSWORD',
-  email: 'EMAIL',
-  url: 'URL',
-  hidden: 'HIDDEN',
 } as const;
 
 export const INPUT_ELEMENTS = {
@@ -107,14 +101,6 @@ export const INPUT_ELEMENTS = {
         '{"time":1698505259832,"blocks":[{"id":"Q8N6L2v2WS","type":"paragraph","data":{"text":"123"}}],"version":"2.28.2"}',
     },
   },
-  [INPUTS.range]: {
-    label: 'Range',
-    value: INPUTS.range,
-  },
-  [INPUTS.color]: {
-    label: 'Color',
-    value: INPUTS.color,
-  },
   [INPUTS.switch]: {
     label: 'Switch',
     value: INPUTS.switch,
@@ -122,21 +108,6 @@ export const INPUT_ELEMENTS = {
       label: 'Switch',
       value: true,
     },
-  [INPUTS.password]: {
-    label: 'Password',
-    value: INPUTS.password,
-  },
-  [INPUTS.email]: {
-    label: 'Email',
-    value: INPUTS.email,
-  },
-  [INPUTS.url]: {
-    label: 'URL',
-    value: INPUTS.url,
-  },
-  [INPUTS.hidden]: {
-    label: 'Hidden',
-    value: INPUTS.hidden,
   },
 } as const;
 

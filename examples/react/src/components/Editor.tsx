@@ -8,12 +8,10 @@ import Select from './Inputs/Select.tsx';
 import Checkbox from './Inputs/Checkbox.tsx';
 import RadioGroup from './Inputs/Radio/RadioGroup.tsx';
 import RadioButton from './Inputs/Radio/RadioButton.tsx';
-import Calendar from './Inputs/DatePicker/Calendar.tsx';
 import DatePicker from './Inputs/DatePicker';
 import TimePicker from './Inputs/TimePicker.tsx';
 import FileUpload from './Inputs/FileUpload.tsx';
 import RichText from './Inputs/RichText.tsx';
-import Range from './Inputs/Range.tsx';
 import Switch from './Inputs/Switch.tsx';
 
 const InputsComponent = ({
