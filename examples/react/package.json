@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@editorjs/editorjs": "^2.28.2",
     "@floating-ui/react": "^0.26.1",
     "classnames": "^2.3.2",
     "react": "^18.2.0",

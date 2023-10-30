@@ -31,6 +31,7 @@
     ]
   },
   "dependencies": {
+    "dayjs": "^1.11.10",
     "nanoid": "^5.0.1"
   }
 }

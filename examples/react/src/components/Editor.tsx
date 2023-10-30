@@ -8,6 +8,13 @@ import Select from './Inputs/Select.tsx';
 import Checkbox from './Inputs/Checkbox.tsx';
 import RadioGroup from './Inputs/Radio/RadioGroup.tsx';
 import RadioButton from './Inputs/Radio/RadioButton.tsx';
+import Calendar from './Inputs/DatePicker/Calendar.tsx';
+import DatePicker from './Inputs/DatePicker';
+import TimePicker from './Inputs/TimePicker.tsx';
+import FileUpload from './Inputs/FileUpload.tsx';
+import RichText from './Inputs/RichText.tsx';
+import Range from './Inputs/Range.tsx';
+import Switch from './Inputs/Switch.tsx';
 
 const InputsComponent = ({
   label,
@@ -36,6 +43,16 @@ const InputsComponent = ({
           <RadioButton label="Option 2" />
         </RadioGroup>
       );
+    case INPUTS.date:
+      return <DatePicker {...componentProps} />;
+    case INPUTS.time:
+      return <TimePicker {...componentProps} />;
+    case INPUTS.file:
+      return <FileUpload {...componentProps} />;
+    case INPUTS.richText:
+      return <RichText {...componentProps} />;
+    case INPUTS.switch:
+      return <Switch {...componentProps} />;
     default:
       return label;
   }
@@ -72,32 +89,33 @@ const Editor = () => {
   };
 
   return (
-    <ul
-      className="h-full w-full bg-white"
-      onDragOver={(e) => handleDragOver(e, items.length)}
-      onDrop={handleDrop}
-      onDragLeave={() => setDragIndex(null)}
-    >
-      {items.map((item, index) => (
-        <li
-          className={classNames(
-            'px-4 py-2 text-black cursor-pointer border border-transparent hover:border-blue ease-in-out transition-all duration-200',
-            dragIndex === index && 'border-t-red-500',
-            dragIndex === index + 1 &&
-              index === items.length - 1 &&
-              'border-b-red-500',
-          )}
-          key={item.id}
-          draggable
-          onDragOver={(e) => {
-            e.stopPropagation();
-            handleDragOver(e, index);
-          }}
-        >
-          <InputsComponent {...INPUT_ELEMENTS[item.element]} />
-        </li>
-      ))}
-    </ul>
+    <>
+      <ul
+        className="h-full w-full bg-white"
+        onDragOver={(e) => handleDragOver(e, items.length)}
+        onDrop={handleDrop}
+        onDragLeave={() => setDragIndex(null)}
+      >
+        {items.map((item, index) => (
+          <li
+            className={classNames(
+              'px-4 py-2 text-black cursor-pointer border border-transparent hover:border-blue ease-in-out transition-all duration-200',
+              dragIndex === index && 'border-t-red-500',
+              dragIndex === index + 1 &&
+                index === items.length - 1 &&
+                'border-b-red-500',
+            )}
+            key={item.id}
+            onDragOver={(e) => {
+              e.stopPropagation();
+              handleDragOver(e, index);
+            }}
+          >
+            <InputsComponent {...INPUT_ELEMENTS[item.element]} />
+          </li>
+        ))}
+      </ul>
+    </>
   );
 };
 

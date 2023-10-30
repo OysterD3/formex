@@ -41,14 +41,14 @@ export function usePopover({
   const setOpen = setControlledOpen ?? setUncontrolledOpen;
 
   const data = useFloating({
-    placement: 'bottom',
+    placement: 'bottom-start',
     open,
     onOpenChange: setOpen,
     whileElementsMounted: autoUpdate,
     middleware: [
       offset(5),
       flip({
-        crossAxis: false,
+        crossAxis: true,
         fallbackAxisSideDirection: 'end',
         padding: 5,
       }),

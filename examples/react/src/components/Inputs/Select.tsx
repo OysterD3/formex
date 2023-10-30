@@ -8,9 +8,19 @@ export interface SelectProps {
   name?: string;
   helperText?: string;
   placeholder?: string;
+  value?: string;
+  onChange?: (value: string) => void;
+  defaultValue?: string;
 }
 
-const Select = ({ label, id }: SelectProps) => {
+const Select = ({
+  label,
+  id,
+  name,
+  value,
+  onChange,
+  defaultValue,
+}: SelectProps) => {
   const _id = useId();
 
   const inputId = id || _id;
@@ -55,6 +65,14 @@ const Select = ({ label, id }: SelectProps) => {
           </ul>
         </PopoverContent>
       </Popover>
+      <input
+        aria-hidden="true"
+        className="sr-only"
+        id={inputId}
+        name={name || inputId}
+        tabIndex={-1}
+        value={value ?? defaultValue}
+      />
     </InputLayout>
   );
 };

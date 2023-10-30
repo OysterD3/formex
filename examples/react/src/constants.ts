@@ -74,18 +74,38 @@ export const INPUT_ELEMENTS = {
   [INPUTS.date]: {
     label: 'Date',
     value: INPUTS.date,
+    componentProps: {
+      label: 'Date',
+      placeholder: 'Select date',
+      value: '2020-12-31',
+    },
   },
   [INPUTS.time]: {
     label: 'Time',
     value: INPUTS.time,
+    componentProps: {
+      label: 'Time',
+      placeholder: 'Select time',
+      interval: 15,
+    },
   },
   [INPUTS.file]: {
     label: 'File',
     value: INPUTS.file,
+    componentProps: {
+      label: 'File',
+      helperText: 'Helper text',
+    },
   },
   [INPUTS.richText]: {
     label: 'Rich Text',
     value: INPUTS.richText,
+    componentProps: {
+      label: 'Rich Text',
+      id: 'abc',
+      defaultValue:
+        '{"time":1698505259832,"blocks":[{"id":"Q8N6L2v2WS","type":"paragraph","data":{"text":"123"}}],"version":"2.28.2"}',
+    },
   },
   [INPUTS.range]: {
     label: 'Range',
@@ -98,7 +118,10 @@ export const INPUT_ELEMENTS = {
   [INPUTS.switch]: {
     label: 'Switch',
     value: INPUTS.switch,
-  },
+    componentProps: {
+      label: 'Switch',
+      value: true,
+    },
   [INPUTS.password]: {
     label: 'Password',
     value: INPUTS.password,
