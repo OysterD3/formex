@@ -1,15 +1,15 @@
 import { createBEM } from '../../utils/bem.ts';
 
 interface InputLabelProps {
-  id?: string;
+  htmlFor?: string;
   children: React.ReactNode;
 }
 
 const bem = createBEM('input');
 
-const InputLabel = ({ id, children }: InputLabelProps) => {
+const InputLabel = ({ htmlFor, children }: InputLabelProps) => {
   return (
-    <label htmlFor={id} className={bem('label')}>
+    <label htmlFor={htmlFor} className={bem('label')}>
       {children}
     </label>
   );
