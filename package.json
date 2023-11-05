@@ -14,8 +14,8 @@
   "devDependencies": {
     "@oysterlee/eslint-config": "^0.4.2",
     "@types/node": "^20.8.3",
-    "@unocss/eslint-config": "^0.54.1",
-    "@unocss/reset": "^0.56.5",
+    "@unocss/eslint-config": "^0.57.2",
+    "@unocss/reset": "^0.57.2",
     "@unocss/transformer-directives": "^0.57.2",
     "@vitejs/plugin-react": "^4.1.0",
     "eslint": "^8.46.0",
@@ -23,8 +23,8 @@
     "sass": "^1.69.5",
     "turbo": "^1.10.15",
     "typescript": "^5.1.6",
-    "unocss": "^0.54.1",
-    "vite": "^4.4.8",
+    "unocss": "^0.57.2",
+    "vite": "^4.5.0",
     "vite-plugin-dts": "^3.6.0"
   },
   "eslintConfig": {
