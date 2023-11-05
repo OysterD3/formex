@@ -1,13 +1,13 @@
 import { createBEM } from '../../utils/bem.ts';
 
 interface InputHelperTextProps {
-  helperText: string;
+  children: React.ReactNode;
 }
 
 const bem = createBEM('input');
 
-const InputHelperText = ({ helperText }: InputHelperTextProps) => {
-  return <p className={bem('helper-text')}>{helperText}</p>;
+const InputHelperText = ({ children }: InputHelperTextProps) => {
+  return <p className={bem('helper-text')}>{children}</p>;
 };
 
 export default InputHelperText;

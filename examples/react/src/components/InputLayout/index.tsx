@@ -31,9 +31,9 @@ const InputLayout = ({
   } = slots || {};
   return (
     <Wrapper>
-      {labelSlot && labelSlot({ id, label })}
+      {labelSlot && labelSlot({ id, children: label })}
       {children}
-      {helperTextSlot && helperText && helperTextSlot({ helperText })}
+      {helperTextSlot && helperText && helperTextSlot({ children: helperText })}
       {errorsSlot && errorsSlot({ errors: [] })}
     </Wrapper>
   );
