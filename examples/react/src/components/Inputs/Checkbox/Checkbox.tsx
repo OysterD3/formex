@@ -1,29 +1,22 @@
 import { useId } from 'react';
 import InputButton from '../../InputLayout/InputButton.tsx';
 
-export type RadioButtonProps = {
+export interface CheckboxProps {
   label: string;
   id?: string;
   name?: string;
   helperText?: string;
   checked?: boolean;
-};
+}
 
-const RadioButton = ({
-  label,
-  id,
-  name,
-  helperText,
-  checked,
-}: RadioButtonProps) => {
+const Checkbox = ({ id, label, name, helperText, checked }: CheckboxProps) => {
   const _id = useId();
 
   const inputId = id || _id;
-
   return (
     <InputButton
       label={label}
-      type="radio"
+      type="checkbox"
       id={inputId}
       name={name}
       helperText={helperText}
@@ -32,4 +25,4 @@ const RadioButton = ({
   );
 };
 
-export default RadioButton;
+export default Checkbox;

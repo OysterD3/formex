@@ -1,28 +1,39 @@
 import { useId } from 'react';
 import { createBEM } from '../../utils/bem.ts';
 
-const bem = createBEM('input-checkbox');
+const bem = createBEM('input-button');
 
-export interface CheckboxProps {
+export interface InputButtonProps {
   label: string;
   id?: string;
   name?: string;
   helperText?: string;
+  checked?: boolean;
+  type: 'radio' | 'checkbox';
 }
 
-const Checkbox = ({ id, label, name, helperText }: CheckboxProps) => {
+const InputButton = ({
+  label,
+  id,
+  name,
+  helperText,
+  checked,
+  type,
+}: InputButtonProps) => {
   const _id = useId();
 
   const inputId = id || _id;
+
   return (
     <div className={bem('container')}>
-      <div className={bem('checkbox-wrapper')}>
+      <div className={bem('input-wrapper')}>
         <input
           id={inputId}
           aria-describedby={helperText ? `${inputId}-description` : undefined}
           name={name || inputId}
-          type="checkbox"
+          type={type}
           className={bem('input')}
+          checked={checked}
         />
       </div>
       <div className={bem('label-wrapper')}>
@@ -39,4 +50,4 @@ const Checkbox = ({ id, label, name, helperText }: CheckboxProps) => {
   );
 };
 
-export default Checkbox;
+export default InputButton;

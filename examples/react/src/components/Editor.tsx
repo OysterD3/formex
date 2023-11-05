@@ -5,7 +5,7 @@ import { INPUT_ELEMENTS, INPUTS } from '../constants.ts';
 import TextField from './Inputs/TextField.tsx';
 import TextArea from './Inputs/TextArea.tsx';
 import Select from './Inputs/Select';
-import Checkbox from './Inputs/Checkbox.tsx';
+import Checkbox from './Inputs/Checkbox/Checkbox.tsx';
 import RadioGroup from './Inputs/Radio/RadioGroup.tsx';
 import RadioButton from './Inputs/Radio/RadioButton.tsx';
 import DatePicker from './Inputs/DatePicker';

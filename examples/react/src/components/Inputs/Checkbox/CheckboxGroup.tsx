@@ -1,7 +1,7 @@
 import { Children, cloneElement, isValidElement, useId } from 'react';
 import InputGroup from '../../InputLayout/InputGroup.tsx';
 
-export interface RadioGroupProps {
+export interface CheckboxGroupProps {
   label: string;
   name: string;
   helperText?: string;
@@ -10,14 +10,14 @@ export interface RadioGroupProps {
   id?: string;
 }
 
-const RadioGroup = ({
+const CheckboxGroup = ({
   label,
   name,
   helperText,
   children,
   row,
   id,
-}: RadioGroupProps) => {
+}: CheckboxGroupProps) => {
   const _id = useId();
   const inputId = id || _id;
 
@@ -41,4 +41,4 @@ const RadioGroup = ({
   );
 };
 
-export default RadioGroup;
+export default CheckboxGroup;
