@@ -1,4 +1,7 @@
 import { useId } from 'react';
+import { createBEM } from '../../../utils/bem.ts';
+
+const bem = createBEM('input-radio-button');
 
 export type RadioButtonProps = {
   label: string;
@@ -13,22 +16,22 @@ const RadioButton = ({ label, id, name, helperText }: RadioButtonProps) => {
   const inputId = id || _id;
 
   return (
-    <div className="relative flex items-start">
-      <div className="flex h-6 items-center">
+    <div className={bem('container')}>
+      <div className={bem('radio-wrapper')}>
         <input
           id={inputId}
           aria-describedby={helperText ? `${inputId}-description` : undefined}
           name={name || inputId}
           type="radio"
-          className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
+          className={bem('input')}
         />
       </div>
-      <div className="ml-3 text-sm leading-6">
-        <label htmlFor={inputId} className="font-medium text-gray-900">
+      <div className={bem('label-wrapper')}>
+        <label htmlFor={inputId} className={bem('label')}>
           {label}
         </label>
         {helperText && (
-          <p id={`${inputId}-description`} className="text-gray-500">
+          <p id={`${inputId}-description`} className={bem('helper-text')}>
             {helperText}
           </p>
         )}

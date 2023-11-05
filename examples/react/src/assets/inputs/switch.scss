@@ -1,0 +1,21 @@
+.formex-input-switch {
+  &__input {
+    @apply sr-only;
+  }
+
+  &__wrapper {
+    @apply bg-gray-200 relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-600 focus:ring-offset-2;
+
+    &#{&}--checked {
+      @apply bg-indigo-600;
+    }
+  }
+
+  &__thumb {
+    @apply pointer-events-none inline-block h-5 w-5 transform translate-x-0 rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out;
+
+    &#{&}--checked {
+      @apply translate-x-5;
+    }
+  }
+}

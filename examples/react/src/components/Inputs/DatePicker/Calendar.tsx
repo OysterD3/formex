@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react';
 import dayjs from 'dayjs';
-import classNames from 'classnames';
 import { getElementAttribute } from '../../../utils/dom.ts';
+import { createBEM } from '../../../utils/bem.ts';
+
+const bem = createBEM('input-calendar');
 
 const MONTH_NAMES = [
   'January',
@@ -110,23 +112,18 @@ const Calendar = ({ value, onChange, defaultValue }: CalendarProps) => {
   };
 
   return (
-    <div className="p-4">
-      <div className="flex items-center">
-        <h2 className="flex-auto font-semibold text-gray-900">
+    <div className={bem('container')}>
+      <div className={bem('header')}>
+        <h2 className={bem('year-month')}>
           {MONTH_NAMES[currentMonth]} {currentYear}
         </h2>
         <button
           onClick={handlePreviousMonth}
           type="button"
-          className="-my-1.5 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
+          className={bem('btn', ['prev'])}
         >
           <span className="sr-only">Previous month</span>
-          <svg
-            className="h-5 w-5"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-          >
+          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
             <path
               fillRule="evenodd"
               d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
@@ -137,15 +134,10 @@ const Calendar = ({ value, onChange, defaultValue }: CalendarProps) => {
         <button
           onClick={handleNextMonth}
           type="button"
-          className="-my-1.5 -mr-1.5 ml-2 flex flex-none items-center justify-center p-1.5 text-gray-400 hover:text-gray-500"
+          className={bem('btn', ['next'])}
         >
           <span className="sr-only">Next month</span>
-          <svg
-            className="h-5 w-5"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-          >
+          <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
             <path
               fillRule="evenodd"
               d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
@@ -154,12 +146,12 @@ const Calendar = ({ value, onChange, defaultValue }: CalendarProps) => {
           </svg>
         </button>
       </div>
-      <div className="mt-4 grid grid-cols-7 text-center text-xs leading-6 text-gray-500">
+      <div className={bem('week')}>
         {DAYS.map((day) => (
           <span key={day}>{day}</span>
         ))}
       </div>
-      <div className="mt-2 grid grid-cols-7 text-sm" onClick={handleSelect}>
+      <div className={bem('date')} onClick={handleSelect}>
         {dates.map((date, i) => {
           const isSelected = (_value ?? dayjs()).isSame(date.fullDate, 'day');
           const isToday = dayjs().isSame(date.fullDate, 'day');
@@ -168,24 +160,17 @@ const Calendar = ({ value, onChange, defaultValue }: CalendarProps) => {
           return (
             <div
               key={i}
-              className={classNames(
-                i > 6 && 'border-t border-gray-200',
-                'py-2',
-              )}
+              className={bem('day-of-month-wrapper', {
+                'not-first-week': i > 6,
+              })}
               data-value={date.fullDate.format('YYYY-MM-DD')}
             >
               <span
-                className={classNames(
-                  isSelected && 'text-white',
-                  !isSelected && isToday && 'text-indigo-600',
-                  !isSelected && !isToday && isCurrentMonth && 'text-gray-900',
-                  !isSelected && !isToday && !isCurrentMonth && 'text-gray-400',
-                  isSelected && isToday && 'bg-indigo-600',
-                  isSelected && !isToday && 'bg-gray-900',
-                  !isSelected && 'hover:bg-gray-200',
-                  (isSelected || isToday) && 'font-semibold',
-                  'mx-auto select-none flex h-8 w-8 items-center justify-center rounded-full cursor-pointer',
-                )}
+                className={bem('day-of-month', {
+                  selected: isSelected,
+                  today: isToday,
+                  'current-month': isCurrentMonth,
+                })}
               >
                 <time
                   dateTime={`${currentYear}-${currentMonth + 1}-${date.date}`}

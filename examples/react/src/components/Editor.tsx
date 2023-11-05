@@ -4,7 +4,7 @@ import * as classNames from 'classnames';
 import { INPUT_ELEMENTS, INPUTS } from '../constants.ts';
 import TextField from './Inputs/TextField.tsx';
 import TextArea from './Inputs/TextArea.tsx';
-import Select from './Inputs/Select.tsx';
+import Select from './Inputs/Select';
 import Checkbox from './Inputs/Checkbox.tsx';
 import RadioGroup from './Inputs/Radio/RadioGroup.tsx';
 import RadioButton from './Inputs/Radio/RadioButton.tsx';
@@ -13,6 +13,7 @@ import TimePicker from './Inputs/TimePicker.tsx';
 import FileUpload from './Inputs/FileUpload.tsx';
 import RichText from './Inputs/RichText.tsx';
 import Switch from './Inputs/Switch.tsx';
+import Option from './Inputs/Select/Option.tsx';
 
 const InputsComponent = ({
   label,
@@ -31,7 +32,12 @@ const InputsComponent = ({
     case INPUTS.number:
       return <TextField {...componentProps} />;
     case INPUTS.select:
-      return <Select {...componentProps} />;
+      return (
+        <Select {...componentProps}>
+          <Option value="1">Option 1</Option>
+          <Option value="2">Option 2</Option>
+        </Select>
+      );
     case INPUTS.checkbox:
       return <Checkbox {...componentProps} />;
     case INPUTS.radio:

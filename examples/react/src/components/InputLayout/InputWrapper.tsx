@@ -1,5 +1,9 @@
+import { createBEM } from '../../utils/bem.ts';
+
+const bem = createBEM('input');
+
 const InputWrapper = ({ children }: { children: React.ReactNode }) => {
-  return <div className="flex flex-col gap-2">{children}</div>;
+  return <div className={bem('container')}>{children}</div>;
 };
 
 export default InputWrapper;

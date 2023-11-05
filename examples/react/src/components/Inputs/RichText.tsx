@@ -1,6 +1,9 @@
 import EditorJS, { API } from '@editorjs/editorjs';
 import { useEffect, useId } from 'react';
 import InputLayout from '../InputLayout';
+import { createBEM } from '../../utils/bem.ts';
+
+const bem = createBEM('input-rich-text');
 
 export interface RichTextProps {
   label: string;
@@ -52,14 +55,11 @@ const RichText = ({
 
   return (
     <InputLayout label={label} id={inputId}>
-      <div
-        className="w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
-        id={inputId}
-      />
+      <div className={bem('editor')} id={inputId} />
       <input
         aria-hidden={true}
         name={name || inputId}
-        className="sr-only"
+        className={bem('input')}
         tabIndex={-1}
       />
     </InputLayout>

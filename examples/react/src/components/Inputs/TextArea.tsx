@@ -1,5 +1,8 @@
 import { useId } from 'react';
 import InputLayout from '../InputLayout';
+import { createBEM } from '../../utils/bem.ts';
+
+const bem = createBEM('input-textarea');
 
 export interface TextAreaProps {
   label: string;
@@ -8,6 +11,9 @@ export interface TextAreaProps {
   helperText?: string;
   placeholder?: string;
   rows?: number;
+  value?: string;
+  defaultValue?: string;
+  onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
 const TextArea = ({
@@ -17,6 +23,9 @@ const TextArea = ({
   placeholder,
   helperText,
   rows = 3,
+  onChange,
+  value,
+  defaultValue,
 }: TextAreaProps) => {
   const _id = useId();
 
@@ -24,15 +33,15 @@ const TextArea = ({
 
   return (
     <InputLayout label={label} id={inputId} helperText={helperText}>
-      <div>
-        <textarea
-          rows={rows}
-          name={name || inputId}
-          id={inputId}
-          placeholder={placeholder}
-          className="block resize-none w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
-        />
-      </div>
+      <textarea
+        onChange={onChange}
+        value={defaultValue || value}
+        rows={rows}
+        name={name || inputId}
+        id={inputId}
+        placeholder={placeholder}
+        className={bem('textarea')}
+      />
     </InputLayout>
   );
 };

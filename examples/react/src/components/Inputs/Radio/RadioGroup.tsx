@@ -1,5 +1,8 @@
-import { isValidElement, Children, cloneElement } from 'react';
-import classNames from 'classnames';
+import { isValidElement, Children, cloneElement, useId } from 'react';
+import { createBEM } from '../../../utils/bem.ts';
+import InputLayout from '../../InputLayout';
+
+const bem = createBEM('input-radio-group');
 
 export interface RadioGroupProps {
   label: string;
@@ -16,11 +19,11 @@ const RadioGroup = ({
   children,
   row,
 }: RadioGroupProps) => {
+  const id = useId();
+
   return (
-    <div>
-      <label>{label}</label>
-      {helperText && <p className="text-sm text-gray-500">{helperText}</p>}
-      <fieldset className={classNames('mt-4', row && 'flex space-x-6')}>
+    <InputLayout label={label} id={id} helperText={helperText}>
+      <fieldset className={bem('wrapper', { row: !!row })}>
         {Children.map(children, (child) => {
           if (isValidElement(child)) {
             return cloneElement(child as React.ReactElement, {
@@ -30,7 +33,7 @@ const RadioGroup = ({
           return null;
         })}
       </fieldset>
-    </div>
+    </InputLayout>
   );
 };
 

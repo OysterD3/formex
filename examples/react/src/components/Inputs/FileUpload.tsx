@@ -1,4 +1,8 @@
 import { ChangeEvent, DragEventHandler, useId, useRef, useState } from 'react';
+import InputLayout from '../InputLayout';
+import { createBEM } from '../../utils/bem.ts';
+
+const bem = createBEM('input-upload');
 
 export interface FileUploadProps {
   label: string;
@@ -83,20 +87,17 @@ const FileUpload = ({
   };
 
   return (
-    <div>
-      <label className="block text-sm font-medium leading-6 text-gray-900">
-        {label}
-      </label>
+    <InputLayout label={label} id={inputId} helperText={helperText}>
       <div
         onClick={openFileUploader}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className="mt-2 cursor-pointer flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10"
+        className={bem('container')}
       >
-        <div className="text-center">
+        <div className={bem('wrapper')}>
           <svg
-            className="mx-auto h-12 w-12 text-gray-300"
+            className={bem('icon')}
             viewBox="0 0 24 24"
             fill="currentColor"
             aria-hidden="true"
@@ -107,11 +108,10 @@ const FileUpload = ({
               clipRule="evenodd"
             />
           </svg>
-          <div className="mt-4 flex text-sm leading-6 text-gray-600">
+          <div className={bem('label-wrapper')}>
             <label
               onClick={(e) => e.stopPropagation()}
-              htmlFor={inputId}
-              className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+              className={bem('label')}
             >
               <span>{uploadText}</span>
               <input
@@ -119,7 +119,7 @@ const FileUpload = ({
                 id={inputId}
                 name={name || inputId}
                 type="file"
-                className="sr-only"
+                className={bem('input')}
                 multiple={multiple}
                 accept={accept}
                 tabIndex={-1}
@@ -128,14 +128,11 @@ const FileUpload = ({
                 onChange={handleChange}
               />
             </label>
-            <p className="pl-1">{dragAndDropText}</p>
+            <p className={bem('dnd-text')}>{dragAndDropText}</p>
           </div>
-          {helperText && (
-            <p className="text-xs leading-5 text-gray-600">{helperText}</p>
-          )}
         </div>
       </div>
-    </div>
+    </InputLayout>
   );
 };
 
