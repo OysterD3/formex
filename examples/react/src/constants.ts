@@ -16,6 +16,8 @@ export const INPUT_ELEMENTS = {
   [INPUTS.text]: {
     label: 'Text Input',
     value: INPUTS.text,
+    icon: 'text',
+    description: 'Single line text input',
     componentProps: {
       type: 'text',
       label: 'Text Input',
@@ -25,6 +27,8 @@ export const INPUT_ELEMENTS = {
   [INPUTS.textArea]: {
     label: 'Text Area',
     value: INPUTS.textArea,
+    icon: 'input-method-line',
+    description: 'Multi line text input',
     componentProps: {
       label: 'Text Area',
       placeholder: 'Insert text',
@@ -33,6 +37,8 @@ export const INPUT_ELEMENTS = {
   [INPUTS.number]: {
     label: 'Number',
     value: INPUTS.number,
+    icon: 'calculator-line',
+    description: 'Number input',
     componentProps: {
       label: 'Number',
       placeholder: 'Insert number',
@@ -43,6 +49,8 @@ export const INPUT_ELEMENTS = {
   [INPUTS.select]: {
     label: 'Select',
     value: INPUTS.select,
+    icon: 'dropdown-list',
+    description: 'Dropdown list',
     componentProps: {
       label: 'Select',
     },
@@ -50,6 +58,8 @@ export const INPUT_ELEMENTS = {
   [INPUTS.checkbox]: {
     label: 'Checkbox',
     value: INPUTS.checkbox,
+    icon: 'checkbox-line',
+    description: 'Checkbox',
     componentProps: {
       label: 'Checkbox',
       helperText: 'Helper text',
@@ -58,6 +68,8 @@ export const INPUT_ELEMENTS = {
   [INPUTS.radio]: {
     label: 'Radio',
     value: INPUTS.radio,
+    icon: 'radio-button-line',
+    description: 'Radio buttons',
     componentProps: {
       label: 'Radio',
       name: 'foo',
@@ -68,6 +80,8 @@ export const INPUT_ELEMENTS = {
   [INPUTS.date]: {
     label: 'Date',
     value: INPUTS.date,
+    icon: 'calendar-line',
+    description: 'Date picker',
     componentProps: {
       label: 'Date',
       placeholder: 'Select date',
@@ -77,6 +91,8 @@ export const INPUT_ELEMENTS = {
   [INPUTS.time]: {
     label: 'Time',
     value: INPUTS.time,
+    icon: 'time-line',
+    description: 'Time picker',
     componentProps: {
       label: 'Time',
       placeholder: 'Select time',
@@ -86,6 +102,8 @@ export const INPUT_ELEMENTS = {
   [INPUTS.file]: {
     label: 'File',
     value: INPUTS.file,
+    icon: 'upload-cloud-2-line',
+    description: 'File upload',
     componentProps: {
       label: 'File',
       helperText: 'Helper text',
@@ -94,6 +112,8 @@ export const INPUT_ELEMENTS = {
   [INPUTS.richText]: {
     label: 'Rich Text',
     value: INPUTS.richText,
+    icon: 'code-view',
+    description: 'Rich text editor',
     componentProps: {
       label: 'Rich Text',
       id: 'abc',
@@ -104,6 +124,8 @@ export const INPUT_ELEMENTS = {
   [INPUTS.switch]: {
     label: 'Switch',
     value: INPUTS.switch,
+    icon: 'toggle-line',
+    description: 'Switch',
     componentProps: {
       label: 'Switch',
       value: true,

@@ -1,10 +1,10 @@
 .formex-input {
   &__container {
-    @apply flex flex-col gap-2;
+    @apply flex flex-col gap-0.5;
   }
 
   &__label {
-    @apply block text-sm font-medium leading-6 text-gray-900;
+    @apply block text-sm font-semibold uppercase leading-6 text-gray-500;
   }
 
   &__helper-text {
@@ -54,7 +54,7 @@
   }
 
   &__label {
-    @apply font-medium text-gray-900;
+    @apply font-semibold uppercase text-gray-500;
   }
 
   &__helper-text {
@@ -86,7 +86,7 @@
   }
 
   &__label {
-    @apply block text-sm font-medium text-gray-900;
+    @apply block text-sm font-semibold uppercase text-gray-500;
   }
 
   &__helper-text {

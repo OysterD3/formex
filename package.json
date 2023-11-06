@@ -12,9 +12,11 @@
   "author": "Oyster Lee <oysterd3@gmail.com> (https://linktr.ee/OysterD3)",
   "license": "ISC",
   "devDependencies": {
+    "@iconify-json/ri": "^1.1.12",
     "@oysterlee/eslint-config": "^0.4.2",
     "@types/node": "^20.8.3",
     "@unocss/eslint-config": "^0.57.2",
+    "@unocss/preset-icons": "^0.57.2",
     "@unocss/reset": "^0.57.2",
     "@unocss/transformer-directives": "^0.57.2",
     "@vitejs/plugin-react": "^4.1.0",
