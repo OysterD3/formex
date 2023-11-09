@@ -5,12 +5,13 @@ import InputLayout from '../../InputLayout';
 import { Popover, PopoverContent, PopoverTrigger } from '../../Popover';
 import { createBEM } from '../../../utils/bem.ts';
 import InputDropdownTrigger from '../../InputLayout/InputDropdownTrigger.tsx';
+import { mergeProps } from '../../../utils/props.ts';
 import Calendar from './Calendar.tsx';
 
 const bem = createBEM('input-date-picker');
 
 export interface DatePickerProps {
-  label: string;
+  label?: string;
   id?: string;
   name?: string;
   helperText?: string;
@@ -23,15 +24,30 @@ export interface DatePickerProps {
 
 dayjs.extend(customParseFormat);
 
-const DatePicker = ({
-  label,
-  id,
-  value,
-  onChange,
-  defaultValue,
-  format = 'YYYY-MM-DD',
-  placeholder,
-}: DatePickerProps) => {
+export const DEFAULT_DATE_PICKER_PROPS = {
+  label: '',
+  id: undefined,
+  name: undefined,
+  helperText: undefined,
+  placeholder: undefined,
+  format: 'YYYY-MM-DD',
+  value: undefined,
+  defaultValue: undefined,
+};
+
+const DatePicker = (props: DatePickerProps) => {
+  const {
+    label,
+    id,
+    name,
+    helperText,
+    placeholder,
+    format,
+    value,
+    onChange,
+    defaultValue,
+  } = mergeProps(DEFAULT_DATE_PICKER_PROPS, props);
+
   const _id = useId();
 
   const inputId = id || _id;
@@ -52,7 +68,7 @@ const DatePicker = ({
   };
 
   return (
-    <InputLayout label={label} id={inputId}>
+    <InputLayout label={label} id={inputId} helperText={helperText}>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger onClick={() => setOpen((v) => !v)}>
           <InputDropdownTrigger
@@ -89,6 +105,15 @@ const DatePicker = ({
           </div>
         </PopoverContent>
       </Popover>
+      <input
+        aria-hidden="true"
+        type="hidden"
+        className={bem('input')}
+        tabIndex={-1}
+        id={inputId}
+        name={name}
+        value={isValidValue ? value : defaultValue}
+      />
     </InputLayout>
   );
 };

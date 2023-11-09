@@ -1,10 +1,11 @@
 import { useId } from 'react';
 import InputLayout from '../InputLayout';
 import { createBEM } from '../../utils/bem.ts';
+import { mergeProps } from '../../utils/props.ts';
 
 export interface TextFieldProps {
-  type: HTMLInputElement['type'];
-  label: string;
+  type?: HTMLInputElement['type'];
+  label?: string;
   id?: string;
   name?: string;
   helperText?: string;
@@ -23,22 +24,37 @@ export interface TextFieldProps {
   >;
 }
 
+export const DEFAULT_TEXT_FIELD_PROPS = {
+  label: '',
+  type: 'text',
+  id: undefined,
+  name: undefined,
+  helperText: undefined,
+  placeholder: undefined,
+  prefix: undefined,
+  suffix: undefined,
+  value: undefined,
+  defaultValue: undefined,
+  inputProps: {},
+};
+
 const bem = createBEM('input-text-field');
 
-const TextField = ({
-  type,
-  label,
-  id,
-  name,
-  placeholder,
-  helperText,
-  prefix,
-  suffix,
-  inputProps,
-  value,
-  onChange,
-  defaultValue,
-}: TextFieldProps) => {
+const TextField = (props: TextFieldProps) => {
+  const {
+    label,
+    id,
+    name,
+    helperText,
+    placeholder,
+    prefix,
+    suffix,
+    value,
+    defaultValue,
+    onChange,
+    type,
+    inputProps,
+  } = mergeProps(DEFAULT_TEXT_FIELD_PROPS, props);
   const _id = useId();
 
   const inputId = id || _id;

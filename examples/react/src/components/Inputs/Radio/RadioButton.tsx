@@ -1,21 +1,29 @@
 import { useId } from 'react';
 import InputButton from '../../InputLayout/InputButton.tsx';
+import { mergeProps } from '../../../utils/props.ts';
 
 export type RadioButtonProps = {
-  label: string;
+  label?: string;
   id?: string;
   name?: string;
   helperText?: string;
   checked?: boolean;
 };
 
-const RadioButton = ({
-  label,
-  id,
-  name,
-  helperText,
-  checked,
-}: RadioButtonProps) => {
+export const DEFAULT_RADIO_BUTTON_PROPS = {
+  label: '',
+  id: undefined,
+  name: undefined,
+  helperText: undefined,
+  checked: undefined,
+};
+
+const RadioButton = (props: RadioButtonProps) => {
+  const { label, id, name, helperText, checked } = mergeProps(
+    DEFAULT_RADIO_BUTTON_PROPS,
+    props,
+  );
+
   const _id = useId();
 
   const inputId = id || _id;

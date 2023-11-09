@@ -19,6 +19,10 @@
     }
   }
 
+  &__input {
+    @apply sr-only;
+  }
+
   &__btn--next {
     @apply -mr-1.5 ml-2;
   }

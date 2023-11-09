@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import * as classNames from 'classnames';
 import { INPUT_ELEMENTS, INPUTS } from '../constants.ts';
+import { getElementAttribute } from '../utils/dom.ts';
 import TextField from './Inputs/TextField.tsx';
 import TextArea from './Inputs/TextArea.tsx';
 import Select from './Inputs/Select';
@@ -92,6 +93,12 @@ const Editor = () => {
     setDragIndex(index);
   };
 
+  const handleClick = (e: React.MouseEvent<HTMLUListElement>) => {
+    const data = getElementAttribute(e, 'data-id');
+    if (data) {
+    }
+  };
+
   return (
     <>
       <ul
@@ -99,6 +106,7 @@ const Editor = () => {
         onDragOver={(e) => handleDragOver(e, items.length)}
         onDrop={handleDrop}
         onDragLeave={() => setDragIndex(null)}
+        onClick={handleClick}
       >
         {items.map((item, index) => (
           <li
@@ -109,6 +117,7 @@ const Editor = () => {
                 index === items.length - 1 &&
                 'border-b-red-500',
             )}
+            data-id={item.id}
             key={item.id}
             onDragOver={(e) => {
               e.stopPropagation();

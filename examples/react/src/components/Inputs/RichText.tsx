@@ -2,11 +2,12 @@ import EditorJS, { API } from '@editorjs/editorjs';
 import { useEffect, useId } from 'react';
 import InputLayout from '../InputLayout';
 import { createBEM } from '../../utils/bem.ts';
+import { mergeProps } from '../../utils/props.ts';
 
 const bem = createBEM('input-rich-text');
 
 export interface RichTextProps {
-  label: string;
+  label?: string;
   id?: string;
   name?: string;
   helperText?: string;
@@ -16,15 +17,28 @@ export interface RichTextProps {
   defaultValue?: string;
 }
 
-const RichText = ({
-  id,
-  name,
-  label,
-  placeholder,
-  onChange,
-  value,
-  defaultValue,
-}: RichTextProps) => {
+export const DEFAULT_RICH_TEXT_PROPS = {
+  label: '',
+  id: undefined,
+  name: undefined,
+  helperText: undefined,
+  placeholder: undefined,
+  value: undefined,
+  defaultValue: undefined,
+};
+
+const RichText = (props: RichTextProps) => {
+  const {
+    label,
+    id,
+    name,
+    helperText,
+    placeholder,
+    value,
+    onChange,
+    defaultValue,
+  } = mergeProps(DEFAULT_RICH_TEXT_PROPS, props);
+
   const _id = useId();
   const inputId = id || _id;
 
@@ -54,7 +68,7 @@ const RichText = ({
   }, []);
 
   return (
-    <InputLayout label={label} id={inputId}>
+    <InputLayout label={label} id={inputId} helperText={helperText}>
       <div className={bem('editor')} id={inputId} />
       <input
         aria-hidden={true}

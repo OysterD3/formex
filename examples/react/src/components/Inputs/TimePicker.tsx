@@ -6,6 +6,7 @@ import InputLayout from '../InputLayout';
 import { getElementAttribute } from '../../utils/dom.ts';
 import InputDropdownTrigger from '../InputLayout/InputDropdownTrigger.tsx';
 import { createBEM } from '../../utils/bem.ts';
+import { mergeProps } from '../../utils/props.ts';
 
 const bem = createBEM('input-time-picker');
 
@@ -24,7 +25,17 @@ export interface TimePickerProps {
   defaultValue?: string;
 }
 
-export const generateTimes = (interval: number, format: string) => {
+export const DEFAULT_TIME_PICKER_PROPS = {
+  label: '',
+  placeholder: undefined,
+  helperText: undefined,
+  value: undefined,
+  defaultValue: undefined,
+  interval: 15,
+  format: 'HH:mm',
+};
+
+const generateTimes = (interval: number, format: string) => {
   const startTime = dayjs().startOf('day');
   const endTime = dayjs().endOf('day').subtract(interval, 'minute');
   const times: string[] = [];
@@ -42,17 +53,19 @@ export const generateTimes = (interval: number, format: string) => {
 // if value is undefined - uses current date in company timezone as the base date
 // if value is defined - sets the hour and minute of the provided date
 
-const TimePicker = ({
-  value,
-  onChange,
-  interval = 15,
-  label,
-  name,
-  id,
-  format = 'HH:mm',
-  defaultValue,
-  placeholder,
-}: TimePickerProps) => {
+const TimePicker = (props: TimePickerProps) => {
+  const {
+    label,
+    id,
+    name,
+    helperText,
+    placeholder,
+    value,
+    onChange,
+    defaultValue,
+    interval,
+    format,
+  } = mergeProps(DEFAULT_TIME_PICKER_PROPS, props);
   const _id = useId();
 
   const inputId = id || _id;
@@ -72,7 +85,7 @@ const TimePicker = ({
   );
 
   return (
-    <InputLayout label={label} id={inputId}>
+    <InputLayout label={label} id={inputId} helperText={helperText}>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger onClick={() => setOpen((v) => !v)}>
           <InputDropdownTrigger

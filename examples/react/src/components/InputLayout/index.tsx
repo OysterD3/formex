@@ -10,7 +10,7 @@ interface InputLayoutProps {
     helperText?: typeof InputHelperText;
     errors?: typeof InputErrors;
   };
-  label: string;
+  label?: string;
   id: string;
   helperText?: string;
   children: React.ReactNode;

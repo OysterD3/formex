@@ -1,15 +1,29 @@
 import { useId } from 'react';
 import InputButton from '../../InputLayout/InputButton.tsx';
+import { mergeProps } from '../../../utils/props.ts';
 
 export interface CheckboxProps {
-  label: string;
+  label?: string;
   id?: string;
   name?: string;
   helperText?: string;
   checked?: boolean;
 }
 
-const Checkbox = ({ id, label, name, helperText, checked }: CheckboxProps) => {
+export const DEFAULT_CHECKBOX_PROPS = {
+  label: '',
+  id: undefined,
+  name: undefined,
+  helperText: undefined,
+  checked: false,
+};
+
+const Checkbox = (props: CheckboxProps) => {
+  const { id, label, name, helperText, checked } = mergeProps(
+    DEFAULT_CHECKBOX_PROPS,
+    props,
+  );
+
   const _id = useId();
 
   const inputId = id || _id;

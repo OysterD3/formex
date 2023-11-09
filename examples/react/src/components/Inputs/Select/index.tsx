@@ -11,11 +11,12 @@ import { Popover, PopoverContent, PopoverTrigger } from '../../Popover';
 import { getElementAttribute } from '../../../utils/dom.ts';
 import InputDropdownTrigger from '../../InputLayout/InputDropdownTrigger.tsx';
 import { createBEM } from '../../../utils/bem.ts';
+import { mergeProps } from '../../../utils/props.ts';
 
 const bem = createBEM('input-select');
 
 export interface SelectProps {
-  label: string;
+  label?: string;
   id?: string;
   name?: string;
   helperText?: string;
@@ -26,16 +27,28 @@ export interface SelectProps {
   children: React.ReactNode;
 }
 
-const Select = ({
-  label,
-  id,
-  name,
-  value,
-  onChange,
-  defaultValue,
-  placeholder,
-  children,
-}: SelectProps) => {
+export const DEFAULT_SELECT_PROPS = {
+  label: '',
+  id: undefined,
+  name: undefined,
+  helperText: undefined,
+  placeholder: undefined,
+  value: undefined,
+  defaultValue: undefined,
+};
+
+const Select = (props: SelectProps) => {
+  const {
+    label,
+    id,
+    name,
+    helperText,
+    placeholder,
+    value,
+    onChange,
+    defaultValue,
+    children,
+  } = mergeProps(DEFAULT_SELECT_PROPS, props);
   const _id = useId();
 
   const inputId = id || _id;
@@ -51,7 +64,7 @@ const Select = ({
   };
 
   return (
-    <InputLayout label={label} id={inputId}>
+    <InputLayout label={label} id={inputId} helperText={helperText}>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger onClick={() => setOpen((v) => !v)}>
           <InputDropdownTrigger

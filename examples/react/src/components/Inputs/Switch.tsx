@@ -1,6 +1,7 @@
 import { useId } from 'react';
 import InputLayout from '../InputLayout';
 import { createBEM } from '../../utils/bem.ts';
+import { mergeProps } from '../../utils/props.ts';
 
 const bem = createBEM('input-switch');
 
@@ -9,7 +10,7 @@ type Value = string | number | boolean;
 export interface SwitchProps {
   id?: string;
   name?: string;
-  label: string;
+  label?: string;
   helperText?: string;
   value?: Value;
   onChange?: (value: Value) => void;
@@ -18,17 +19,30 @@ export interface SwitchProps {
   defaultValue?: Value;
 }
 
-const Switch = ({
-  id,
-  name,
-  label,
-  trueValue = true,
-  falseValue = false,
-  defaultValue,
-  value,
-  helperText,
-  onChange,
-}: SwitchProps) => {
+export const DEFAULT_SWITCH_PROPS = {
+  label: '',
+  id: undefined,
+  name: undefined,
+  helperText: undefined,
+  value: undefined,
+  defaultValue: undefined,
+  trueValue: true,
+  falseValue: false,
+};
+
+const Switch = (props: SwitchProps) => {
+  const {
+    label,
+    id,
+    name,
+    helperText,
+    value,
+    onChange,
+    defaultValue,
+    trueValue,
+    falseValue,
+  } = mergeProps(DEFAULT_SWITCH_PROPS, props);
+
   const _id = useId();
   const inputId = id || _id;
 

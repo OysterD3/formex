@@ -1,11 +1,12 @@
 import { useId } from 'react';
 import InputLayout from '../InputLayout';
 import { createBEM } from '../../utils/bem.ts';
+import { mergeProps } from '../../utils/props.ts';
 
 const bem = createBEM('input-textarea');
 
 export interface TextAreaProps {
-  label: string;
+  label?: string;
   id?: string;
   name?: string;
   helperText?: string;
@@ -16,17 +17,29 @@ export interface TextAreaProps {
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-const TextArea = ({
-  label,
-  id,
-  name,
-  placeholder,
-  helperText,
-  rows = 3,
-  onChange,
-  value,
-  defaultValue,
-}: TextAreaProps) => {
+export const DEFAULT_TEXT_AREA_PROPS = {
+  label: '',
+  id: undefined,
+  name: undefined,
+  helperText: undefined,
+  placeholder: undefined,
+  rows: 3,
+  value: undefined,
+  defaultValue: undefined,
+};
+
+const TextArea = (props: TextAreaProps) => {
+  const {
+    label,
+    id,
+    name,
+    helperText,
+    placeholder,
+    rows,
+    value,
+    defaultValue,
+    onChange,
+  } = mergeProps(DEFAULT_TEXT_AREA_PROPS, props);
   const _id = useId();
 
   const inputId = id || _id;

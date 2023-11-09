@@ -1,6 +1,7 @@
 import { ChangeEvent, DragEventHandler, useId, useRef, useState } from 'react';
 import InputLayout from '../InputLayout';
 import { createBEM } from '../../utils/bem.ts';
+import { mergeProps } from '../../utils/props.ts';
 
 const bem = createBEM('input-upload');
 
@@ -20,20 +21,37 @@ export interface FileUploadProps {
   size?: number;
 }
 
-const FileUpload = ({
-  id,
-  multiple,
-  label,
-  onChange,
-  defaultValue,
-  value,
-  accept,
-  name,
-  helperText,
-  uploadText = 'Upload a file',
-  dragAndDropText = 'or drag and drop',
-  size,
-}: FileUploadProps) => {
+export const DEFAULT_FILE_UPLOAD_PROPS = {
+  label: '',
+  id: undefined,
+  name: undefined,
+  helperText: undefined,
+  placeholder: undefined,
+  accept: undefined,
+  multiple: false,
+  value: undefined,
+  defaultValue: undefined,
+  uploadText: undefined,
+  dragAndDropText: undefined,
+  size: undefined,
+};
+
+const FileUpload = (props: FileUploadProps) => {
+  const {
+    label,
+    id,
+    name,
+    helperText,
+    accept,
+    multiple,
+    value,
+    onChange,
+    defaultValue,
+    uploadText,
+    dragAndDropText,
+    size,
+  } = mergeProps(DEFAULT_FILE_UPLOAD_PROPS, props);
+
   const _id = useId();
   const inputId = id || _id;
   const uploadRef = useRef<HTMLInputElement>(null);
@@ -70,7 +88,10 @@ const FileUpload = ({
   };
 
   const validateAccept = (file: File): boolean => {
-    const allowed = accept!.split(',').map((v) => v.trim());
+    if (!accept) return true;
+    const allowed = (accept as HTMLInputElement['accept'])
+      .split(',')
+      .map((v) => v.trim());
     return (
       allowed.includes(file.type) ||
       allowed.includes(file.type.split('/')[0] + '/*') ||
