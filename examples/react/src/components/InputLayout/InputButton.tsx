@@ -10,6 +10,7 @@ export interface InputButtonProps {
   helperText?: string;
   checked?: boolean;
   type: 'radio' | 'checkbox';
+  value?: string;
 }
 
 const InputButton = ({
@@ -19,6 +20,7 @@ const InputButton = ({
   helperText,
   checked,
   type,
+  value,
 }: InputButtonProps) => {
   const _id = useId();
 
@@ -34,6 +36,7 @@ const InputButton = ({
           type={type}
           className={bem('input')}
           checked={checked}
+          value={value}
         />
       </div>
       <div className={bem('label-wrapper')}>

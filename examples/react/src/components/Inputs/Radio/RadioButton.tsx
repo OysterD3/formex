@@ -1,6 +1,7 @@
 import { useId } from 'react';
 import InputButton from '../../InputLayout/InputButton.tsx';
 import { mergeProps } from '../../../utils/props.ts';
+import InputCard from '../../InputLayout/InputCard.tsx';
 
 export type RadioButtonProps = {
   label?: string;
@@ -8,6 +9,8 @@ export type RadioButtonProps = {
   name?: string;
   helperText?: string;
   checked?: boolean;
+  variant?: 'default' | 'card';
+  value?: string;
 };
 
 export const DEFAULT_RADIO_BUTTON_PROPS = {
@@ -16,10 +19,12 @@ export const DEFAULT_RADIO_BUTTON_PROPS = {
   name: undefined,
   helperText: undefined,
   checked: undefined,
+  variant: 'default',
+  value: undefined,
 };
 
 const RadioButton = (props: RadioButtonProps) => {
-  const { label, id, name, helperText, checked } = mergeProps(
+  const { label, id, name, helperText, checked, variant, value } = mergeProps(
     DEFAULT_RADIO_BUTTON_PROPS,
     props,
   );
@@ -28,14 +33,27 @@ const RadioButton = (props: RadioButtonProps) => {
 
   const inputId = id || _id;
 
+  if (variant === 'default') {
+    return (
+      <InputButton
+        label={label}
+        type="radio"
+        id={inputId}
+        name={name}
+        helperText={helperText}
+        checked={checked}
+      />
+    );
+  }
+
   return (
-    <InputButton
-      label={label}
+    <InputCard
       type="radio"
-      id={inputId}
+      label={label}
       name={name}
       helperText={helperText}
       checked={checked}
+      value={value}
     />
   );
 };
