@@ -188,3 +188,9 @@ export const INPUT_CONFIGS = {
     helperText: '',
   },
 };
+
+export const DRAG_AND_DROP_DATA_TYPE = {
+  input: 'INPUT',
+  group: 'GROUP',
+  static: 'STATIC',
+} as const;

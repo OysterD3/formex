@@ -1,9 +1,20 @@
 import { useState } from 'react';
 import { nanoid } from 'nanoid';
 import * as classNames from 'classnames';
-import { INPUT_ELEMENTS, INPUTS } from '../constants.ts';
+import {
+  DRAG_AND_DROP_DATA_TYPE,
+  INPUT_ELEMENTS,
+  INPUTS,
+} from '../constants.ts';
 import { getElementAttribute } from '../utils/dom.ts';
-import { ElementProps, Elements } from '../types';
+import {
+  DragAndDropData,
+  EditorActiveItem,
+  ElementProps,
+  Elements,
+  InputElements,
+} from '../types';
+import { isInputDragAndDropData } from '../types/guard.ts';
 import TextField from './Inputs/TextField.tsx';
 import TextArea from './Inputs/TextArea.tsx';
 import Select from './Inputs/Select';
@@ -18,15 +29,13 @@ import Switch from './Inputs/Switch.tsx';
 import Option from './Inputs/Select/Option.tsx';
 
 const InputsComponent = <T extends Elements>({
-  label,
-  value,
+  element,
   componentProps,
 }: {
-  label: string;
-  value: T;
+  element: T;
   componentProps: ElementProps<T>;
 }) => {
-  switch (value) {
+  switch (element) {
     case INPUTS.text:
       return <TextField {...componentProps} />;
     case INPUTS.textArea:
@@ -60,26 +69,23 @@ const InputsComponent = <T extends Elements>({
     case INPUTS.switch:
       return <Switch {...componentProps} />;
     default:
-      return label;
+      return null;
   }
 };
 
 const Editor = () => {
-  const [items, setItems] = useState<
-    {
-      id: string;
-      element: string;
-    }[]
-  >([]);
+  const [items, setItems] = useState<EditorActiveItem[]>([]);
   const [dragIndex, setDragIndex] = useState<number | null>(null);
   const handleDrop = (e: React.DragEvent<HTMLUListElement>) => {
     e.preventDefault();
-    const data = e.dataTransfer.getData('text/plain');
+    const raw = e.dataTransfer.getData('text/plain');
+    if (!raw) return;
+    const data: DragAndDropData = JSON.parse(raw);
     setItems((prev) => [
       ...prev.slice(0, dragIndex!),
       {
         id: nanoid(),
-        element: data,
+        ...data,
       },
       ...prev.slice(dragIndex!),
     ]);
@@ -109,7 +115,7 @@ const Editor = () => {
         onDragLeave={() => setDragIndex(null)}
         onClick={handleClick}
       >
-        {items.map((item, index) => (
+        {items.map(({ id, ...item }, index) => (
           <li
             className={classNames(
               'px-4 py-2 text-black cursor-pointer border border-transparent hover:border-blue ease-in-out transition-all duration-200',
@@ -118,14 +124,21 @@ const Editor = () => {
                 index === items.length - 1 &&
                 'border-b-red-500',
             )}
-            data-id={item.id}
-            key={item.id}
+            data-id={id}
+            key={id}
             onDragOver={(e) => {
               e.stopPropagation();
               handleDragOver(e, index);
             }}
           >
-            <InputsComponent {...INPUT_ELEMENTS[item.element]} />
+            {isInputDragAndDropData(item) && (
+              <InputsComponent
+                element={item.element}
+                componentProps={
+                  INPUT_ELEMENTS[item.element].defaultComponentProps
+                }
+              />
+            )}
           </li>
         ))}
       </ul>

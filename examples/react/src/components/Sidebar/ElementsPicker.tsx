@@ -1,9 +1,12 @@
-import { INPUT_ELEMENTS } from '../../constants';
+import { DRAG_AND_DROP_DATA_TYPE, INPUT_ELEMENTS } from '../../constants';
 
 const ElementsPicker = () => {
   const handleDragStart =
-    (value: string) => (e: React.DragEvent<HTMLLIElement>) => {
-      e.dataTransfer.setData('text/plain', value);
+    (element: string) => (e: React.DragEvent<HTMLLIElement>) => {
+      e.dataTransfer.setData(
+        'text/plain',
+        JSON.stringify({ type: DRAG_AND_DROP_DATA_TYPE.input, element }),
+      );
     };
 
   return (

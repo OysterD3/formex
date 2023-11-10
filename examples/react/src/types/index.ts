@@ -3,6 +3,7 @@ import {
   INPUT_GROUP_ELEMENTS,
   INPUT_GROUPS,
   INPUTS,
+  STATIC_ELEMENTS,
 } from '../constants.ts';
 import { ValuesOf } from './utils.ts';
 
@@ -17,7 +18,13 @@ export type InputGroupElementProps<T extends InputGroupElements> = Omit<
   'children'
 >;
 
-export type Elements = InputElements & InputGroupElements;
+export type StaticElements = ValuesOf<typeof STATIC_ELEMENTS>;
+
+export type Elements = InputElements | InputGroupElements;
 export type ElementProps<T extends Elements> = T extends InputElements
   ? InputElementProps<T>
-  : InputGroupElementProps<T>;
+  : T extends InputGroupElements
+  ? InputGroupElementProps<T>
+  : never;
+
+export * from './editor.ts';
