@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 import * as classNames from 'classnames';
 import { INPUT_ELEMENTS, INPUTS } from '../constants.ts';
 import { getElementAttribute } from '../utils/dom.ts';
+import { ElementProps, Elements } from '../types';
 import TextField from './Inputs/TextField.tsx';
 import TextArea from './Inputs/TextArea.tsx';
 import Select from './Inputs/Select';
@@ -16,14 +17,14 @@ import RichText from './Inputs/RichText.tsx';
 import Switch from './Inputs/Switch.tsx';
 import Option from './Inputs/Select/Option.tsx';
 
-const InputsComponent = ({
+const InputsComponent = <T extends Elements>({
   label,
   value,
   componentProps,
 }: {
   label: string;
-  value: string;
-  componentProps?: Record<string, any>;
+  value: T;
+  componentProps: ElementProps<T>;
 }) => {
   switch (value) {
     case INPUTS.text:
