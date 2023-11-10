@@ -5,7 +5,7 @@ import InputCard from '../../InputLayout/InputCard.tsx';
 
 export interface CheckboxProps {
   label?: string;
-  variant: 'card' | 'default';
+  variant?: 'card' | 'default';
   id?: string;
   name?: string;
   helperText?: string;

@@ -15,7 +15,7 @@ dayjs.extend(customParseFormat);
 export interface TimePickerProps {
   value?: string;
   onChange?: (value: string) => void;
-  label: string;
+  label?: string;
   placeholder?: string;
   helperText?: string;
   interval?: 1 | 15 | 30;

@@ -6,7 +6,7 @@ import { mergeProps } from '../../utils/props.ts';
 const bem = createBEM('input-upload');
 
 export interface FileUploadProps {
-  label: string;
+  label?: string;
   id?: string;
   name?: string;
   helperText?: string;
