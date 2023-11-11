@@ -1,4 +1,4 @@
-import { useId } from 'react';
+import { forwardRef, useId } from 'react';
 import InputButton from '../../InputLayout/InputButton.tsx';
 import { mergeProps } from '../../../utils/props.ts';
 import InputCard from '../../InputLayout/InputCard.tsx';
@@ -9,8 +9,9 @@ export interface CheckboxProps {
   id?: string;
   name?: string;
   helperText?: string;
-  checked?: boolean;
+  defaultChecked?: boolean;
   value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const DEFAULT_CHECKBOX_PROPS = {
@@ -19,15 +20,21 @@ export const DEFAULT_CHECKBOX_PROPS = {
   id: undefined,
   name: undefined,
   helperText: undefined,
-  checked: false,
-  value: undefined,
+  defaultChecked: false,
+  value: '',
 };
 
-const Checkbox = (props: CheckboxProps) => {
-  const { id, label, name, helperText, checked, variant, value } = mergeProps(
-    DEFAULT_CHECKBOX_PROPS,
-    props,
-  );
+const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
+  const {
+    id,
+    label,
+    name,
+    helperText,
+    defaultChecked,
+    variant,
+    value,
+    onChange,
+  } = mergeProps(DEFAULT_CHECKBOX_PROPS, props);
 
   const _id = useId();
 
@@ -36,12 +43,14 @@ const Checkbox = (props: CheckboxProps) => {
   if (variant === 'default') {
     return (
       <InputButton
+        ref={ref}
         label={label}
         type="checkbox"
         id={inputId}
         name={name}
         helperText={helperText}
-        checked={checked}
+        defaultChecked={defaultChecked}
+        onChange={onChange}
       />
     );
   }
@@ -52,10 +61,13 @@ const Checkbox = (props: CheckboxProps) => {
       label={label}
       name={name}
       helperText={helperText}
-      checked={checked}
+      defaultChecked={defaultChecked}
       value={value}
+      onChange={onChange}
     />
   );
-};
+});
+
+Checkbox.displayName = 'Checkbox';
 
 export default Checkbox;

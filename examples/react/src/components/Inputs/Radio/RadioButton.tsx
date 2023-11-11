@@ -1,4 +1,4 @@
-import { useId } from 'react';
+import { forwardRef, useId } from 'react';
 import InputButton from '../../InputLayout/InputButton.tsx';
 import { mergeProps } from '../../../utils/props.ts';
 import InputCard from '../../InputLayout/InputCard.tsx';
@@ -8,9 +8,10 @@ export type RadioButtonProps = {
   id?: string;
   name?: string;
   helperText?: string;
-  checked?: boolean;
+  defaultChecked?: boolean;
   variant?: 'default' | 'card';
   value?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 export const DEFAULT_RADIO_BUTTON_PROPS = {
@@ -18,44 +19,58 @@ export const DEFAULT_RADIO_BUTTON_PROPS = {
   id: undefined,
   name: undefined,
   helperText: undefined,
-  checked: undefined,
+  defaultChecked: undefined,
   variant: 'default',
-  value: undefined,
+  value: '',
 };
 
-const RadioButton = (props: RadioButtonProps) => {
-  const { label, id, name, helperText, checked, variant, value } = mergeProps(
-    DEFAULT_RADIO_BUTTON_PROPS,
-    props,
-  );
+const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
+  (props, ref) => {
+    const {
+      label,
+      id,
+      name,
+      helperText,
+      defaultChecked,
+      variant,
+      value,
+      onChange,
+    } = mergeProps(DEFAULT_RADIO_BUTTON_PROPS, props);
 
-  const _id = useId();
+    const _id = useId();
 
-  const inputId = id || _id;
+    const inputId = id || _id;
 
-  if (variant === 'default') {
+    if (variant === 'default') {
+      return (
+        <InputButton
+          ref={ref}
+          label={label}
+          type="radio"
+          id={inputId}
+          name={name}
+          helperText={helperText}
+          defaultChecked={defaultChecked}
+          onChange={onChange}
+        />
+      );
+    }
+
     return (
-      <InputButton
-        label={label}
+      <InputCard
+        ref={ref}
         type="radio"
-        id={inputId}
+        label={label}
         name={name}
         helperText={helperText}
-        checked={checked}
+        defaultChecked={defaultChecked}
+        value={value}
+        onChange={onChange}
       />
     );
-  }
+  },
+);
 
-  return (
-    <InputCard
-      type="radio"
-      label={label}
-      name={name}
-      helperText={helperText}
-      checked={checked}
-      value={value}
-    />
-  );
-};
+RadioButton.displayName = 'RadioButton';
 
 export default RadioButton;
