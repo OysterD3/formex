@@ -10,7 +10,7 @@
 
 .formex-input-text-field {
   &__container {
-    @apply flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-md;
+    @apply flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300;
 
     &#{&}--disabled {
       @apply bg-gray-50 text-gray-400 cursor-not-allowed;
