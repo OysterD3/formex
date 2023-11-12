@@ -9,6 +9,7 @@ import { FormexFormValues } from '../../types';
 import { SelectProps } from '../Inputs/Select';
 import Button from '../StaticElements/Button.tsx';
 import IconButton from '../StaticElements/IconButton.tsx';
+import Switch from '../Inputs/Switch.tsx';
 
 const ConfigurationSelect = () => {
   const { control } =
@@ -96,6 +97,16 @@ const ConfigurationSelect = () => {
           Add Option
         </Button>
       </div>
+      <Controller
+        render={({ field }) => <Switch {...field} label="Disabled" />}
+        name={`items.${index}.props.disabled`}
+        control={control}
+      />
+      <Controller
+        render={({ field }) => <Switch {...field} label="Readonly" />}
+        name={`items.${index}.props.readOnly`}
+        control={control}
+      />
     </>
   );
 };

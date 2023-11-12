@@ -12,10 +12,11 @@ export interface InputGroupProps {
   helperText?: string;
   row?: boolean;
   children: React.ReactNode;
+  disabled?: boolean;
 }
 
 const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(
-  ({ label, id, name, helperText, children, row }, ref) => {
+  ({ label, id, name, helperText, children, row, disabled }, ref) => {
     const _id = useId();
     const inputId = id || _id;
 
@@ -27,6 +28,7 @@ const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(
           className={bem('wrapper', { row: !!row })}
           id={inputId}
           name={name}
+          disabled={disabled}
         >
           {children}
         </fieldset>

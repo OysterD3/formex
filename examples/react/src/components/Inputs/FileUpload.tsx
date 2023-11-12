@@ -25,6 +25,8 @@ export interface FileUploadProps {
   uploadText?: string;
   dragAndDropText?: string;
   size?: number;
+  disabled?: boolean;
+  readOnly?: boolean;
 }
 
 export const DEFAULT_FILE_UPLOAD_PROPS = {
@@ -39,6 +41,8 @@ export const DEFAULT_FILE_UPLOAD_PROPS = {
   uploadText: 'Upload a file',
   dragAndDropText: 'or drag and drop',
   size: undefined,
+  disabled: false,
+  readOnly: false,
 };
 
 const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
@@ -56,6 +60,8 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
       uploadText,
       dragAndDropText,
       size,
+      disabled,
+      readOnly,
     } = mergeProps(DEFAULT_FILE_UPLOAD_PROPS, props);
 
     const _id = useId();
@@ -67,6 +73,7 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
     );
 
     const openFileUploader = () => {
+      if (disabled || readOnly) return;
       if (uploadRef.current) {
         uploadRef.current.click();
       }
@@ -74,16 +81,19 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
 
     const handleDragOver: DragEventHandler<HTMLDivElement> = (e) => {
       e.preventDefault();
+      if (disabled || readOnly) return;
       setIsDragging(true);
     };
 
     const handleDragLeave: DragEventHandler<HTMLDivElement> = (e) => {
       e.preventDefault();
+      if (disabled || readOnly) return;
       setIsDragging(false);
     };
 
     const handleDrop: DragEventHandler<HTMLDivElement> = (e) => {
       e.preventDefault();
+      if (disabled || readOnly) return;
       setIsDragging(false);
       if (e.dataTransfer?.files.length > 0) {
         const file = e.dataTransfer.files[0];
@@ -116,6 +126,8 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
     return (
       <InputLayout label={label} id={inputId} helperText={helperText}>
         <div
+          aria-disabled={disabled}
+          aria-readonly={readOnly}
           onClick={openFileUploader}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
@@ -123,6 +135,7 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
           className={bem('container', {
             dragging: isDragging,
             'has-file': !!fileInfo,
+            disabled,
           })}
         >
           <div className={bem('wrapper')}>
@@ -146,6 +159,8 @@ const FileUpload = forwardRef<HTMLInputElement, FileUploadProps>(
                 <span>{uploadText}</span>
                 <input
                   ref={ref || uploadRef}
+                  disabled={disabled}
+                  readOnly={readOnly}
                   id={inputId}
                   name={name || inputId}
                   type="file"

@@ -64,6 +64,16 @@ const ConfigurationRadio = () => {
         name={`items.${index}.props.variant`}
         control={control}
       />
+      <Controller
+        render={({ field }) => <Switch {...field} label="Disabled" />}
+        name={`items.${index}.props.disabled`}
+        control={control}
+      />
+      <Controller
+        render={({ field }) => <Switch {...field} label="Readonly" />}
+        name={`items.${index}.props.readOnly`}
+        control={control}
+      />
     </>
   );
 };

@@ -19,6 +19,10 @@
 .formex-input-dropdown-trigger {
   @apply relative min-h-[36px] w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6;
 
+  &#{&}--disabled {
+    @apply bg-gray-50 text-gray-400 ring-gray-200 cursor-not-allowed;
+  }
+
   &__value {
     @apply block truncate;
   }
@@ -47,6 +51,10 @@
 
   &__input {
     @apply h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600;
+
+    &#{&}--disabled {
+      @apply text-gray-400 bg-gray-300 cursor-not-allowed focus:ring-0;
+    }
   }
 
   &__label-wrapper {
@@ -84,8 +92,16 @@
   &__container {
     @apply relative flex cursor-pointer border border-gray-200 p-4 focus:outline-none;
 
+    &#{&}--disabled {
+      @apply bg-gray-50 text-gray-400 cursor-not-allowed;
+    }
+
     &#{&}--checked {
       @apply z-10 border-indigo-200 bg-indigo-50;
+
+      &.formex-input-card__container--disabled {
+        @apply border-gray-200 bg-gray-100;
+      }
     }
   }
 
@@ -102,6 +118,10 @@
   }
 
   &__input {
-    @apply mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-indigo-600 border-gray-300 focus:ring-indigo-600 active:ring-2 active:ring-offset-2 active:ring-indigo-600;
+    @apply mt-0.5 h-4 w-4 shrink-0 cursor-pointer text-indigo-600 border-gray-300 focus:ring-indigo-600;
+
+    &#{&}--disabled {
+      @apply text-gray-400 bg-gray-300 cursor-not-allowed focus:ring-0;
+    }
   }
 }

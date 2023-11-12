@@ -15,6 +15,8 @@ export interface RichTextProps {
   value?: string;
   onChange?: (value: string) => void;
   defaultValue?: string;
+  disabled?: boolean;
+  readOnly?: boolean;
 }
 
 export const DEFAULT_RICH_TEXT_PROPS = {
@@ -25,6 +27,8 @@ export const DEFAULT_RICH_TEXT_PROPS = {
   placeholder: 'Type something...',
   value: undefined,
   defaultValue: undefined,
+  disabled: false,
+  readOnly: false,
 };
 
 const RichText = forwardRef<HTMLDivElement, RichTextProps>((props, ref) => {
@@ -37,6 +41,8 @@ const RichText = forwardRef<HTMLDivElement, RichTextProps>((props, ref) => {
     value,
     onChange,
     defaultValue,
+    disabled,
+    readOnly,
   } = mergeProps(DEFAULT_RICH_TEXT_PROPS, props);
 
   const editorRef = useRef<EditorJS>();
@@ -48,6 +54,8 @@ const RichText = forwardRef<HTMLDivElement, RichTextProps>((props, ref) => {
       const editor = new EditorJS({
         holder: inputId,
         placeholder,
+        readOnly,
+        minHeight: 100,
         async onChange(api: API) {
           try {
             const output = await api.saver.save();
@@ -82,7 +90,7 @@ const RichText = forwardRef<HTMLDivElement, RichTextProps>((props, ref) => {
 
   return (
     <InputLayout label={label} id={inputId} helperText={helperText}>
-      <div className={bem('editor')} id={inputId} ref={ref} />
+      <div className={bem('editor', { disabled })} id={inputId} ref={ref} />
       <input
         aria-hidden={true}
         name={name || inputId}

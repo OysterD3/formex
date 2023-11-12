@@ -4,6 +4,7 @@ import { FormexFormValues } from '../../types';
 import { TimePickerProps } from '../Inputs/TimePicker.tsx';
 import Select from '../Inputs/Select';
 import Option from '../Inputs/Select/Option.tsx';
+import Switch from '../Inputs/Switch.tsx';
 
 const ConfigurationTimePicker = () => {
   const { control } = useFormContext<FormexFormValues<TimePickerProps>>();
@@ -108,6 +109,16 @@ const ConfigurationTimePicker = () => {
           </Select>
         )}
         name={`items.${index}.props.format`}
+        control={control}
+      />
+      <Controller
+        render={({ field }) => <Switch {...field} label="Disabled" />}
+        name={`items.${index}.props.disabled`}
+        control={control}
+      />
+      <Controller
+        render={({ field }) => <Switch {...field} label="Readonly" />}
+        name={`items.${index}.props.readOnly`}
         control={control}
       />
     </>

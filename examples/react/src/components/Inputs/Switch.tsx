@@ -17,6 +17,8 @@ export interface SwitchProps {
   trueValue?: Value;
   falseValue?: Value;
   defaultValue?: Value;
+  disabled?: boolean;
+  readOnly?: boolean;
 }
 
 export const DEFAULT_SWITCH_PROPS = {
@@ -28,6 +30,8 @@ export const DEFAULT_SWITCH_PROPS = {
   defaultValue: undefined,
   trueValue: true,
   falseValue: false,
+  disabled: false,
+  readOnly: false,
 };
 
 const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
@@ -41,6 +45,8 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
     defaultValue,
     trueValue,
     falseValue,
+    disabled,
+    readOnly,
   } = mergeProps(DEFAULT_SWITCH_PROPS, props);
 
   const _id = useId();
@@ -49,6 +55,7 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
   const isTrueValue = (value || defaultValue) === trueValue;
 
   const handleChange = () => {
+    if (disabled || readOnly) return;
     if (isTrueValue) {
       onChange?.(falseValue);
     } else {
@@ -71,14 +78,22 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
       />
       <div
         onClick={handleChange}
-        className={bem('wrapper', { checked: isTrueValue })}
+        className={bem('wrapper', {
+          checked: isTrueValue,
+          disabled,
+          readonly: readOnly,
+        })}
         role="switch"
         aria-checked={isTrueValue}
       >
         <span className="sr-only">Use setting</span>
         <span
           aria-hidden="true"
-          className={bem('thumb', { checked: isTrueValue })}
+          className={bem('thumb', {
+            checked: isTrueValue,
+            disabled,
+            readonly: readOnly,
+          })}
         ></span>
       </div>
     </InputLayout>

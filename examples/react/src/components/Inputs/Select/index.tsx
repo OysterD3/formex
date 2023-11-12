@@ -28,6 +28,8 @@ export interface SelectProps<T> {
   defaultValue?: string;
   displayValue?: (value: T) => React.ReactNode;
   children: React.ReactNode;
+  disabled?: boolean;
+  readOnly?: boolean;
 }
 
 export const DEFAULT_SELECT_PROPS = {
@@ -38,6 +40,8 @@ export const DEFAULT_SELECT_PROPS = {
   placeholder: 'Select option',
   value: undefined,
   defaultValue: undefined,
+  disabled: false,
+  readOnly: false,
 };
 
 const SelectBase = <T,>(
@@ -55,6 +59,8 @@ const SelectBase = <T,>(
     defaultValue,
     children,
     displayValue,
+    disabled,
+    readOnly,
   } = mergeProps(DEFAULT_SELECT_PROPS, props);
   const _id = useId();
 
@@ -76,6 +82,8 @@ const SelectBase = <T,>(
         <PopoverTrigger onClick={() => setOpen((v) => !v)}>
           <InputDropdownTrigger
             ref={ref || activatorRef}
+            disabled={disabled}
+            readOnly={readOnly}
             value={displayValue ? displayValue(value as T) : value}
             defaultValue={defaultValue}
             placeholder={placeholder}

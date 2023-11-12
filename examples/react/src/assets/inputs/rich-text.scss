@@ -1,6 +1,10 @@
 .formex-input-rich-text {
   &__editor {
     @apply w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6;
+
+    &#{&}--disabled {
+      @apply bg-gray-50 text-gray-400 ring-gray-200 pointer-events-none;
+    }
   }
 
   &__input {

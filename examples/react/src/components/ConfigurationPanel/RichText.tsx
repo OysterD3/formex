@@ -2,6 +2,7 @@ import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import TextField from '../Inputs/TextField.tsx';
 import { FormexFormValues } from '../../types';
 import RichText, { RichTextProps } from '../Inputs/RichText.tsx';
+import Switch from '../Inputs/Switch.tsx';
 
 const ConfigurationRichText = () => {
   const { control } = useFormContext<FormexFormValues<RichTextProps>>();
@@ -52,6 +53,16 @@ const ConfigurationRichText = () => {
           <RichText {...field} value={value || ''} label="Default Value" />
         )}
         name={`items.${index}.props.defaultValue`}
+        control={control}
+      />
+      <Controller
+        render={({ field }) => <Switch {...field} label="Disabled" />}
+        name={`items.${index}.props.disabled`}
+        control={control}
+      />
+      <Controller
+        render={({ field }) => <Switch {...field} label="Readonly" />}
+        name={`items.${index}.props.readOnly`}
         control={control}
       />
     </>

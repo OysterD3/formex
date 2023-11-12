@@ -22,13 +22,6 @@ const ConfigurationFileUpload = () => {
       />
       <Controller
         render={({ field: { value, ...field } }) => (
-          <TextField {...field} value={value || ''} label="Placeholder" />
-        )}
-        name={`items.${index}.props.placeholder`}
-        control={control}
-      />
-      <Controller
-        render={({ field: { value, ...field } }) => (
           <TextField {...field} value={value || ''} label="Helper text" />
         )}
         name={`items.${index}.props.helperText`}
@@ -78,6 +71,16 @@ const ConfigurationFileUpload = () => {
           />
         )}
         name={`items.${index}.props.dragAndDropText`}
+        control={control}
+      />
+      <Controller
+        render={({ field }) => <Switch {...field} label="Disabled" />}
+        name={`items.${index}.props.disabled`}
+        control={control}
+      />
+      <Controller
+        render={({ field }) => <Switch {...field} label="Readonly" />}
+        name={`items.${index}.props.readOnly`}
         control={control}
       />
     </>

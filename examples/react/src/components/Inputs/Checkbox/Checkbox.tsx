@@ -12,6 +12,8 @@ export interface CheckboxProps {
   defaultChecked?: boolean;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
+  readOnly?: boolean;
 }
 
 export const DEFAULT_CHECKBOX_PROPS = {
@@ -22,6 +24,8 @@ export const DEFAULT_CHECKBOX_PROPS = {
   helperText: undefined,
   defaultChecked: false,
   value: '',
+  disabled: false,
+  readOnly: false,
 };
 
 const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
@@ -34,6 +38,8 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
     variant,
     value,
     onChange,
+    disabled,
+    readOnly,
   } = mergeProps(DEFAULT_CHECKBOX_PROPS, props);
 
   const _id = useId();
@@ -51,12 +57,15 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
         helperText={helperText}
         defaultChecked={defaultChecked}
         onChange={onChange}
+        disabled={disabled}
+        readOnly={readOnly}
       />
     );
   }
 
   return (
     <InputCard
+      ref={ref}
       type="checkbox"
       label={label}
       name={name}
@@ -64,6 +73,8 @@ const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
       defaultChecked={defaultChecked}
       value={value}
       onChange={onChange}
+      disabled={disabled}
+      readOnly={readOnly}
     />
   );
 });

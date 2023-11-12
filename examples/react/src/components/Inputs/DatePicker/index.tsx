@@ -20,6 +20,8 @@ export interface DatePickerProps {
   value?: string;
   onChange?: (value: string) => void;
   defaultValue?: string;
+  disabled?: boolean;
+  readOnly?: boolean;
 }
 
 dayjs.extend(customParseFormat);
@@ -33,6 +35,8 @@ export const DEFAULT_DATE_PICKER_PROPS = {
   format: 'YYYY-MM-DD',
   value: undefined,
   defaultValue: undefined,
+  disabled: true,
+  readOnly: false,
 };
 
 const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
@@ -47,6 +51,8 @@ const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
       value,
       onChange,
       defaultValue,
+      disabled,
+      readOnly,
     } = mergeProps(DEFAULT_DATE_PICKER_PROPS, props);
 
     const _id = useId();
@@ -74,6 +80,8 @@ const DatePicker = forwardRef<HTMLButtonElement, DatePickerProps>(
           <PopoverTrigger onClick={() => setOpen((v) => !v)}>
             <InputDropdownTrigger
               ref={ref}
+              disabled={disabled}
+              readOnly={readOnly}
               value={value}
               defaultValue={defaultValue}
               placeholder={placeholder}

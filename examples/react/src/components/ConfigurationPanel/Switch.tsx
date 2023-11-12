@@ -1,7 +1,7 @@
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import TextField from '../Inputs/TextField.tsx';
 import { FormexFormValues } from '../../types';
-import { SwitchProps } from '../Inputs/Switch.tsx';
+import Switch, { SwitchProps } from '../Inputs/Switch.tsx';
 
 const ConfigurationSwitch = () => {
   const { control } = useFormContext<FormexFormValues<SwitchProps>>();
@@ -86,6 +86,16 @@ const ConfigurationSwitch = () => {
           />
         )}
         name={`items.${index}.props.falseValue`}
+        control={control}
+      />
+      <Controller
+        render={({ field }) => <Switch {...field} label="Disabled" />}
+        name={`items.${index}.props.disabled`}
+        control={control}
+      />
+      <Controller
+        render={({ field }) => <Switch {...field} label="Readonly" />}
+        name={`items.${index}.props.readOnly`}
         control={control}
       />
     </>

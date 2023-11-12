@@ -1,12 +1,20 @@
 .formex-input-textarea {
   &__textarea {
     @apply block resize-none w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6;
+
+    &#{&}--disabled {
+      @apply bg-gray-50 text-gray-400 ring-gray-200 cursor-not-allowed;
+    }
   }
 }
 
 .formex-input-text-field {
   &__container {
     @apply flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 sm:max-w-md;
+
+    &#{&}--disabled {
+      @apply bg-gray-50 text-gray-400 cursor-not-allowed;
+    }
   }
 
   &__prefix {
@@ -22,6 +30,10 @@
 
     &--with-suffix {
       @apply pr-3;
+    }
+
+    &--disabled {
+      @apply bg-gray-50 text-gray-400 cursor-not-allowed;
     }
   }
 

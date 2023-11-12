@@ -1,6 +1,7 @@
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import TextField, { TextFieldProps } from '../Inputs/TextField.tsx';
 import { FormexFormValues } from '../../types';
+import Switch from '../Inputs/Switch.tsx';
 
 const ConfigurationTextField = () => {
   const { control } = useFormContext<FormexFormValues<TextFieldProps>>();
@@ -65,6 +66,16 @@ const ConfigurationTextField = () => {
           <TextField {...field} value={value || ''} label="Default Value" />
         )}
         name={`items.${index}.props.defaultValue`}
+        control={control}
+      />
+      <Controller
+        render={({ field }) => <Switch {...field} label="Disabled" />}
+        name={`items.${index}.props.disabled`}
+        control={control}
+      />
+      <Controller
+        render={({ field }) => <Switch {...field} label="Readonly" />}
+        name={`items.${index}.props.readOnly`}
         control={control}
       />
     </>

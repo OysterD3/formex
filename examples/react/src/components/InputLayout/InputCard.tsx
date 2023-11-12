@@ -11,19 +11,38 @@ export interface InputCardProps {
   defaultChecked?: boolean;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
+  readOnly?: boolean;
 }
 
 const InputCard = forwardRef<HTMLInputElement, InputCardProps>(
-  ({ type, label, name, helperText, defaultChecked, value, onChange }, ref) => {
+  (
+    {
+      type,
+      label,
+      name,
+      helperText,
+      defaultChecked,
+      value,
+      onChange,
+      disabled,
+      readOnly,
+    },
+    ref,
+  ) => {
     return (
-      <label className={bem('container', { checked: !!defaultChecked })}>
+      <label
+        className={bem('container', { checked: !!defaultChecked, disabled })}
+      >
         <input
           ref={ref}
           type={type}
           name={name}
+          disabled={disabled}
+          readOnly={readOnly}
           value={value}
           onChange={onChange}
-          className={bem('input')}
+          className={bem('input', { disabled })}
           defaultChecked={defaultChecked}
         />
         <span className={bem('wrapper')}>

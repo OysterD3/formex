@@ -12,11 +12,24 @@ export interface InputButtonProps {
   type: 'radio' | 'checkbox';
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
+  readOnly?: boolean;
 }
 
 const InputButton = forwardRef<HTMLInputElement, InputButtonProps>(
   (
-    { label, id, name, helperText, defaultChecked, type, value, onChange },
+    {
+      label,
+      id,
+      name,
+      helperText,
+      defaultChecked,
+      type,
+      value,
+      onChange,
+      disabled,
+      readOnly,
+    },
     ref,
   ) => {
     const _id = useId();
@@ -30,9 +43,11 @@ const InputButton = forwardRef<HTMLInputElement, InputButtonProps>(
             ref={ref}
             id={inputId}
             aria-describedby={helperText ? `${inputId}-description` : undefined}
+            disabled={disabled}
+            readOnly={readOnly}
             name={name || inputId}
             type={type}
-            className={bem('input')}
+            className={bem('input', { disabled })}
             defaultChecked={defaultChecked}
             value={value}
             onChange={onChange}

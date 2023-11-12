@@ -20,8 +20,10 @@ export interface TextFieldProps {
       React.InputHTMLAttributes<HTMLInputElement>,
       HTMLInputElement
     >,
-    'inputMode'
+    'inputMode' | 'disabled' | 'readOnly'
   >;
+  disabled?: boolean;
+  readOnly?: boolean;
 }
 
 export const DEFAULT_TEXT_FIELD_PROPS = {
@@ -36,6 +38,8 @@ export const DEFAULT_TEXT_FIELD_PROPS = {
   value: undefined,
   defaultValue: undefined,
   inputProps: {},
+  disabled: true,
+  readOnly: false,
 };
 
 const bem = createBEM('input-text-field');
@@ -54,6 +58,8 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, ref) => {
     onChange,
     type,
     inputProps,
+    disabled,
+    readOnly,
   } = mergeProps(DEFAULT_TEXT_FIELD_PROPS, props);
   const _id = useId();
 
@@ -61,11 +67,13 @@ const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, ref) => {
 
   return (
     <InputLayout label={label} id={inputId} helperText={helperText}>
-      <div className={bem('container')}>
+      <div className={bem('container', { disabled })}>
         {prefix && <span className={bem('prefix')}>{prefix}</span>}
         <input
           {...inputProps}
           ref={ref}
+          disabled={disabled}
+          readOnly={readOnly}
           value={defaultValue || value}
           onChange={onChange}
           type={type}

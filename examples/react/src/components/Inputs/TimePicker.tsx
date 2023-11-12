@@ -23,6 +23,8 @@ export interface TimePickerProps {
   id?: string;
   name?: string;
   defaultValue?: string;
+  disabled?: boolean;
+  readOnly?: boolean;
 }
 
 export const DEFAULT_TIME_PICKER_PROPS = {
@@ -33,6 +35,8 @@ export const DEFAULT_TIME_PICKER_PROPS = {
   defaultValue: undefined,
   interval: 15,
   format: 'HH:mm',
+  disabled: false,
+  readOnly: false,
 };
 
 const generateTimes = (interval: number, format: string) => {
@@ -66,6 +70,8 @@ const TimePicker = forwardRef<HTMLButtonElement, TimePickerProps>(
       defaultValue,
       interval,
       format,
+      disabled,
+      readOnly,
     } = mergeProps(DEFAULT_TIME_PICKER_PROPS, props);
     const _id = useId();
 
@@ -93,6 +99,8 @@ const TimePicker = forwardRef<HTMLButtonElement, TimePickerProps>(
               ref={ref}
               placeholder={placeholder}
               value={value}
+              disabled={disabled}
+              readOnly={readOnly}
               defaultValue={defaultValue}
               endAdornment={
                 <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">

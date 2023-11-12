@@ -15,6 +15,8 @@ export interface TextAreaProps {
   value?: string;
   defaultValue?: string;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  disabled?: boolean;
+  readOnly?: boolean;
 }
 
 export const DEFAULT_TEXT_AREA_PROPS = {
@@ -26,6 +28,8 @@ export const DEFAULT_TEXT_AREA_PROPS = {
   rows: 3,
   value: undefined,
   defaultValue: undefined,
+  disabled: true,
+  readOnly: false,
 };
 
 const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
@@ -40,6 +44,8 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
       value,
       defaultValue,
       onChange,
+      disabled,
+      readOnly,
     } = mergeProps(DEFAULT_TEXT_AREA_PROPS, props);
     const _id = useId();
 
@@ -55,7 +61,9 @@ const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
           name={name || inputId}
           id={inputId}
           placeholder={placeholder}
-          className={bem('textarea')}
+          disabled={disabled}
+          readOnly={readOnly}
+          className={bem('textarea', { disabled })}
         />
       </InputLayout>
     );

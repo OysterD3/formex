@@ -19,6 +19,8 @@ export interface CheckboxGroupProps {
   value?: string[];
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   variant?: 'default' | 'card';
+  disabled?: boolean;
+  readOnly?: boolean;
 }
 
 export const DEFAULT_CHECKBOX_GROUP_PROPS = {
@@ -28,6 +30,8 @@ export const DEFAULT_CHECKBOX_GROUP_PROPS = {
   row: false,
   id: undefined,
   variant: 'default',
+  disabled: false,
+  readOnly: false,
 };
 
 const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
@@ -42,6 +46,8 @@ const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
       onChange,
       value,
       variant,
+      readOnly,
+      disabled,
     } = mergeProps(DEFAULT_CHECKBOX_GROUP_PROPS, props);
 
     const _id = useId();
@@ -55,6 +61,7 @@ const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
         name={name}
         helperText={helperText}
         row={row}
+        disabled={disabled}
       >
         {Children.map(children, (child) => {
           if (isValidElement(child)) {
@@ -68,6 +75,8 @@ const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
                 value.includes(
                   (child as React.ReactElement<CheckboxProps>).props.value!,
                 ),
+              readOnly,
+              disabled,
             });
           }
           return null;

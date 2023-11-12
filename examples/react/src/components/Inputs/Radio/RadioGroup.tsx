@@ -19,6 +19,8 @@ export interface RadioGroupProps {
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   variant?: 'default' | 'card';
+  disabled?: boolean;
+  readOnly?: boolean;
 }
 
 export const DEFAULT_RADIO_GROUP_PROPS = {
@@ -29,6 +31,8 @@ export const DEFAULT_RADIO_GROUP_PROPS = {
   row: false,
   id: undefined,
   variant: 'default',
+  disabled: false,
+  readOnly: false,
 };
 
 const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>((props, ref) => {
@@ -42,6 +46,8 @@ const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>((props, ref) => {
     onChange,
     value,
     variant,
+    disabled,
+    readOnly,
   } = mergeProps(DEFAULT_RADIO_GROUP_PROPS, props);
 
   const _id = useId();
@@ -55,6 +61,7 @@ const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>((props, ref) => {
       name={name}
       helperText={helperText}
       row={row}
+      disabled={disabled}
     >
       {Children.map(children, (child) => {
         if (isValidElement(child)) {
@@ -65,6 +72,8 @@ const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>((props, ref) => {
             defaultChecked:
               (child as React.ReactElement<RadioButtonProps>).props.value ===
               value,
+            disabled,
+            readOnly,
           });
         }
         return null;

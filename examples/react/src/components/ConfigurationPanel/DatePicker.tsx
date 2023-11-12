@@ -4,6 +4,7 @@ import { FormexFormValues } from '../../types';
 import Select from '../Inputs/Select';
 import Option from '../Inputs/Select/Option.tsx';
 import { DatePickerProps } from '../Inputs/DatePicker';
+import Switch from '../Inputs/Switch.tsx';
 
 const ConfigurationDatePicker = () => {
   const { control } = useFormContext<FormexFormValues<DatePickerProps>>();
@@ -81,6 +82,16 @@ const ConfigurationDatePicker = () => {
           </Select>
         )}
         name={`items.${index}.props.format`}
+        control={control}
+      />
+      <Controller
+        render={({ field }) => <Switch {...field} label="Disabled" />}
+        name={`items.${index}.props.disabled`}
+        control={control}
+      />
+      <Controller
+        render={({ field }) => <Switch {...field} label="Readonly" />}
+        name={`items.${index}.props.readOnly`}
         control={control}
       />
     </>
