@@ -1,11 +1,11 @@
-import Editor from './components/Editor.tsx';
-import FormexWrapper from './components/FormexWrapper.tsx';
+import Editor from './components/Editor';
+import FormexProvider from './components/FormexProvider.tsx';
 import ConfigurationPanel from './components/ConfigurationPanel';
 import ElementsPicker from './components/ElementPicker';
 
 function App() {
   return (
-    <FormexWrapper>
+    <FormexProvider>
       <div className="h-screen w-screen overflow-none flex">
         <aside>
           <ElementsPicker />
@@ -17,7 +17,7 @@ function App() {
           <ConfigurationPanel />
         </aside>
       </div>
-    </FormexWrapper>
+    </FormexProvider>
   );
 }
 

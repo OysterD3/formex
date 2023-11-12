@@ -1,4 +1,8 @@
+import { useDraggable } from '@dnd-kit/core';
+import { useId } from 'react';
+import { CSS } from '@dnd-kit/utilities';
 import { createBEM } from '../../../../utils/bem.ts';
+import { DragAndDropData, Elements } from '../../../../types';
 
 const bem = createBEM('element-picker-element');
 
@@ -8,6 +12,8 @@ function ElementPickerElementBase(props: {
   row?: false;
   draggable?: boolean;
   onDragStart?: (e: React.DragEvent<HTMLLIElement>) => void;
+  type: DragAndDropData['type'];
+  element: Elements;
 }): JSX.Element;
 
 function ElementPickerElementBase(props: {
@@ -17,6 +23,8 @@ function ElementPickerElementBase(props: {
   row: true;
   draggable?: boolean;
   onDragStart?: (e: React.DragEvent<HTMLLIElement>) => void;
+  type: DragAndDropData['type'];
+  element: Elements;
 }): JSX.Element;
 
 function ElementPickerElementBase({
@@ -25,20 +33,39 @@ function ElementPickerElementBase({
   description,
   row = false,
   draggable,
-  onDragStart,
+  type,
+  element,
 }: {
   icon: string;
   title: string;
   description?: string;
   row?: boolean;
   draggable?: boolean;
-  onDragStart?: (e: React.DragEvent<HTMLLIElement>) => void;
+  type: DragAndDropData['type'];
+  element: Elements;
 }) {
+  const id = useId();
+
+  const { setNodeRef, attributes, listeners, transform } = useDraggable({
+    id,
+    disabled: !draggable,
+    data: {
+      type,
+      element,
+    },
+  });
+
+  const style = {
+    transform: CSS.Translate.toString(transform),
+  };
+
   return (
     <li
-      draggable={draggable}
-      onDragStart={onDragStart}
+      ref={setNodeRef}
+      style={style}
       className={bem('container', { row })}
+      {...attributes}
+      {...listeners}
     >
       <div className={bem('icon-wrapper')}>
         <div className={`i-ri-${icon} h-6 w-8`}></div>
