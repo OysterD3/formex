@@ -4,7 +4,7 @@ import { createBEM } from '../../utils/bem.ts';
 const bem = createBEM('input-dropdown-trigger');
 
 export interface InputDropdownTriggerProps {
-  value?: string;
+  value?: React.ReactNode;
   defaultValue?: string;
   placeholder?: string;
   endAdornment?: React.ReactNode;
