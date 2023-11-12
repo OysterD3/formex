@@ -22,7 +22,7 @@ export interface RadioGroupProps {
 }
 
 export const DEFAULT_RADIO_GROUP_PROPS = {
-  label: '',
+  label: 'Radio group',
   name: undefined,
   helperText: undefined,
   children: undefined,

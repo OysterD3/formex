@@ -25,12 +25,12 @@ export interface TextFieldProps {
 }
 
 export const DEFAULT_TEXT_FIELD_PROPS = {
-  label: '',
+  label: 'Text input',
   type: 'text',
   id: undefined,
   name: undefined,
   helperText: undefined,
-  placeholder: undefined,
+  placeholder: 'Type something...',
   prefix: undefined,
   suffix: undefined,
   value: undefined,

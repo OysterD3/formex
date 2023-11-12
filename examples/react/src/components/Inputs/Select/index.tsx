@@ -31,11 +31,11 @@ export interface SelectProps<T> {
 }
 
 export const DEFAULT_SELECT_PROPS = {
-  label: '',
+  label: 'Select',
   id: undefined,
   name: undefined,
   helperText: undefined,
-  placeholder: undefined,
+  placeholder: 'Select option',
   value: undefined,
   defaultValue: undefined,
 };

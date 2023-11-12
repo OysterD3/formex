@@ -22,7 +22,7 @@ export interface CheckboxGroupProps {
 }
 
 export const DEFAULT_CHECKBOX_GROUP_PROPS = {
-  label: '',
+  label: 'Checkbox group',
   name: undefined,
   helperText: undefined,
   row: false,

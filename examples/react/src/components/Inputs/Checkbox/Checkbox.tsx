@@ -15,7 +15,7 @@ export interface CheckboxProps {
 }
 
 export const DEFAULT_CHECKBOX_PROPS = {
-  label: '',
+  label: 'Checkbox',
   variant: 'default',
   id: undefined,
   name: undefined,

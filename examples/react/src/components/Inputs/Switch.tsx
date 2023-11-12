@@ -20,7 +20,7 @@ export interface SwitchProps {
 }
 
 export const DEFAULT_SWITCH_PROPS = {
-  label: '',
+  label: 'Switch',
   id: undefined,
   name: undefined,
   helperText: undefined,
@@ -84,5 +84,7 @@ const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
     </InputLayout>
   );
 });
+
+Switch.displayName = 'Switch';
 
 export default Switch;

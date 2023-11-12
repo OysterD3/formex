@@ -15,7 +15,7 @@ export type RadioButtonProps = {
 };
 
 export const DEFAULT_RADIO_BUTTON_PROPS = {
-  label: '',
+  label: 'Radio button',
   id: undefined,
   name: undefined,
   helperText: undefined,

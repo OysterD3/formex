@@ -1,4 +1,4 @@
-import { useId } from 'react';
+import { forwardRef, useId } from 'react';
 import InputLayout from '../InputLayout';
 import { createBEM } from '../../utils/bem.ts';
 import { mergeProps } from '../../utils/props.ts';
@@ -18,45 +18,50 @@ export interface TextAreaProps {
 }
 
 export const DEFAULT_TEXT_AREA_PROPS = {
-  label: '',
+  label: 'Textarea',
   id: undefined,
   name: undefined,
   helperText: undefined,
-  placeholder: undefined,
+  placeholder: 'Type something...',
   rows: 3,
   value: undefined,
   defaultValue: undefined,
 };
 
-const TextArea = (props: TextAreaProps) => {
-  const {
-    label,
-    id,
-    name,
-    helperText,
-    placeholder,
-    rows,
-    value,
-    defaultValue,
-    onChange,
-  } = mergeProps(DEFAULT_TEXT_AREA_PROPS, props);
-  const _id = useId();
+const TextArea = forwardRef<HTMLTextAreaElement, TextAreaProps>(
+  (props, ref) => {
+    const {
+      label,
+      id,
+      name,
+      helperText,
+      placeholder,
+      rows,
+      value,
+      defaultValue,
+      onChange,
+    } = mergeProps(DEFAULT_TEXT_AREA_PROPS, props);
+    const _id = useId();
 
-  const inputId = id || _id;
+    const inputId = id || _id;
 
-  return (
-    <InputLayout label={label} id={inputId} helperText={helperText}>
-      <textarea
-        onChange={onChange}
-        value={defaultValue || value}
-        rows={rows}
-        name={name || inputId}
-        id={inputId}
-        placeholder={placeholder}
-        className={bem('textarea')}
-      />
-    </InputLayout>
-  );
-};
+    return (
+      <InputLayout label={label} id={inputId} helperText={helperText}>
+        <textarea
+          ref={ref}
+          onChange={onChange}
+          value={defaultValue || value}
+          rows={rows}
+          name={name || inputId}
+          id={inputId}
+          placeholder={placeholder}
+          className={bem('textarea')}
+        />
+      </InputLayout>
+    );
+  },
+);
+
+TextArea.displayName = 'TextArea';
 
 export default TextArea;
