@@ -1,7 +1,11 @@
 import { useFormContext, useWatch } from 'react-hook-form';
-import { INPUTS } from '../../constants.ts';
+import { INPUT_GROUPS, INPUTS } from '../../constants.ts';
 import { DragAndDropData, FormexFormValues } from '../../types';
 import { createBEM } from '../../utils/bem.ts';
+import {
+  isInputDragAndDropData,
+  isInputGroupDragAndDropData,
+} from '../../types/guard.ts';
 import ConfigurationTextField from './TextField.tsx';
 import ConfigurationTextArea from './TextArea.tsx';
 import ConfigurationTimePicker from './TimePicker.tsx';
@@ -12,6 +16,8 @@ import ConfigurationSelect from './Select.tsx';
 import ConfigurationDatePicker from './DatePicker.tsx';
 import ConfigurationFileUpload from './File.tsx';
 import ConfigurationRichText from './RichText.tsx';
+import ConfigurationRadioGroup from './RadioGroup.tsx';
+import ConfigurationCheckboxGroup from './CheckboxGroup.tsx';
 
 const bem = createBEM('configuration-panel');
 
@@ -51,6 +57,25 @@ const InputConfigurationPanel = ({
   }
 };
 
+const InputGroupConfigurationPanel = ({
+  item,
+  isSelected,
+}: {
+  item: DragAndDropData;
+  isSelected: boolean;
+}) => {
+  if (!isSelected) return null;
+
+  switch (item.element) {
+    case INPUT_GROUPS.radio:
+      return <ConfigurationRadioGroup />;
+    case INPUT_GROUPS.checkbox:
+      return <ConfigurationCheckboxGroup />;
+    default:
+      return null;
+  }
+};
+
 const ConfigurationPanel = () => {
   const { control } = useFormContext<FormexFormValues>();
   const [activeIndex, items] = useWatch({
@@ -60,13 +85,27 @@ const ConfigurationPanel = () => {
 
   return (
     <div className={bem('container')}>
-      {items.map((item, index) => (
-        <InputConfigurationPanel
-          key={index}
-          item={item}
-          isSelected={activeIndex === index}
-        />
-      ))}
+      {items.map((item, index) => {
+        if (isInputDragAndDropData(item)) {
+          return (
+            <InputConfigurationPanel
+              key={index}
+              item={item}
+              isSelected={activeIndex === index}
+            />
+          );
+        }
+        if (isInputGroupDragAndDropData(item)) {
+          return (
+            <InputGroupConfigurationPanel
+              key={index}
+              item={item}
+              isSelected={activeIndex === index}
+            />
+          );
+        }
+        return null;
+      })}
     </div>
   );
 };

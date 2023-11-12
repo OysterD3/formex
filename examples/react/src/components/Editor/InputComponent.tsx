@@ -1,5 +1,5 @@
 import { useFormContext, useWatch } from 'react-hook-form';
-import { Elements, FormexFormValues } from '../../types';
+import { FormexFormValues, InputElements } from '../../types';
 import { INPUTS } from '../../constants.ts';
 import TextField from '../Inputs/TextField.tsx';
 import TextArea from '../Inputs/TextArea.tsx';
@@ -13,7 +13,7 @@ import FileUpload from '../Inputs/FileUpload.tsx';
 import RichText from '../Inputs/RichText.tsx';
 import Switch from '../Inputs/Switch.tsx';
 
-const InputComponent = <T extends Elements>({
+const InputComponent = <T extends InputElements>({
   element,
   index,
 }: {

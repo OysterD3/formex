@@ -1,10 +1,14 @@
 import { useFormContext, useWatch } from 'react-hook-form';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { isInputDragAndDropData } from '../../types/guard.ts';
+import {
+  isInputDragAndDropData,
+  isInputGroupDragAndDropData,
+} from '../../types/guard.ts';
 import { createBEM } from '../../utils/bem.ts';
 import { DragAndDropData, FormexFormValues } from '../../types';
 import InputComponent from './InputComponent.tsx';
+import InputGroupComponent from './InputGroupComponent.tsx';
 
 const bem = createBEM('editor');
 
@@ -56,6 +60,9 @@ const DraggableElement = ({
       <div className={bem('element-wrapper')}>
         {isInputDragAndDropData(item) && (
           <InputComponent element={item.element} index={index} />
+        )}
+        {isInputGroupDragAndDropData(item) && (
+          <InputGroupComponent element={item.element} index={index} />
         )}
       </div>
     </li>

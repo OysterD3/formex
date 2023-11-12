@@ -18,7 +18,12 @@ import {
   isInputDragAndDropData,
   isInputGroupDragAndDropData,
 } from '../types/guard.ts';
-import { INPUT_ELEMENTS, INPUT_GROUP_ELEMENTS, INPUTS } from '../constants.ts';
+import {
+  INPUT_ELEMENTS,
+  INPUT_GROUP_ELEMENTS,
+  INPUT_GROUPS,
+  INPUTS,
+} from '../constants.ts';
 
 const FormexContext = createContext<
   UseFieldArrayReturn<FormexFormValues, 'items', 'id'>
@@ -47,58 +52,7 @@ const FormexProvider = ({
   const form = useForm<FormexFormValues>({
     ...reactHookFormProps,
     defaultValues: {
-      items: [
-        {
-          type: 'INPUT',
-          element: 'TEXT',
-          props: {
-            label: 'Text input',
-            type: 'text',
-            placeholder: 'Type something...',
-            inputProps: {},
-            disabled: false,
-            readOnly: false,
-          },
-        },
-        {
-          type: 'INPUT',
-          element: 'TEXT',
-          props: {
-            label: 'Text input',
-            type: 'text',
-            placeholder: 'Type something...',
-            inputProps: {},
-            disabled: false,
-            readOnly: false,
-          },
-        },
-        {
-          type: 'INPUT',
-          element: 'NUMBER',
-          props: {
-            label: 'Text input',
-            type: 'number',
-            placeholder: 'Type something...',
-            inputProps: {},
-            disabled: false,
-            readOnly: false,
-            inputMode: 'numeric',
-          },
-        },
-        {
-          type: 'INPUT',
-          element: 'CHECKBOX',
-          props: {
-            label: 'Checkbox',
-            variant: 'default',
-            defaultChecked: false,
-            value: '',
-            disabled: false,
-            readOnly: false,
-          },
-        },
-      ],
-      activeIndex: -1,
+      items: [],
     },
   });
 
@@ -128,7 +82,6 @@ const FormexProvider = ({
   };
 
   const handleDragOver = (e: DragOverEvent) => {
-    console.log(e);
     const overEvent = e.over;
     const activeEvent = e.active;
     if (!overEvent) return;
@@ -167,7 +120,10 @@ const FormexProvider = ({
         insert(overIndex, {
           ...data,
           nanoId: activeId,
-          props: INPUT_GROUP_ELEMENTS[data.element].defaultComponentProps,
+          props: {
+            ...INPUT_GROUP_ELEMENTS[data.element].defaultComponentProps,
+            options: [{ label: 'Option 1', value: 'option-1' }],
+          },
         });
       }
     }
