@@ -1,4 +1,4 @@
-import { useId } from 'react';
+import { forwardRef, useId } from 'react';
 import InputLayout from '../InputLayout';
 import { createBEM } from '../../utils/bem.ts';
 import { mergeProps } from '../../utils/props.ts';
@@ -30,7 +30,7 @@ export const DEFAULT_SWITCH_PROPS = {
   falseValue: false,
 };
 
-const Switch = (props: SwitchProps) => {
+const Switch = forwardRef<HTMLInputElement, SwitchProps>((props, ref) => {
   const {
     label,
     id,
@@ -59,9 +59,10 @@ const Switch = (props: SwitchProps) => {
   return (
     <InputLayout label={label} id={inputId} helperText={helperText}>
       <input
+        ref={ref}
         type="checkbox"
         value={`${trueValue}`}
-        checked={isTrueValue}
+        defaultChecked={isTrueValue}
         aria-checked={isTrueValue}
         name={name || inputId}
         id={inputId}
@@ -82,6 +83,6 @@ const Switch = (props: SwitchProps) => {
       </div>
     </InputLayout>
   );
-};
+});
 
 export default Switch;

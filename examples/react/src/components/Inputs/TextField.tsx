@@ -1,4 +1,4 @@
-import { useId } from 'react';
+import { forwardRef, useId } from 'react';
 import InputLayout from '../InputLayout';
 import { createBEM } from '../../utils/bem.ts';
 import { mergeProps } from '../../utils/props.ts';
@@ -40,7 +40,7 @@ export const DEFAULT_TEXT_FIELD_PROPS = {
 
 const bem = createBEM('input-text-field');
 
-const TextField = (props: TextFieldProps) => {
+const TextField = forwardRef<HTMLInputElement, TextFieldProps>((props, ref) => {
   const {
     label,
     id,
@@ -65,6 +65,7 @@ const TextField = (props: TextFieldProps) => {
         {prefix && <span className={bem('prefix')}>{prefix}</span>}
         <input
           {...inputProps}
+          ref={ref}
           value={defaultValue || value}
           onChange={onChange}
           type={type}
@@ -80,6 +81,8 @@ const TextField = (props: TextFieldProps) => {
       </div>
     </InputLayout>
   );
-};
+});
+
+TextField.displayName = 'TextField';
 
 export default TextField;

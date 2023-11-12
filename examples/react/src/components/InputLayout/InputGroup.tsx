@@ -1,4 +1,4 @@
-import { useId } from 'react';
+import { forwardRef, useId } from 'react';
 import { createBEM } from '../../utils/bem.ts';
 import InputLabel from './InputLabel.tsx';
 import InputHelperText from './InputHelperText.tsx';
@@ -14,30 +14,27 @@ export interface InputGroupProps {
   children: React.ReactNode;
 }
 
-const InputGroup = ({
-  label,
-  id,
-  name,
-  helperText,
-  children,
-  row,
-}: InputGroupProps) => {
-  const _id = useId();
-  const inputId = id || _id;
+const InputGroup = forwardRef<HTMLDivElement, InputGroupProps>(
+  ({ label, id, name, helperText, children, row }, ref) => {
+    const _id = useId();
+    const inputId = id || _id;
 
-  return (
-    <div>
-      <InputLabel htmlFor={inputId}>{label}</InputLabel>
-      {helperText && <InputHelperText>{helperText}</InputHelperText>}
-      <fieldset
-        className={bem('wrapper', { row: !!row })}
-        id={inputId}
-        name={name}
-      >
-        {children}
-      </fieldset>
-    </div>
-  );
-};
+    return (
+      <div ref={ref}>
+        <InputLabel htmlFor={inputId}>{label}</InputLabel>
+        {helperText && <InputHelperText>{helperText}</InputHelperText>}
+        <fieldset
+          className={bem('wrapper', { row: !!row })}
+          id={inputId}
+          name={name}
+        >
+          {children}
+        </fieldset>
+      </div>
+    );
+  },
+);
+
+InputGroup.displayName = 'InputGroup';
 
 export default InputGroup;

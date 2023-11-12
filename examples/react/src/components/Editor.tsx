@@ -1,20 +1,13 @@
 import { useState } from 'react';
-import { nanoid } from 'nanoid';
 import * as classNames from 'classnames';
-import {
-  DRAG_AND_DROP_DATA_TYPE,
-  INPUT_ELEMENTS,
-  INPUTS,
-} from '../constants.ts';
+import { useFieldArray, useFormContext, useWatch } from 'react-hook-form';
+import { INPUT_ELEMENTS, INPUT_GROUP_ELEMENTS, INPUTS } from '../constants.ts';
 import { getElementAttribute } from '../utils/dom.ts';
+import { DragAndDropData, Elements, FormexFormValues } from '../types';
 import {
-  DragAndDropData,
-  EditorActiveItem,
-  ElementProps,
-  Elements,
-  InputElements,
-} from '../types';
-import { isInputDragAndDropData } from '../types/guard.ts';
+  isInputDragAndDropData,
+  isInputGroupDragAndDropData,
+} from '../types/guard.ts';
 import TextField from './Inputs/TextField.tsx';
 import TextArea from './Inputs/TextArea.tsx';
 import Select from './Inputs/Select';
@@ -30,11 +23,17 @@ import Option from './Inputs/Select/Option.tsx';
 
 const InputsComponent = <T extends Elements>({
   element,
-  componentProps,
+  index,
 }: {
   element: T;
-  componentProps: ElementProps<T>;
+  index: number;
 }) => {
+  const { control } = useFormContext<FormexFormValues>();
+  const [componentProps] = useWatch({
+    control,
+    name: [`items.${index}.props`],
+  });
+
   switch (element) {
     case INPUTS.text:
       return <TextField {...componentProps} />;
@@ -45,19 +44,19 @@ const InputsComponent = <T extends Elements>({
     case INPUTS.select:
       return (
         <Select {...componentProps}>
-          <Option value="1">Option 1</Option>
-          <Option value="2">Option 2</Option>
+          {(componentProps.options as { label: string; value: string }[]).map(
+            (option) => (
+              <Option value={option.value} key={option.value}>
+                {option.label}
+              </Option>
+            ),
+          )}
         </Select>
       );
     case INPUTS.checkbox:
       return <Checkbox {...componentProps} />;
     case INPUTS.radio:
-      return (
-        <RadioGroup {...componentProps}>
-          <RadioButton label="Option 1" />
-          <RadioButton label="Option 2" />
-        </RadioGroup>
-      );
+      return <RadioButton {...componentProps} />;
     case INPUTS.date:
       return <DatePicker {...componentProps} />;
     case INPUTS.time:
@@ -74,26 +73,43 @@ const InputsComponent = <T extends Elements>({
 };
 
 const Editor = () => {
-  const [items, setItems] = useState<EditorActiveItem[]>([]);
+  const { control, setValue, getValues } = useFormContext<FormexFormValues>();
+  const { fields, insert } = useFieldArray({
+    control,
+    name: 'items',
+  });
   const [dragIndex, setDragIndex] = useState<number | null>(null);
   const handleDrop = (e: React.DragEvent<HTMLUListElement>) => {
     e.preventDefault();
     const raw = e.dataTransfer.getData('text/plain');
-    if (!raw) return;
+    if (!raw || dragIndex === null) return;
     const data: DragAndDropData = JSON.parse(raw);
-    setItems((prev) => [
-      ...prev.slice(0, dragIndex!),
-      {
-        id: nanoid(),
+    if (isInputDragAndDropData(data)) {
+      if (data.element === INPUTS.select) {
+        insert(dragIndex, {
+          ...data,
+          props: {
+            ...INPUT_ELEMENTS[data.element].defaultComponentProps,
+            options: [{ label: 'Option 1', value: 'option-1' }],
+          },
+        });
+        return;
+      }
+      insert(dragIndex, {
         ...data,
-      },
-      ...prev.slice(dragIndex!),
-    ]);
+        props: INPUT_ELEMENTS[data.element].defaultComponentProps,
+      });
+    } else if (isInputGroupDragAndDropData(data)) {
+      insert(dragIndex, {
+        ...data,
+        props: INPUT_GROUP_ELEMENTS[data.element].defaultComponentProps,
+      });
+    }
     setDragIndex(null);
   };
 
   const handleDragOver = (
-    e: React.DragEvent<HTMLUListElement>,
+    e: React.DragEvent<HTMLUListElement | HTMLLIElement>,
     index: number,
   ) => {
     e.preventDefault();
@@ -101,8 +117,14 @@ const Editor = () => {
   };
 
   const handleClick = (e: React.MouseEvent<HTMLUListElement>) => {
-    const data = getElementAttribute(e, 'data-id');
-    if (data) {
+    const data = getElementAttribute(e, 'data-index');
+    if (data && !isNaN(parseInt(data))) {
+      const index = parseInt(data);
+      if (getValues('activeIndex') === index) {
+        setValue('activeIndex', -1);
+        return;
+      }
+      setValue('activeIndex', index);
     }
   };
 
@@ -110,21 +132,21 @@ const Editor = () => {
     <>
       <ul
         className="h-full w-full bg-white"
-        onDragOver={(e) => handleDragOver(e, items.length)}
+        onDragOver={(e) => handleDragOver(e, fields.length)}
         onDrop={handleDrop}
         onDragLeave={() => setDragIndex(null)}
         onClick={handleClick}
       >
-        {items.map(({ id, ...item }, index) => (
+        {fields.map(({ id, ...item }, index) => (
           <li
             className={classNames(
               'px-4 py-2 text-black cursor-pointer border border-transparent hover:border-blue ease-in-out transition-all duration-200',
               dragIndex === index && 'border-t-red-500',
               dragIndex === index + 1 &&
-                index === items.length - 1 &&
+                index === fields.length - 1 &&
                 'border-b-red-500',
             )}
-            data-id={id}
+            data-index={index}
             key={id}
             onDragOver={(e) => {
               e.stopPropagation();
@@ -132,12 +154,7 @@ const Editor = () => {
             }}
           >
             {isInputDragAndDropData(item) && (
-              <InputsComponent
-                element={item.element}
-                componentProps={
-                  INPUT_ELEMENTS[item.element].defaultComponentProps
-                }
-              />
+              <InputsComponent element={item.element} index={index} />
             )}
           </li>
         ))}

@@ -1,6 +1,8 @@
 import {
   Children,
   cloneElement,
+  ForwardedRef,
+  forwardRef,
   isValidElement,
   useId,
   useRef,
@@ -15,15 +17,16 @@ import { mergeProps } from '../../../utils/props.ts';
 
 const bem = createBEM('input-select');
 
-export interface SelectProps {
+export interface SelectProps<T> {
   label?: string;
   id?: string;
   name?: string;
   helperText?: string;
   placeholder?: string;
-  value?: string;
-  onChange?: (value: string) => void;
+  value?: T;
+  onChange?: (value: T) => void;
   defaultValue?: string;
+  displayValue?: (value: T) => React.ReactNode;
   children: React.ReactNode;
 }
 
@@ -37,7 +40,10 @@ export const DEFAULT_SELECT_PROPS = {
   defaultValue: undefined,
 };
 
-const Select = (props: SelectProps) => {
+const SelectBase = <T,>(
+  props: SelectProps<T>,
+  ref: ForwardedRef<HTMLButtonElement>,
+) => {
   const {
     label,
     id,
@@ -48,6 +54,7 @@ const Select = (props: SelectProps) => {
     onChange,
     defaultValue,
     children,
+    displayValue,
   } = mergeProps(DEFAULT_SELECT_PROPS, props);
   const _id = useId();
 
@@ -58,7 +65,7 @@ const Select = (props: SelectProps) => {
   const handleChange = (e: React.MouseEvent<HTMLUListElement>) => {
     const data = getElementAttribute(e, 'data-value');
     if (data) {
-      onChange?.(data);
+      onChange?.(data as T);
       setOpen(false);
     }
   };
@@ -68,8 +75,8 @@ const Select = (props: SelectProps) => {
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger onClick={() => setOpen((v) => !v)}>
           <InputDropdownTrigger
-            ref={activatorRef}
-            value={value}
+            ref={ref || activatorRef}
+            value={displayValue ? displayValue(value as T) : value}
             defaultValue={defaultValue}
             placeholder={placeholder}
             endAdornment={
@@ -89,7 +96,7 @@ const Select = (props: SelectProps) => {
               if (isValidElement(child)) {
                 return cloneElement(child as React.ReactElement, {
                   name,
-                  isSelected: true,
+                  isSelected: value === child.props.value,
                 });
               }
               return null;
@@ -98,6 +105,7 @@ const Select = (props: SelectProps) => {
         </PopoverContent>
       </Popover>
       <input
+        type="hidden"
         aria-hidden="true"
         className={bem('input')}
         id={inputId}
@@ -108,5 +116,9 @@ const Select = (props: SelectProps) => {
     </InputLayout>
   );
 };
+
+const Select = forwardRef(SelectBase) as <T>(
+  props: SelectProps<T> & { ref?: ForwardedRef<HTMLButtonElement> },
+) => ReturnType<typeof SelectBase>;
 
 export default Select;
