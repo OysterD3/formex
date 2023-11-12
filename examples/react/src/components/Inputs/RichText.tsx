@@ -1,5 +1,5 @@
 import EditorJS, { API } from '@editorjs/editorjs';
-import { forwardRef, useEffect, useId } from 'react';
+import { forwardRef, memo, useEffect, useId, useRef } from 'react';
 import InputLayout from '../InputLayout';
 import { createBEM } from '../../utils/bem.ts';
 import { mergeProps } from '../../utils/props.ts';
@@ -39,33 +39,46 @@ const RichText = forwardRef<HTMLDivElement, RichTextProps>((props, ref) => {
     defaultValue,
   } = mergeProps(DEFAULT_RICH_TEXT_PROPS, props);
 
+  const editorRef = useRef<EditorJS>();
   const _id = useId();
   const inputId = id || _id;
 
-  const editor = new EditorJS({
-    holder: inputId,
-    placeholder,
-    async onChange(api: API) {
-      try {
-        const output = await api.saver.save();
-        onChange?.(JSON.stringify(output));
-      } catch (error) {
-        console.error('Saving failed: ', error);
+  useEffect(() => {
+    if (!editorRef.current) {
+      const editor = new EditorJS({
+        holder: inputId,
+        placeholder,
+        async onChange(api: API) {
+          try {
+            const output = await api.saver.save();
+            onChange?.(JSON.stringify(output));
+          } catch (error) {
+            console.error('Saving failed: ', error);
+          }
+        },
+      });
+      editorRef.current = editor;
+    }
+
+    return () => {
+      if (editorRef.current && editorRef.current.destroy) {
+        editorRef.current.destroy();
       }
-    },
-  });
+    };
+  }, []);
 
   useEffect(() => {
+    if (!editorRef.current) return;
     if (value) {
-      editor.isReady.then(() => {
-        editor.render(JSON.parse(value));
+      editorRef.current.isReady.then(() => {
+        editorRef.current!.render(JSON.parse(value));
       });
     } else if (defaultValue) {
-      editor.isReady.then(() => {
-        editor.render(JSON.parse(defaultValue));
+      editorRef.current.isReady.then(() => {
+        editorRef.current!.render(JSON.parse(defaultValue));
       });
     }
-  }, []);
+  }, [editorRef.current]);
 
   return (
     <InputLayout label={label} id={inputId} helperText={helperText}>
@@ -82,4 +95,4 @@ const RichText = forwardRef<HTMLDivElement, RichTextProps>((props, ref) => {
 
 RichText.displayName = 'RichText';
 
-export default RichText;
+export default memo(RichText);
