@@ -1,4 +1,6 @@
-type Modifier = (string | false | undefined)[] | Record<string, boolean>;
+type Modifier =
+  | (string | false | undefined)[]
+  | Record<string, boolean | undefined>;
 
 export const createBEM = (namespace: string) => {
   const NAME = `formex-${namespace}`;
