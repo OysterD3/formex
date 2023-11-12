@@ -1,1 +1,14 @@
 @import './element.scss';
+
+
+.formex-element-picker {
+  &__container {
+    @apply min-w-[16rem] py-4;
+  }
+
+  &-input {
+    &__container {
+      @apply flex flex-col space-y-1;
+    }
+  }
+}
