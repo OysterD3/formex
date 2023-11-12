@@ -1,4 +1,4 @@
-type Modifier = string[] | Record<string, boolean>;
+type Modifier = (string | false | undefined)[] | Record<string, boolean>;
 
 export const createBEM = (namespace: string) => {
   const NAME = `formex-${namespace}`;
@@ -10,7 +10,9 @@ export const createBEM = (namespace: string) => {
       return (
         `${NAME}__${elOrMod}` +
         mod.reduce((acc, curr) => {
-          acc += ` ${NAME}__${elOrMod}--${curr}`;
+          if (curr) {
+            acc += ` ${NAME}__${elOrMod}--${curr}`;
+          }
           return acc;
         }, '')
       );
@@ -34,7 +36,9 @@ export const createBEM = (namespace: string) => {
       return (
         NAME +
         elOrMod.reduce((acc, curr) => {
-          acc += ` ${NAME}--${curr}`;
+          if (curr) {
+            acc += ` ${NAME}--${curr}`;
+          }
           return acc;
         }, '')
       );
