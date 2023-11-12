@@ -28,7 +28,7 @@ export const DEFAULT_TEXT_AREA_PROPS = {
   rows: 3,
   value: undefined,
   defaultValue: undefined,
-  disabled: true,
+  disabled: false,
   readOnly: false,
 };
 

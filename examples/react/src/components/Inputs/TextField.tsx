@@ -38,7 +38,7 @@ export const DEFAULT_TEXT_FIELD_PROPS = {
   value: undefined,
   defaultValue: undefined,
   inputProps: {},
-  disabled: true,
+  disabled: false,
   readOnly: false,
 };
 
