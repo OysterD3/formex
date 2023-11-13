@@ -18,14 +18,9 @@ import {
   isInputDragAndDropData,
   isInputGroupDragAndDropData,
 } from '../types/guard.ts';
-import {
-  INPUT_ELEMENTS,
-  INPUT_GROUP_ELEMENTS,
-  INPUT_GROUPS,
-  INPUTS,
-} from '../constants.ts';
+import { INPUT_ELEMENTS, INPUT_GROUP_ELEMENTS, INPUTS } from '../constants.ts';
 
-const FormexContext = createContext<
+const FormexFieldsContext = createContext<
   UseFieldArrayReturn<FormexFormValues, 'items', 'id'>
 >({
   fields: [],
@@ -39,7 +34,7 @@ const FormexContext = createContext<
   replace: () => {},
 });
 
-export const useFormexContext = () => useContext(FormexContext);
+export const useFormexFields = () => useContext(FormexFieldsContext);
 
 const FormexProvider = ({
   children,
@@ -134,7 +129,7 @@ const FormexProvider = ({
   };
 
   return (
-    <FormexContext.Provider value={{ ...fields }}>
+    <FormexFieldsContext.Provider value={{ ...fields }}>
       <FormProvider {...form}>
         <DndContext
           onDragEnd={handleDragEnd}
@@ -145,7 +140,7 @@ const FormexProvider = ({
           {children}
         </DndContext>
       </FormProvider>
-    </FormexContext.Provider>
+    </FormexFieldsContext.Provider>
   );
 };
 

@@ -7,14 +7,14 @@ import { useDroppable } from '@dnd-kit/core';
 import { getElementAttribute } from '../../utils/dom.ts';
 import { FormexFormValues } from '../../types';
 import { createBEM } from '../../utils/bem.ts';
-import { useFormexContext } from '../FormexProvider.tsx';
+import { useFormexFields } from '../FormexProvider.tsx';
 import DraggableElement from './DraggableElement.tsx';
 
 const bem = createBEM('editor');
 
 const Editor = () => {
   const { control, setValue } = useFormContext<FormexFormValues>();
-  const { fields = [] } = useFormexContext();
+  const { fields = [] } = useFormexFields();
   const { setNodeRef } = useDroppable({
     id: 'formex-editor',
   });
