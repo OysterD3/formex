@@ -34,7 +34,21 @@ const FormexFieldsContext = createContext<
   replace: () => {},
 });
 
+const FormexEditorContext = createContext<{
+  onSave: (
+    cb: (
+      values: FormexFormValues['items'],
+      errors: React.BaseSyntheticEvent<object> | undefined,
+    ) => void,
+  ) => void;
+}>({
+  onSave: async (cb) => {
+    return cb([], undefined);
+  },
+});
+
 export const useFormexFields = () => useContext(FormexFieldsContext);
+export const useFormexEditor = () => useContext(FormexEditorContext);
 
 const FormexProvider = ({
   children,
@@ -128,18 +142,27 @@ const FormexProvider = ({
     setActiveId(nanoid());
   };
 
+  const handleSave = (
+    cb: (
+      values: FormexFormValues['items'],
+      errors: React.BaseSyntheticEvent<object> | undefined,
+    ) => void,
+  ) => form.handleSubmit((values, errors) => cb(values.items, errors))();
+
   return (
     <FormexFieldsContext.Provider value={{ ...fields }}>
-      <FormProvider {...form}>
-        <DndContext
-          onDragEnd={handleDragEnd}
-          collisionDetection={pointerWithin}
-          onDragOver={handleDragOver}
-          onDragStart={handleDragStart}
-        >
-          {children}
-        </DndContext>
-      </FormProvider>
+      <FormexEditorContext.Provider value={{ onSave: handleSave }}>
+        <FormProvider {...form}>
+          <DndContext
+            onDragEnd={handleDragEnd}
+            collisionDetection={pointerWithin}
+            onDragOver={handleDragOver}
+            onDragStart={handleDragStart}
+          >
+            {children}
+          </DndContext>
+        </FormProvider>
+      </FormexEditorContext.Provider>
     </FormexFieldsContext.Provider>
   );
 };
