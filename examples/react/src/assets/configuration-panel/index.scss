@@ -2,4 +2,14 @@
   &__container {
     @apply flex flex-col gap-4 min-w-[16rem] p-4;
   }
+
+  &__heading {
+    @apply text-lg font-bold text-gray-900;
+  }
+
+  &__heading-wrapper {
+    @apply flex items-center justify-between;
+  }
+
+
 }
