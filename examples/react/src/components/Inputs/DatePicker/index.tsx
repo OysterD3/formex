@@ -35,7 +35,7 @@ export const DEFAULT_DATE_PICKER_PROPS = {
   format: 'YYYY-MM-DD',
   value: undefined,
   defaultValue: undefined,
-  disabled: true,
+  disabled: false,
   readOnly: false,
 };
 
