@@ -35,7 +35,7 @@ const InputDropdownTrigger = forwardRef<
         onClick={!readOnly && !disabled ? onClick : undefined}
         ref={ref}
         type="button"
-        className={bem({ disabled })}
+        className={bem({ disabled, readonly: readOnly })}
       >
         <span className={bem('value')}>{defaultValue || value}</span>
         {placeholder && !value && !defaultValue && (
