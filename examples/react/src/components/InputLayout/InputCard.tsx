@@ -12,7 +12,6 @@ export interface InputCardProps {
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
-  readOnly?: boolean;
 }
 
 const InputCard = forwardRef<HTMLInputElement, InputCardProps>(
@@ -26,7 +25,6 @@ const InputCard = forwardRef<HTMLInputElement, InputCardProps>(
       value,
       onChange,
       disabled,
-      readOnly,
     },
     ref,
   ) => {
@@ -39,7 +37,6 @@ const InputCard = forwardRef<HTMLInputElement, InputCardProps>(
           type={type}
           name={name}
           disabled={disabled}
-          readOnly={readOnly}
           value={value}
           onChange={onChange}
           className={bem('input', { disabled })}

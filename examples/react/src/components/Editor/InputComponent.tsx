@@ -46,9 +46,9 @@ const InputComponent = <T extends InputElements>({
         </Select>
       );
     case INPUTS.checkbox:
-      return <Checkbox {...componentProps} readOnly />;
+      return <Checkbox {...componentProps} />;
     case INPUTS.radio:
-      return <RadioButton {...componentProps} readOnly />;
+      return <RadioButton {...componentProps} />;
     case INPUTS.date:
       return <DatePicker {...componentProps} readOnly />;
     case INPUTS.time:

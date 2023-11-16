@@ -13,7 +13,6 @@ export interface InputButtonProps {
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
-  readOnly?: boolean;
 }
 
 const InputButton = forwardRef<HTMLInputElement, InputButtonProps>(
@@ -28,7 +27,6 @@ const InputButton = forwardRef<HTMLInputElement, InputButtonProps>(
       value,
       onChange,
       disabled,
-      readOnly,
     },
     ref,
   ) => {
@@ -44,7 +42,6 @@ const InputButton = forwardRef<HTMLInputElement, InputButtonProps>(
             id={inputId}
             aria-describedby={helperText ? `${inputId}-description` : undefined}
             disabled={disabled}
-            readOnly={readOnly}
             name={name || inputId}
             type={type}
             className={bem('input', { disabled })}

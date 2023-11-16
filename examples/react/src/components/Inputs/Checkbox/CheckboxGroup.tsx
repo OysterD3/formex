@@ -20,7 +20,6 @@ export interface CheckboxGroupProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   variant?: 'default' | 'card';
   disabled?: boolean;
-  readOnly?: boolean;
 }
 
 export const DEFAULT_CHECKBOX_GROUP_PROPS = {
@@ -31,7 +30,6 @@ export const DEFAULT_CHECKBOX_GROUP_PROPS = {
   id: undefined,
   variant: 'default',
   disabled: false,
-  readOnly: false,
 };
 
 const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
@@ -46,7 +44,6 @@ const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
       onChange,
       value,
       variant,
-      readOnly,
       disabled,
     } = mergeProps(DEFAULT_CHECKBOX_GROUP_PROPS, props);
 
@@ -75,7 +72,6 @@ const CheckboxGroup = forwardRef<HTMLDivElement, CheckboxGroupProps>(
                 value.includes(
                   (child as React.ReactElement<CheckboxProps>).props.value!,
                 ),
-              readOnly,
               disabled,
             });
           }

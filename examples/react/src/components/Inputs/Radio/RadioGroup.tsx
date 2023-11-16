@@ -20,7 +20,6 @@ export interface RadioGroupProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   variant?: 'default' | 'card';
   disabled?: boolean;
-  readOnly?: boolean;
 }
 
 export const DEFAULT_RADIO_GROUP_PROPS = {
@@ -32,7 +31,6 @@ export const DEFAULT_RADIO_GROUP_PROPS = {
   id: undefined,
   variant: 'default',
   disabled: false,
-  readOnly: false,
 };
 
 const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>((props, ref) => {
@@ -47,7 +45,6 @@ const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>((props, ref) => {
     value,
     variant,
     disabled,
-    readOnly,
   } = mergeProps(DEFAULT_RADIO_GROUP_PROPS, props);
 
   const _id = useId();
@@ -73,7 +70,6 @@ const RadioGroup = forwardRef<HTMLDivElement, RadioGroupProps>((props, ref) => {
               (child as React.ReactElement<RadioButtonProps>).props.value ===
               value,
             disabled,
-            readOnly,
           });
         }
         return null;

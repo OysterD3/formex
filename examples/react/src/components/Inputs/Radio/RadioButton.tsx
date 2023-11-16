@@ -13,7 +13,6 @@ export type RadioButtonProps = {
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   disabled?: boolean;
-  readOnly?: boolean;
 };
 
 export const DEFAULT_RADIO_BUTTON_PROPS = {
@@ -25,7 +24,6 @@ export const DEFAULT_RADIO_BUTTON_PROPS = {
   variant: 'default',
   value: '',
   disabled: false,
-  readOnly: false,
 };
 
 const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
@@ -40,7 +38,6 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
       value,
       onChange,
       disabled,
-      readOnly,
     } = mergeProps(DEFAULT_RADIO_BUTTON_PROPS, props);
 
     const _id = useId();
@@ -59,7 +56,6 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
           defaultChecked={defaultChecked}
           onChange={onChange}
           disabled={disabled}
-          readOnly={readOnly}
         />
       );
     }
@@ -75,7 +71,6 @@ const RadioButton = forwardRef<HTMLInputElement, RadioButtonProps>(
         value={value}
         onChange={onChange}
         disabled={disabled}
-        readOnly={readOnly}
       />
     );
   },
