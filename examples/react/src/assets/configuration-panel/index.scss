@@ -11,5 +11,13 @@
     @apply flex items-center justify-between;
   }
 
+  &-select {
+    &__option-container {
+      @apply flex flex-col gap-y-2;
+    }
 
+    &__option-wrapper {
+      @apply flex gap-x-1.5 items-end;
+    }
+  }
 }
