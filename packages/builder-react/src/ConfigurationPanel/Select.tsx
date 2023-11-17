@@ -4,13 +4,14 @@ import {
   useFormContext,
   useWatch,
 } from 'react-hook-form';
-import TextField from '../Inputs/TextField.tsx';
+import { useMemo } from 'react';
 import { FormexFormValues } from '../../types';
 import { SelectProps } from '../Inputs/Select';
 import Button from '../StaticElements/Button.tsx';
 import IconButton from '../StaticElements/IconButton.tsx';
-import Switch from '../Inputs/Switch.tsx';
 import { createBEM } from '../utils/bem.ts';
+import { useFormexComponents } from '../FormexProvider.tsx';
+import { INPUTS } from '../constants.ts';
 
 const bem = createBEM('configuration-panel-select');
 
@@ -29,6 +30,15 @@ const ConfigurationSelect = () => {
     control,
     name: `items.${index}.props.options`,
   });
+
+  const components = useFormexComponents();
+  const { TextField, Switch } = useMemo(
+    () => ({
+      TextField: components[INPUTS.text],
+      Switch: components[INPUTS.switch],
+    }),
+    [components],
+  );
 
   return (
     <>

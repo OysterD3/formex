@@ -1,10 +1,9 @@
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import TextField from '../Inputs/TextField';
+import { useMemo } from 'react';
 import { FormexFormValues } from '../../types';
 import { CheckboxProps } from '../Inputs/Checkbox/Checkbox';
-import Switch from '../Inputs/Switch';
-import RadioGroup from '../Inputs/Radio/RadioGroup';
-import RadioButton from '../Inputs/Radio/RadioButton';
+import { useFormexComponents } from '../FormexProvider.tsx';
+import { INPUT_GROUPS, INPUTS } from '../constants.ts';
 
 const ConfigurationCheckbox = () => {
   const { control } = useFormContext<FormexFormValues<CheckboxProps>>();
@@ -12,6 +11,18 @@ const ConfigurationCheckbox = () => {
     name: ['activeIndex'],
     control,
   });
+
+  const components = useFormexComponents();
+
+  const { TextField, Switch, RadioGroup, RadioButton } = useMemo(
+    () => ({
+      TextField: components[INPUTS.text],
+      Switch: components[INPUTS.switch],
+      RadioGroup: components[INPUT_GROUPS.radio],
+      RadioButton: components[INPUTS.radio],
+    }),
+    [components],
+  );
 
   return (
     <>

@@ -25,6 +25,10 @@ export const INPUTS = {
   switch: 'SWITCH',
 } as const;
 
+export const MISCELLANEOUS = {
+  selectOption: 'SELECT_OPTION',
+} as const;
+
 export const INPUT_GROUPS = {
   radio: 'RADIO_GROUP',
   checkbox: 'CHECKBOX_GROUP',

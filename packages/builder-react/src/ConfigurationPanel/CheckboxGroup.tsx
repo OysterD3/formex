@@ -4,14 +4,13 @@ import {
   useFormContext,
   useWatch,
 } from 'react-hook-form';
-import TextField from '../Inputs/TextField.tsx';
+import { useMemo } from 'react';
 import { FormexFormValues } from '../../types';
-import Switch from '../Inputs/Switch.tsx';
-import RadioGroup from '../Inputs/Radio/RadioGroup.tsx';
-import RadioButton from '../Inputs/Radio/RadioButton.tsx';
 import { CheckboxGroupProps } from '../Inputs/Checkbox/CheckboxGroup.tsx';
 import IconButton from '../StaticElements/IconButton.tsx';
 import Button from '../StaticElements/Button.tsx';
+import { useFormexComponents } from '../FormexProvider.tsx';
+import { INPUT_GROUPS, INPUTS } from '../constants.ts';
 
 const ConfigurationCheckboxGroup = () => {
   const { control } =
@@ -28,6 +27,18 @@ const ConfigurationCheckboxGroup = () => {
     control,
     name: `items.${index}.props.options`,
   });
+
+  const components = useFormexComponents();
+
+  const { TextField, Switch, RadioGroup, RadioButton } = useMemo(
+    () => ({
+      TextField: components[INPUTS.text],
+      Switch: components[INPUTS.switch],
+      RadioGroup: components[INPUT_GROUPS.radio],
+      RadioButton: components[INPUTS.radio],
+    }),
+    [components],
+  );
 
   return (
     <>

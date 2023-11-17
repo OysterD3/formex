@@ -1,8 +1,9 @@
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import TextField from '../Inputs/TextField.tsx';
+import { useMemo } from 'react';
 import { FormexFormValues } from '../../types';
 import { TextAreaProps } from '../Inputs/TextArea.tsx';
-import Switch from '../Inputs/Switch.tsx';
+import { useFormexComponents } from '../FormexProvider.tsx';
+import { INPUTS } from '../constants.ts';
 
 const ConfigurationTextArea = () => {
   const { control } = useFormContext<FormexFormValues<TextAreaProps>>();
@@ -10,6 +11,15 @@ const ConfigurationTextArea = () => {
     name: ['activeIndex'],
     control,
   });
+
+  const components = useFormexComponents();
+  const { TextField, Switch } = useMemo(
+    () => ({
+      TextField: components[INPUTS.text],
+      Switch: components[INPUTS.switch],
+    }),
+    [components],
+  );
 
   return (
     <>

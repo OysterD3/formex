@@ -1,9 +1,9 @@
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import TextField from '../Inputs/TextField.tsx';
+import { useMemo } from 'react';
 import { FormexFormValues } from '../../types';
-import Switch from '../Inputs/Switch.tsx';
-import RadioGroup from '../Inputs/Radio/RadioGroup.tsx';
-import RadioButton, { RadioButtonProps } from '../Inputs/Radio/RadioButton.tsx';
+import { RadioButtonProps } from '../Inputs/Radio/RadioButton.tsx';
+import { useFormexComponents } from '../FormexProvider.tsx';
+import { INPUT_GROUPS, INPUTS } from '../constants.ts';
 
 const ConfigurationRadio = () => {
   const { control } = useFormContext<FormexFormValues<RadioButtonProps>>();
@@ -11,6 +11,17 @@ const ConfigurationRadio = () => {
     name: ['activeIndex'],
     control,
   });
+
+  const components = useFormexComponents();
+  const { TextField, Switch, RadioButton, RadioGroup } = useMemo(
+    () => ({
+      TextField: components[INPUTS.text],
+      Switch: components[INPUTS.switch],
+      RadioGroup: components[INPUT_GROUPS.radio],
+      RadioButton: components[INPUTS.radio],
+    }),
+    [components],
+  );
 
   return (
     <>

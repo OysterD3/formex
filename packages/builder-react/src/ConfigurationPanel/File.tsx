@@ -1,8 +1,9 @@
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import TextField from '../Inputs/TextField.tsx';
+import { useMemo } from 'react';
 import { FormexFormValues } from '../../types';
 import { FileUploadProps } from '../Inputs/FileUpload.tsx';
-import Switch from '../Inputs/Switch.tsx';
+import { useFormexComponents } from '../FormexProvider.tsx';
+import { INPUTS } from '../constants.ts';
 
 const ConfigurationFileUpload = () => {
   const { control } = useFormContext<FormexFormValues<FileUploadProps>>();
@@ -10,6 +11,14 @@ const ConfigurationFileUpload = () => {
     name: ['activeIndex'],
     control,
   });
+  const components = useFormexComponents();
+  const { TextField, Switch } = useMemo(
+    () => ({
+      TextField: components[INPUTS.text],
+      Switch: components[INPUTS.switch],
+    }),
+    [components],
+  );
 
   return (
     <>

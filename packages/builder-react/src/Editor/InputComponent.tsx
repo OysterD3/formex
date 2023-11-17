@@ -1,17 +1,8 @@
 import { useFormContext, useWatch } from 'react-hook-form';
+import React, { useMemo } from 'react';
 import { FormexFormValues, InputElements } from '../../types';
-import { INPUTS } from '../constants.ts';
-import TextField from '../Inputs/TextField.tsx';
-import TextArea from '../Inputs/TextArea.tsx';
-import Select from '../Inputs/Select';
-import Option from '../Inputs/Select/Option.tsx';
-import Checkbox from '../Inputs/Checkbox/Checkbox.tsx';
-import RadioButton from '../Inputs/Radio/RadioButton.tsx';
-import DatePicker from '../Inputs/DatePicker';
-import TimePicker from '../Inputs/TimePicker.tsx';
-import FileUpload from '../Inputs/FileUpload.tsx';
-import RichText from '../Inputs/RichText.tsx';
-import Switch from '../Inputs/Switch.tsx';
+import { INPUTS, MISCELLANEOUS } from '../constants.ts';
+import { useFormexComponents } from '../FormexProvider.tsx';
 
 const InputComponent = <T extends InputElements>({
   element,
@@ -26,6 +17,36 @@ const InputComponent = <T extends InputElements>({
     name: [`items.${index}.props`],
   });
 
+  const components = useFormexComponents();
+  const {
+    TextField,
+    TextArea,
+    Checkbox,
+    RadioButton,
+    DatePicker,
+    TimePicker,
+    FileUpload,
+    RichText,
+    Switch,
+    Select,
+    Option,
+  } = useMemo(
+    () => ({
+      TextField: components[INPUTS.text],
+      TextArea: components[INPUTS.textArea],
+      Checkbox: components[INPUTS.checkbox],
+      RadioButton: components[INPUTS.radio],
+      DatePicker: components[INPUTS.date],
+      TimePicker: components[INPUTS.time],
+      FileUpload: components[INPUTS.file],
+      RichText: components[INPUTS.richText],
+      Switch: components[INPUTS.switch],
+      Select: components[INPUTS.select],
+      Option: components[MISCELLANEOUS.selectOption],
+    }),
+    [components],
+  );
+
   switch (element) {
     case INPUTS.text:
       return <TextField {...componentProps} readOnly />;
@@ -33,18 +54,6 @@ const InputComponent = <T extends InputElements>({
       return <TextArea {...componentProps} readOnly />;
     case INPUTS.number:
       return <TextField {...componentProps} readOnly />;
-    case INPUTS.select:
-      return (
-        <Select {...componentProps} readOnly>
-          {(componentProps.options as { label: string; value: string }[]).map(
-            (option) => (
-              <Option value={option.value} key={option.value}>
-                {option.label}
-              </Option>
-            ),
-          )}
-        </Select>
-      );
     case INPUTS.checkbox:
       return <Checkbox {...componentProps} />;
     case INPUTS.radio:
@@ -59,6 +68,18 @@ const InputComponent = <T extends InputElements>({
       return <RichText {...componentProps} readOnly />;
     case INPUTS.switch:
       return <Switch {...componentProps} readOnly />;
+    case INPUTS.select:
+      return (
+        <Select {...componentProps} readOnly>
+          {(componentProps.options as { label: string; value: string }[]).map(
+            (option) => (
+              <Option value={option.value} key={option.value}>
+                {option.label}
+              </Option>
+            ),
+          )}
+        </Select>
+      );
     default:
       return null;
   }

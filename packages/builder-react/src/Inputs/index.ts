@@ -10,6 +10,7 @@ import RichText from './RichText';
 import TextArea from './TextArea';
 import TextField from './TextField';
 import TimePicker from './TimePicker';
+import Option from './Select/Option';
 
 export {
   Checkbox,
@@ -24,4 +25,5 @@ export {
   TextArea,
   TextField,
   TimePicker,
+  Option,
 };

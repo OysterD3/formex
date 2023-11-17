@@ -1,10 +1,9 @@
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import TextField from '../Inputs/TextField.tsx';
+import { useMemo } from 'react';
 import { FormexFormValues } from '../../types';
-import Select from '../Inputs/Select';
-import Option from '../Inputs/Select/Option.tsx';
 import { DatePickerProps } from '../Inputs/DatePicker';
-import Switch from '../Inputs/Switch.tsx';
+import { useFormexComponents } from '../FormexProvider.tsx';
+import { INPUTS, MISCELLANEOUS } from '../constants.ts';
 
 const ConfigurationDatePicker = () => {
   const { control } = useFormContext<FormexFormValues<DatePickerProps>>();
@@ -12,6 +11,17 @@ const ConfigurationDatePicker = () => {
     name: ['activeIndex'],
     control,
   });
+
+  const components = useFormexComponents();
+  const { TextField, Select, Option, Switch } = useMemo(
+    () => ({
+      TextField: components[INPUTS.text],
+      Select: components[INPUTS.select],
+      Option: components[MISCELLANEOUS.selectOption],
+      Switch: components[INPUTS.switch],
+    }),
+    [components],
+  );
 
   return (
     <>

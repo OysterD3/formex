@@ -11,14 +11,44 @@ import {
   DragOverEvent,
   pointerWithin,
 } from '@dnd-kit/core';
-import { createContext, useContext, useState } from 'react';
+import { createContext, ForwardedRef, useContext, useState } from 'react';
 import { nanoid } from 'nanoid';
-import { DragAndDropData, FormexFormValues } from '../types';
+import {
+  DragAndDropData,
+  ElementProps,
+  Elements,
+  FormexFormValues,
+  InputElementProps,
+  InputElements,
+  InputGroupElementProps,
+  InputGroupElements,
+} from '../types';
 import {
   isInputDragAndDropData,
   isInputGroupDragAndDropData,
 } from '../types/guard';
-import { INPUT_ELEMENTS, INPUT_GROUP_ELEMENTS, INPUTS } from './constants';
+import {
+  INPUT_ELEMENTS,
+  INPUT_GROUP_ELEMENTS,
+  INPUT_GROUPS,
+  INPUTS,
+  MISCELLANEOUS,
+} from './constants';
+import {
+  Checkbox,
+  CheckboxGroup,
+  DatePicker,
+  FileUpload,
+  RadioGroup,
+  RichText,
+  Select,
+  Switch,
+  TextArea,
+  TextField,
+  TimePicker,
+  Option,
+} from './Inputs';
+import RadioButton from './Inputs/Radio/RadioButton.tsx';
 
 const FormexFieldsContext = createContext<
   UseFieldArrayReturn<FormexFormValues, 'items', 'id'>
@@ -50,12 +80,42 @@ const FormexEditorContext = createContext<{
 const useFormexFields = () => useContext(FormexFieldsContext);
 const useFormexEditor = () => useContext(FormexEditorContext);
 
+const DEFAULT_CONFIGS: Configs = {
+  [MISCELLANEOUS.selectOption]: Option,
+  [INPUTS.text]: TextField,
+  [INPUTS.textArea]: TextArea,
+  [INPUTS.number]: TextField,
+  [INPUTS.select]: Select,
+  [INPUTS.checkbox]: Checkbox,
+  [INPUTS.radio]: RadioButton,
+  [INPUTS.date]: DatePicker,
+  [INPUTS.time]: TimePicker,
+  [INPUTS.file]: FileUpload,
+  [INPUTS.richText]: RichText,
+  [INPUTS.switch]: Switch,
+  [INPUT_GROUPS.checkbox]: CheckboxGroup,
+  [INPUT_GROUPS.radio]: RadioGroup,
+};
+
+type Configs = {
+  [key in Elements]:
+    | ((
+        props: ElementProps<key> & { ref?: ForwardedRef<HTMLElement> },
+      ) => React.ReactNode)
+    | React.ForwardRefExoticComponent<ElementProps<key>>;
+};
+
+const FormexComponentsContext = createContext<Configs>(DEFAULT_CONFIGS);
+export const useFormexComponents = () => useContext(FormexComponentsContext);
+
 const FormexProvider = ({
   children,
   reactHookFormProps,
+  configs,
 }: {
   children: React.ReactNode;
   reactHookFormProps?: Omit<UseFormProps<FormexFormValues>, 'defaultValues'>;
+  configs?: Configs;
 }) => {
   const [activeId, setActiveId] = useState<string | null>(null);
   const form = useForm<FormexFormValues>({
@@ -152,16 +212,23 @@ const FormexProvider = ({
   return (
     <FormexFieldsContext.Provider value={{ ...fields }}>
       <FormexEditorContext.Provider value={{ onSave: handleSave }}>
-        <FormProvider {...form}>
-          <DndContext
-            onDragEnd={handleDragEnd}
-            collisionDetection={pointerWithin}
-            onDragOver={handleDragOver}
-            onDragStart={handleDragStart}
-          >
-            {children}
-          </DndContext>
-        </FormProvider>
+        <FormexComponentsContext.Provider
+          value={{
+            ...DEFAULT_CONFIGS,
+            ...configs,
+          }}
+        >
+          <FormProvider {...form}>
+            <DndContext
+              onDragEnd={handleDragEnd}
+              onDragOver={handleDragOver}
+              onDragStart={handleDragStart}
+              collisionDetection={pointerWithin}
+            >
+              {children}
+            </DndContext>
+          </FormProvider>
+        </FormexComponentsContext.Provider>
       </FormexEditorContext.Provider>
     </FormexFieldsContext.Provider>
   );

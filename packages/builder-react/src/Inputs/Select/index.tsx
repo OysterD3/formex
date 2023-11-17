@@ -44,7 +44,7 @@ export const DEFAULT_SELECT_PROPS = {
   readOnly: false,
 };
 
-const SelectBase = <T,>(
+const SelectBase = <T = unknown,>(
   props: SelectProps<T>,
   ref: ForwardedRef<HTMLButtonElement>,
 ) => {
@@ -126,7 +126,7 @@ const SelectBase = <T,>(
 };
 
 const Select = forwardRef(SelectBase) as <T>(
-  props: SelectProps<T> & { ref?: ForwardedRef<HTMLButtonElement> },
-) => ReturnType<typeof SelectBase>;
+  props: SelectProps<T> & { ref?: ForwardedRef<HTMLElement> },
+) => React.ReactNode;
 
 export default Select;
