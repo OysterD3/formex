@@ -1,16 +1,18 @@
-import Editor from './components/Editor';
-import FormexProvider from './components/FormexProvider.tsx';
-import ConfigurationPanel from './components/ConfigurationPanel';
-import ElementsPicker from './components/ElementPicker';
+import {
+  Editor,
+  FormexProvider,
+  ElementPicker,
+  ConfigurationPanel,
+} from '@formex/builder-react';
 
 function App() {
   return (
     <FormexProvider>
       <div className="h-screen w-screen overflow-none flex">
         <aside>
-          <ElementsPicker />
+          <ElementPicker />
         </aside>
-        <main className="p-4 py-6 h-full w-full">
+        <main className="p-4 py-6 h-screen w-full">
           <Editor />
         </main>
         <aside>

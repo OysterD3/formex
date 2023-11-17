@@ -94,12 +94,12 @@ importers:
         specifier: ^7.48.2
         version: 7.48.2(react@18.2.0)
     devDependencies:
+      '@formex/builder-react':
+        specifier: workspace:*
+        version: link:../../packages/builder-react
       '@formex/core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@formex/react':
-        specifier: workspace:*
-        version: link:../../packages/react
       '@julr/unocss-preset-forms':
         specifier: ^0.0.5
         version: 0.0.5(unocss@0.57.2)
@@ -134,23 +134,74 @@ importers:
         specifier: ^4.5.0
         version: 4.5.0(@types/node@20.8.3)(sass@1.69.5)
 
-  packages/core: {}
-
-  packages/react:
+  packages/builder-react:
     dependencies:
+      '@dnd-kit/core':
+        specifier: ^6.1.0
+        version: 6.1.0(react-dom@18.2.0)(react@18.2.0)
+      '@dnd-kit/sortable':
+        specifier: ^8.0.0
+        version: 8.0.0(@dnd-kit/core@6.1.0)(react@18.2.0)
+      '@dnd-kit/utilities':
+        specifier: ^3.2.2
+        version: 3.2.2(react@18.2.0)
+      '@editorjs/editorjs':
+        specifier: ^2.28.2
+        version: 2.28.2
+      '@floating-ui/react':
+        specifier: ^0.26.1
+        version: 0.26.1(react-dom@18.2.0)(react@18.2.0)
       '@formex/core':
         specifier: workspace:*
         version: link:../core
+      classnames:
+        specifier: ^2.3.2
+        version: 2.3.2
       react:
         specifier: ^18.2.0
         version: 18.2.0
       react-dom:
         specifier: ^18.2.0
         version: 18.2.0(react@18.2.0)
+      react-hook-form:
+        specifier: ^7.48.2
+        version: 7.48.2(react@18.2.0)
     devDependencies:
+      '@julr/unocss-preset-forms':
+        specifier: ^0.1.0
+        version: 0.1.0(unocss@0.57.2)
       '@types/react':
         specifier: ^18.2.18
         version: 18.2.18
+      '@types/react-dom':
+        specifier: ^18.2.7
+        version: 18.2.11
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^6.0.0
+        version: 6.2.1(@typescript-eslint/parser@6.2.1)(eslint@8.46.0)(typescript@5.2.2)
+      '@typescript-eslint/parser':
+        specifier: ^6.0.0
+        version: 6.2.1(eslint@8.46.0)(typescript@5.2.2)
+      '@vitejs/plugin-react':
+        specifier: ^4.0.3
+        version: 4.1.0(vite@4.5.0)
+      eslint:
+        specifier: ^8.45.0
+        version: 8.46.0
+      eslint-plugin-react-hooks:
+        specifier: ^4.6.0
+        version: 4.6.0(eslint@8.46.0)
+      eslint-plugin-react-refresh:
+        specifier: ^0.4.3
+        version: 0.4.3(eslint@8.46.0)
+      typescript:
+        specifier: ^5.2.2
+        version: 5.2.2
+      vite:
+        specifier: ^4.5.0
+        version: 4.5.0(@types/node@20.8.3)(sass@1.69.5)
+
+  packages/core: {}
 
 packages:
 
@@ -801,6 +852,15 @@ packages:
       unocss: '>= 0.31.13 < 1'
     dependencies:
       mini-svg-data-uri: 1.4.4
+      unocss: 0.57.2(postcss@8.4.27)(vite@4.5.0)
+    dev: true
+
+  /@julr/unocss-preset-forms@0.1.0(unocss@0.57.2):
+    resolution: {integrity: sha512-aQexTEjJY2r8hI4tDfgMB8ztQOnzCcovdra4CbbJ9c0QkvWibFR0yvEdvtWYFfg4kPYKQ+LbeowARCi5biQn+g==}
+    engines: {node: '>=16'}
+    peerDependencies:
+      unocss: '>= 0.31.13 < 1'
+    dependencies:
       unocss: 0.57.2(postcss@8.4.27)(vite@4.5.0)
     dev: true
 

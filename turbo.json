@@ -4,6 +4,7 @@
     "build:packages": {
       "inputs": ["src/**/*.ts"],
       "outputs": ["dist/**"]
-    }
+    },
+    "lint": {}
   }
 }

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "tsc --noEmit --skipLibCheck && eslint --quiet --ext .tsx,.ts,.js src",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -22,7 +22,7 @@
   },
   "devDependencies": {
     "@formex/core": "workspace:*",
-    "@formex/react": "workspace:*",
+    "@formex/builder-react": "workspace:*",
     "@julr/unocss-preset-forms": "^0.0.5",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",

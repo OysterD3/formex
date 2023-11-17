@@ -6,6 +6,7 @@
   "scripts": {
     "clean:node_modules": "find . -maxdepth 4 -type d -name node_modules | xargs -I {} rm -rf {}",
     "build:packages": "turbo build:packages",
+    "lint": "turbo lint",
     "dev:react": "module=dev-react vite"
   },
   "keywords": [],
