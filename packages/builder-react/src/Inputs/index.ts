@@ -1,16 +1,18 @@
-import Checkbox from './Checkbox/Checkbox';
-import CheckboxGroup from './Checkbox/CheckboxGroup';
-import DatePicker from './DatePicker';
-import Radio from './Radio/RadioButton';
-import RadioGroup from './Radio/RadioGroup';
-import Select from './Select';
-import Switch from './Switch';
-import FileUpload from './FileUpload';
-import RichText from './RichText';
-import TextArea from './TextArea';
-import TextField from './TextField';
-import TimePicker from './TimePicker';
-import Option from './Select/Option';
+import Checkbox, { type CheckboxProps } from './Checkbox/Checkbox';
+import CheckboxGroup, {
+  type CheckboxGroupProps,
+} from './Checkbox/CheckboxGroup';
+import DatePicker, { type DatePickerProps } from './DatePicker';
+import Radio, { type RadioButtonProps } from './Radio/RadioButton';
+import RadioGroup, { type RadioGroupProps } from './Radio/RadioGroup';
+import Select, { type SelectProps } from './Select';
+import Switch, { type SwitchProps } from './Switch';
+import FileUpload, { type FileUploadProps } from './FileUpload';
+import RichText, { type RichTextProps } from './RichText';
+import TextArea, { type TextAreaProps } from './TextArea';
+import TextField, { type TextFieldProps } from './TextField';
+import TimePicker, { type TimePickerProps } from './TimePicker';
+import Option, { type OptionProps } from './Select/Option';
 
 export {
   Checkbox,
@@ -26,4 +28,17 @@ export {
   TextField,
   TimePicker,
   Option,
+  TextFieldProps,
+  CheckboxProps,
+  CheckboxGroupProps,
+  DatePickerProps,
+  RadioButtonProps,
+  RadioGroupProps,
+  SelectProps,
+  SwitchProps,
+  FileUploadProps,
+  RichTextProps,
+  TextAreaProps,
+  TimePickerProps,
+  OptionProps,
 };
