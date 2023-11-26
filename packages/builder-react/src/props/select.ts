@@ -4,6 +4,7 @@ import type { CommonProps } from '../../types/props/common.ts';
 
 export type SelectProps<TValue = string> = CommonProps & {
   defaultValue: TValue;
+  multiple: boolean;
   onChange: (value: TValue) => void;
   options: Option<TValue>[];
   value: TValue;
@@ -15,6 +16,7 @@ export const DEFAULT_SELECT_PROPS: EditorComponentProps<SelectProps> = {
   disabled: false,
   id: '',
   label: 'Select',
+  multiple: false,
   name: '',
   options: [],
   placeholder: 'Select option',
