@@ -2,19 +2,20 @@
   "name": "@formex/builder-react",
   "version": "0.0.0",
   "description": "",
-  "main": "dist/index.js",
+  "main": "dist/formex-react.umd.js",
+  "module": "dist/formex-react.es.js",
+  "types": "dist/src/index.d.ts",
+  "typings": "dist/src/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.js"
-    },
-    "./styles": {
-        "import": "./dist/style.css",
-        "require": "./dist/style.css"
+      "import": "./dist/formex-react.es.js",
+      "require": "./dist/formex-react.umd.js",
+      "types": "./dist/src/index.d.ts"
     }
   },
-  "files": ["dist", "styles"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build:packages": "tsc --noEmit && vite build",
     "lint": "tsc --noEmit --skipLibCheck && eslint --quiet --ext .tsx,.ts,.js src"
