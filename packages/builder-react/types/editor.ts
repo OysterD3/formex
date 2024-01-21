@@ -1,22 +1,26 @@
 import { DRAG_AND_DROP_DATA_TYPE } from '../src/constants.ts';
-import { InputElements, InputGroupElements, StaticElements } from './index.ts';
+import {
+  AllValue,
+  ElementProps,
+  Elements,
+  InputElements,
+  InputGroupElements,
+  StaticElements,
+} from './index.ts';
+import { EditorComponentProps } from './utils.ts';
 
-export interface InputDragAndDropData<
-  T extends object = Record<string, unknown>,
-> {
+export interface InputDragAndDropData<TElement extends Elements> {
   type: typeof DRAG_AND_DROP_DATA_TYPE.input;
   element: InputElements;
   nanoId?: string | null;
-  props: T;
+  props: EditorComponentProps<ElementProps<TElement>>;
 }
 
-export interface InputGroupDragAndDropData<
-  T extends object = Record<string, unknown>,
-> {
+export interface InputGroupDragAndDropData<TElement extends Elements> {
   type: typeof DRAG_AND_DROP_DATA_TYPE.group;
   element: InputGroupElements;
   nanoId?: string | null;
-  props: T;
+  props: EditorComponentProps<ElementProps<TElement>>;
 }
 
 export interface StaticDragAndDropData<
@@ -28,12 +32,11 @@ export interface StaticDragAndDropData<
   props: T;
 }
 
-export type DragAndDropData<T extends object = Record<string, unknown>> =
-  | InputDragAndDropData<T>
-  | InputGroupDragAndDropData<T>
-  | StaticDragAndDropData<T>;
+export type DragAndDropData<TElement extends Elements = Elements> =
+  | InputDragAndDropData<TElement>
+  | InputGroupDragAndDropData<TElement>;
 
-export type FormexFormValues<T extends object = Record<string, unknown>> = {
-  items: DragAndDropData<T>[];
+export type FormexFormValues<TElement extends Elements = Elements> = {
+  items: DragAndDropData<TElement>[];
   activeIndex: number;
 };

@@ -5,21 +5,18 @@ import {
   InputGroupDragAndDropData,
   StaticDragAndDropData,
 } from './editor.ts';
+import { Elements } from './index.ts';
 
-export const isInputDragAndDropData = (
-  data: DragAndDropData,
-): data is InputDragAndDropData => {
+export const isInputDragAndDropData = <TElement extends Elements = Elements>(
+  data: DragAndDropData<TElement>,
+): data is InputDragAndDropData<TElement> => {
   return data.type === DRAG_AND_DROP_DATA_TYPE.input;
 };
 
-export const isInputGroupDragAndDropData = (
-  data: DragAndDropData,
-): data is InputGroupDragAndDropData => {
+export const isInputGroupDragAndDropData = <
+  TElement extends Elements = Elements,
+>(
+  data: DragAndDropData<TElement>,
+): data is InputGroupDragAndDropData<TElement> => {
   return data.type === DRAG_AND_DROP_DATA_TYPE.group;
-};
-
-export const isStaticDragAndDropData = (
-  data: DragAndDropData,
-): data is StaticDragAndDropData => {
-  return data.type === DRAG_AND_DROP_DATA_TYPE.static;
 };
