@@ -2,7 +2,6 @@ import type { EditorComponentProps } from '../../types/utils.ts';
 import type { CommonProps } from '../../types/props/common.ts';
 
 export type MultiLineTextProps = CommonProps & {
-  autoComplete: boolean;
   autoFocus: boolean;
   defaultValue: string;
   maxRows: number;
@@ -13,7 +12,6 @@ export type MultiLineTextProps = CommonProps & {
 
 export const DEFAULT_MULTI_LINE_TEXT_PROPS: EditorComponentProps<MultiLineTextProps> =
   {
-    autoComplete: true,
     autoFocus: false,
     defaultValue: '',
     description: '',

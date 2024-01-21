@@ -11,44 +11,35 @@ import {
   DragOverEvent,
   pointerWithin,
 } from '@dnd-kit/core';
-import { createContext, ForwardedRef, useContext, useState } from 'react';
+import {
+  createContext,
+  ForwardedRef,
+  HTMLAttributes,
+  useContext,
+  useState,
+} from 'react';
 import { nanoid } from 'nanoid';
 import {
   DragAndDropData,
+  ElementPickerComponent,
   ElementProps,
   Elements,
   FormexFormValues,
-  InputElementProps,
-  InputElements,
-  InputGroupElementProps,
-  InputGroupElements,
 } from '../types';
 import {
   isInputDragAndDropData,
   isInputGroupDragAndDropData,
 } from '../types/guard';
+import { EditorComponentProps } from '../types/utils.ts';
 import {
-  INPUT_ELEMENTS,
-  INPUT_GROUP_ELEMENTS,
-  INPUT_GROUPS,
-  INPUTS,
-  MISCELLANEOUS,
+  ConfigurationPanelAttributeInputElement,
+  ELEMENT_PICKER_ELEMENTS,
+  ElementAttributeConfiguration,
+  INPUT_ATTRIBUTES_INPUT_MAP,
+  InputAttributeConfiguration,
+  InputAttributeConfigurationProps,
+  INPUTS_ATTRIBUTES_MAP,
 } from './constants';
-import {
-  Checkbox,
-  CheckboxGroup,
-  DatePicker,
-  FileUpload,
-  RadioGroup,
-  RichText,
-  Select,
-  Switch,
-  TextArea,
-  TextField,
-  TimePicker,
-  Option,
-} from './Inputs';
-import RadioButton from './Inputs/Radio/RadioButton.tsx';
 
 const FormexFieldsContext = createContext<
   UseFieldArrayReturn<FormexFormValues, 'items', 'id'>
@@ -80,43 +71,95 @@ const FormexEditorContext = createContext<{
 const useFormexFields = () => useContext(FormexFieldsContext);
 const useFormexEditor = () => useContext(FormexEditorContext);
 
-const DEFAULT_CONFIGS: Configs = {
-  [MISCELLANEOUS.selectOption]: Option,
-  [INPUTS.text]: TextField,
-  [INPUTS.textArea]: TextArea,
-  [INPUTS.number]: TextField,
-  [INPUTS.select]: Select,
-  [INPUTS.checkbox]: Checkbox,
-  [INPUTS.radio]: RadioButton,
-  [INPUTS.date]: DatePicker,
-  [INPUTS.time]: TimePicker,
-  [INPUTS.file]: FileUpload,
-  [INPUTS.richText]: RichText,
-  [INPUTS.switch]: Switch,
-  [INPUT_GROUPS.checkbox]: CheckboxGroup,
-  [INPUT_GROUPS.radio]: RadioGroup,
+type ConfigurationPanelConfig = {
+  inputAttributesEditorConfig?: InputAttributeConfiguration;
+  elementAttributesConfig?: ElementAttributeConfiguration;
+  elementComponents:
+    | {
+        [key in ConfigurationPanelAttributeInputElement]: React.ForwardRefExoticComponent<InputAttributeConfigurationProps>;
+      }
+    | null;
+  ElementWrapper?: React.ForwardRefExoticComponent<
+    HTMLAttributes<HTMLElement>
+  > | null;
+  ElementContainer?: React.FC<HTMLAttributes<HTMLElement>> | null;
 };
 
-type Configs = {
-  [key in Elements]:
-    | ((
-        props: ElementProps<key> & { ref?: ForwardedRef<HTMLElement> },
-      ) => React.ReactNode)
-    | React.ForwardRefExoticComponent<ElementProps<key>>;
+type Configs<TAvailable extends Elements = Elements> = {
+  configurationPanel: ConfigurationPanelConfig;
+  elementPicker: {
+    config:
+      | TAvailable[]
+      | {
+          wrapper: (props: { children: React.ReactNode }) => React.ReactNode;
+          elements: TAvailable[];
+        }[];
+    elementComponents: ElementPickerComponent<TAvailable> | null;
+    ElementWrapper?: React.ForwardRefExoticComponent<
+      HTMLAttributes<HTMLElement>
+    > | null;
+    ElementContainer?: React.FC<HTMLAttributes<HTMLElement>> | null;
+  };
+  editor: {
+    elementComponents:
+      | {
+          [key in TAvailable]: (
+            props: EditorComponentProps<ElementProps<key>>,
+          ) => React.ReactNode;
+        }
+      | null;
+    DragHandler: React.ForwardRefExoticComponent<
+      HTMLAttributes<HTMLElement>
+    > | null;
+    ElementWrapper?: React.FC<HTMLAttributes<HTMLElement>> | null;
+    ElementContainer?: React.FC<HTMLAttributes<HTMLElement>> | null;
+  };
 };
 
-const FormexComponentsContext = createContext<Configs>(DEFAULT_CONFIGS);
-export const useFormexComponents = () => useContext(FormexComponentsContext);
+const FormexConfigurationContext = createContext<Configs>({
+  configurationPanel: {
+    inputAttributesEditorConfig: INPUT_ATTRIBUTES_INPUT_MAP,
+    elementAttributesConfig: INPUTS_ATTRIBUTES_MAP,
+    elementComponents: null,
+    ElementContainer: null,
+    ElementWrapper: null,
+  },
+  elementPicker: {
+    elementComponents: null,
+    config: [],
+    ElementContainer: null,
+    ElementWrapper: null,
+  },
+  editor: {
+    elementComponents: null,
+    DragHandler: null,
+    ElementWrapper: null,
+    ElementContainer: null,
+  },
+});
+export const useFormexConfig = () => useContext(FormexConfigurationContext);
 
-const FormexProvider = ({
+export const createFormexConfig = <TAvailable extends Elements = Elements>(
+  configs: Configs<TAvailable>,
+) => configs;
+
+const FormexProvider = <TAvailable extends Elements = Elements>({
   children,
   reactHookFormProps,
   configs,
 }: {
   children: React.ReactNode;
   reactHookFormProps?: Omit<UseFormProps<FormexFormValues>, 'defaultValues'>;
-  configs?: Configs;
+  configs: Configs<TAvailable>;
 }) => {
+  if (
+    !configs.configurationPanel.elementComponents ||
+    !configs.elementPicker.elementComponents ||
+    !configs.editor.elementComponents
+  ) {
+    throw new Error('Formex: must provide element components');
+  }
+
   const [activeId, setActiveId] = useState<string | null>(null);
   const form = useForm<FormexFormValues>({
     ...reactHookFormProps,
@@ -169,30 +212,16 @@ const FormexProvider = ({
     ) {
       const data = activeEvent.data.current as DragAndDropData;
       if (isInputDragAndDropData(data)) {
-        if (activeEvent.data.current.element === INPUTS.select) {
-          insert(overIndex, {
-            ...data,
-            nanoId: activeId,
-            props: {
-              ...INPUT_ELEMENTS[data.element].defaultComponentProps,
-              options: [{ label: 'Option 1', value: 'option-1' }],
-            },
-          });
-        } else {
-          insert(overIndex, {
-            ...data,
-            nanoId: activeId,
-            props: INPUT_ELEMENTS[data.element].defaultComponentProps,
-          });
-        }
+        insert(overIndex, {
+          ...data,
+          nanoId: activeId,
+          props: ELEMENT_PICKER_ELEMENTS[data.element].defaultComponentProps,
+        });
       } else if (isInputGroupDragAndDropData(data)) {
         insert(overIndex, {
           ...data,
           nanoId: activeId,
-          props: {
-            ...INPUT_GROUP_ELEMENTS[data.element].defaultComponentProps,
-            options: [{ label: 'Option 1', value: 'option-1' }],
-          },
+          props: ELEMENT_PICKER_ELEMENTS[data.element].defaultComponentProps,
         });
       }
     }
@@ -212,12 +241,8 @@ const FormexProvider = ({
   return (
     <FormexFieldsContext.Provider value={{ ...fields }}>
       <FormexEditorContext.Provider value={{ onSave: handleSave }}>
-        <FormexComponentsContext.Provider
-          value={{
-            ...DEFAULT_CONFIGS,
-            ...configs,
-          }}
-        >
+        {/*@ts-expect-error Configs can't accept generic*/}
+        <FormexConfigurationContext.Provider value={configs}>
           <FormProvider {...form}>
             <DndContext
               onDragEnd={handleDragEnd}
@@ -228,7 +253,7 @@ const FormexProvider = ({
               {children}
             </DndContext>
           </FormProvider>
-        </FormexComponentsContext.Provider>
+        </FormexConfigurationContext.Provider>
       </FormexEditorContext.Provider>
     </FormexFieldsContext.Provider>
   );

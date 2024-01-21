@@ -2,7 +2,6 @@ import type { EditorComponentProps } from '../../types/utils.ts';
 import type { CommonProps } from '../../types/props/common.ts';
 
 export type PhoneProps = CommonProps & {
-  autoComplete: boolean;
   autoFocus: boolean;
   defaultValue: string | undefined;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -11,7 +10,6 @@ export type PhoneProps = CommonProps & {
 };
 
 export const DEFAULT_PHONE_PROPS: EditorComponentProps<PhoneProps> = {
-  autoComplete: false,
   autoFocus: false,
   defaultValue: undefined,
   description: '',
