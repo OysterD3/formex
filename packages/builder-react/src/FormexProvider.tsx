@@ -11,13 +11,7 @@ import {
   DragOverEvent,
   pointerWithin,
 } from '@dnd-kit/core';
-import {
-  createContext,
-  ForwardedRef,
-  HTMLAttributes,
-  useContext,
-  useState,
-} from 'react';
+import { createContext, useContext, useState } from 'react';
 import { nanoid } from 'nanoid';
 import {
   DragAndDropData,
@@ -69,6 +63,7 @@ const FormexEditorContext = createContext<{
 });
 
 const useFormexFields = () => useContext(FormexFieldsContext);
+
 const useFormexEditor = () => useContext(FormexEditorContext);
 
 type ConfigurationPanelConfig = {
@@ -79,10 +74,6 @@ type ConfigurationPanelConfig = {
         [key in ConfigurationPanelAttributeInputElement]: React.ForwardRefExoticComponent<InputAttributeConfigurationProps>;
       }
     | null;
-  ElementWrapper?: React.ForwardRefExoticComponent<
-    HTMLAttributes<HTMLElement>
-  > | null;
-  ElementContainer?: React.FC<HTMLAttributes<HTMLElement>> | null;
 };
 
 type Configs<TAvailable extends Elements = Elements> = {
@@ -95,10 +86,6 @@ type Configs<TAvailable extends Elements = Elements> = {
           elements: TAvailable[];
         }[];
     elementComponents: ElementPickerComponent<TAvailable> | null;
-    ElementWrapper?: React.ForwardRefExoticComponent<
-      HTMLAttributes<HTMLElement>
-    > | null;
-    ElementContainer?: React.FC<HTMLAttributes<HTMLElement>> | null;
   };
   editor: {
     elementComponents:
@@ -108,11 +95,6 @@ type Configs<TAvailable extends Elements = Elements> = {
           ) => React.ReactNode;
         }
       | null;
-    DragHandler: React.ForwardRefExoticComponent<
-      HTMLAttributes<HTMLElement>
-    > | null;
-    ElementWrapper?: React.FC<HTMLAttributes<HTMLElement>> | null;
-    ElementContainer?: React.FC<HTMLAttributes<HTMLElement>> | null;
   };
 };
 
@@ -121,28 +103,16 @@ const FormexConfigurationContext = createContext<Configs>({
     inputAttributesEditorConfig: INPUT_ATTRIBUTES_INPUT_MAP,
     elementAttributesConfig: INPUTS_ATTRIBUTES_MAP,
     elementComponents: null,
-    ElementContainer: null,
-    ElementWrapper: null,
   },
   elementPicker: {
     elementComponents: null,
     config: [],
-    ElementContainer: null,
-    ElementWrapper: null,
   },
   editor: {
     elementComponents: null,
-    DragHandler: null,
-    ElementWrapper: null,
-    ElementContainer: null,
   },
 });
 export const useFormexConfig = () => useContext(FormexConfigurationContext);
-
-export const createFormexConfig = <TAvailable extends Elements = Elements>(
-  configs: Configs<TAvailable>,
-) => configs;
-
 const FormexProvider = <TAvailable extends Elements = Elements>({
   children,
   reactHookFormProps,

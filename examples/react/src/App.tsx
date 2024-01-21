@@ -33,7 +33,7 @@ const elementPickersComponent = [
   return acc;
 }, {} as ElementPickerComponent);
 
-const configs = createFormexConfig<typeof INPUTS.singleLineText>({
+const configs = {
   configurationPanel: {
     inputAttributesEditorConfig: INPUT_ATTRIBUTES_INPUT_MAP,
     elementAttributesConfig: INPUTS_ATTRIBUTES_MAP,
@@ -43,37 +43,40 @@ const configs = createFormexConfig<typeof INPUTS.singleLineText>({
       [INPUTS.number]: NumberInput,
       [INPUTS.radio]: Radio,
     },
-    ElementContainer: ConfigsContainer,
-    ElementWrapper: ConfigsWrapper,
   },
   elementPicker: {
     config: [INPUTS.singleLineText],
     elementComponents: elementPickersComponent,
-    ElementContainer: ElementPickerContainer,
-    ElementWrapper: ElementPickerWrapper,
   },
   editor: {
-    ElementContainer: EditorContainer,
-    ElementWrapper: EditorWrapper,
     elementComponents: {
       [INPUTS.singleLineText]: SingleLineTextInput,
     },
-    DragHandler,
   },
-});
+};
 
 function App() {
   return (
     <FormexProvider configs={configs}>
       <Grid container>
         <Grid item xs={3}>
-          <ElementPicker />
+          <ElementPicker
+            container={ElementPickerContainer}
+            wrapper={ElementPickerWrapper}
+          />
         </Grid>
         <Grid item xs={6}>
-          <Editor />
+          <Editor
+            dragHandler={DragHandler}
+            container={EditorContainer}
+            wrapper={EditorWrapper}
+          />
         </Grid>
         <Grid item xs={3}>
-          <ConfigurationPanel />
+          <ConfigurationPanel
+            container={ConfigsContainer}
+            wrapper={ConfigsWrapper}
+          />
         </Grid>
       </Grid>
     </FormexProvider>

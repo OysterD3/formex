@@ -1,14 +1,18 @@
 import { useFormContext, useWatch } from 'react-hook-form';
-import React from 'react';
+import React, { HTMLAttributes } from 'react';
 import { FormexFormValues } from '../../types';
 import { getElementAttribute } from '../utils/dom';
-import { useFormexConfig, useFormexFields } from '../FormexProvider';
+import { useFormexFields } from '../FormexProvider';
 import InputAttributeConfigureInput from './InputAttributeConfigureInput.tsx';
 
 const ConfigurationPanel = ({
   onRemove,
+  container,
+  wrapper,
 }: {
   onRemove?: (index: number) => void;
+  container?: React.ForwardRefExoticComponent<HTMLAttributes<HTMLElement>>;
+  wrapper?: React.ForwardRefExoticComponent<HTMLAttributes<HTMLElement>>;
 }) => {
   const { control } = useFormContext<FormexFormValues>();
   const [activeIndex] = useWatch({
@@ -16,9 +20,6 @@ const ConfigurationPanel = ({
     control,
   });
   const { remove, fields } = useFormexFields();
-  const {
-    configurationPanel: { ElementContainer },
-  } = useFormexConfig();
 
   const handleDelete = (e: React.MouseEvent<HTMLDivElement>) => {
     const data = getElementAttribute(e, 'data-delete-index');
@@ -28,7 +29,7 @@ const ConfigurationPanel = ({
     }
   };
 
-  const Container = ElementContainer || 'div';
+  const Container = container || 'div';
 
   return (
     <Container onClick={handleDelete}>
@@ -36,7 +37,11 @@ const ConfigurationPanel = ({
         if (activeIndex !== index) return null;
 
         return (
-          <InputAttributeConfigureInput key={index} element={item.element} />
+          <InputAttributeConfigureInput
+            key={index}
+            element={item.element}
+            wrapper={wrapper}
+          />
         );
       })}
     </Container>

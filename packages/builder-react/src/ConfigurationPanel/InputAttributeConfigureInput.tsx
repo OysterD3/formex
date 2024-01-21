@@ -1,13 +1,17 @@
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
-import { isValidElement, useMemo } from 'react';
+import { HTMLAttributes, useMemo } from 'react';
 import { Elements, FormexFormValues } from '../../types';
 import { useFormexConfig } from '../FormexProvider.tsx';
 import { InputAttribute } from '../constants.ts';
 
 const InputAttributeConfigureInput = <TElement extends Elements>({
   element,
+  wrapper,
 }: {
   element: TElement;
+  wrapper:
+    | React.ForwardRefExoticComponent<HTMLAttributes<HTMLElement>>
+    | undefined;
 }) => {
   const { control } = useFormContext<FormexFormValues<TElement>>();
   const [index] = useWatch({
@@ -21,10 +25,6 @@ const InputAttributeConfigureInput = <TElement extends Elements>({
       elementAttributesConfig,
       elementComponents,
     },
-  } = useFormexConfig();
-
-  const {
-    configurationPanel: { ElementWrapper },
   } = useFormexConfig();
 
   const fields = useMemo(() => {
@@ -43,7 +43,7 @@ const InputAttributeConfigureInput = <TElement extends Elements>({
     inputAttributesEditorConfig,
   ]);
 
-  const Wrapper = ElementWrapper || 'div';
+  const Wrapper = wrapper || 'div';
 
   return (
     <>

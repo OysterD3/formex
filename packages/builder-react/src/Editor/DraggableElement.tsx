@@ -1,17 +1,25 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { HTMLAttributes } from 'react';
 import { DragAndDropData } from '../../types';
-import { useFormexConfig } from '../FormexProvider.tsx';
 import EditorElement from './EditorElement.tsx';
 
 const DraggableElement = ({
   index,
   item,
   id,
+  dragHandler,
+  wrapper,
 }: {
   id: string;
   index: number;
   item: DragAndDropData;
+  dragHandler:
+    | React.ForwardRefExoticComponent<HTMLAttributes<HTMLElement>>
+    | undefined;
+  wrapper:
+    | React.ForwardRefExoticComponent<HTMLAttributes<HTMLElement>>
+    | undefined;
 }) => {
   const {
     attributes,
@@ -27,12 +35,8 @@ const DraggableElement = ({
     transition,
   };
 
-  const {
-    editor: { DragHandler, ElementWrapper },
-  } = useFormexConfig();
-
-  const Handler = DragHandler || 'div';
-  const Wrapper = ElementWrapper || 'li';
+  const Handler = dragHandler || 'div';
+  const Wrapper = wrapper || 'li';
 
   return (
     <Wrapper ref={setNodeRef} style={style} data-index={index}>

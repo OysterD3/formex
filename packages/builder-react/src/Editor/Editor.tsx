@@ -4,12 +4,21 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { useDroppable } from '@dnd-kit/core';
+import { HTMLAttributes } from 'react';
 import { getElementAttribute } from '../utils/dom';
 import { FormexFormValues } from '../../types';
-import { useFormexConfig, useFormexFields } from '../FormexProvider';
+import { useFormexFields } from '../FormexProvider';
 import DraggableElement from './DraggableElement';
 
-const Editor = () => {
+const Editor = ({
+  container,
+  wrapper,
+  dragHandler,
+}: {
+  container?: React.ForwardRefExoticComponent<HTMLAttributes<HTMLElement>>;
+  wrapper?: React.ForwardRefExoticComponent<HTMLAttributes<HTMLElement>>;
+  dragHandler?: React.ForwardRefExoticComponent<HTMLAttributes<HTMLElement>>;
+}) => {
   const { control, setValue } = useFormContext<FormexFormValues>();
   const { fields = [] } = useFormexFields();
   const { setNodeRef } = useDroppable({
@@ -32,17 +41,20 @@ const Editor = () => {
     }
   };
 
-  const {
-    editor: { ElementContainer },
-  } = useFormexConfig();
-
-  const Container = ElementContainer || 'ul';
+  const Container = container || 'ul';
 
   return (
     <Container ref={setNodeRef} onClick={handleClick}>
       <SortableContext items={fields} strategy={verticalListSortingStrategy}>
         {fields.map(({ id, ...item }, index) => (
-          <DraggableElement id={id} index={index} item={item} key={id} />
+          <DraggableElement
+            id={id}
+            index={index}
+            item={item}
+            key={id}
+            dragHandler={dragHandler}
+            wrapper={wrapper}
+          />
         ))}
       </SortableContext>
     </Container>

@@ -1,3 +1,4 @@
+import { HTMLAttributes } from 'react';
 import { useFormexConfig } from '../FormexProvider.tsx';
 import { Elements, InputElements, InputGroupElements } from '../../types';
 import { DRAG_AND_DROP_DATA_TYPE, INPUT_GROUPS, INPUTS } from '../constants.ts';
@@ -11,12 +12,17 @@ const getType = (element: Elements) => {
   return null;
 };
 
-const ElementPicker = () => {
+const ElementPicker = ({
+  container,
+  wrapper,
+}: {
+  container?: React.ForwardRefExoticComponent<HTMLAttributes<HTMLElement>>;
+  wrapper?: React.ForwardRefExoticComponent<HTMLAttributes<HTMLElement>>;
+}) => {
   const {
-    elementPicker: { config, ElementContainer },
+    elementPicker: { config },
   } = useFormexConfig();
-
-  const Container = ElementContainer || 'ul';
+  const Container = container || 'ul';
 
   return (
     <Container>
@@ -29,7 +35,12 @@ const ElementPicker = () => {
                 const type = getType(el);
                 if (!type) return null;
                 return (
-                  <ElementPickerElement key={el} type={type} element={el} />
+                  <ElementPickerElement
+                    key={el}
+                    type={type}
+                    element={el}
+                    wrapper={wrapper}
+                  />
                 );
               })}
             </Wrapper>
@@ -38,7 +49,14 @@ const ElementPicker = () => {
         const type = getType(v);
         if (!type) return <div>Check {type}</div>;
 
-        return <ElementPickerElement key={v} type={type} element={v} />;
+        return (
+          <ElementPickerElement
+            key={v}
+            type={type}
+            element={v}
+            wrapper={wrapper}
+          />
+        );
       })}
     </Container>
   );
