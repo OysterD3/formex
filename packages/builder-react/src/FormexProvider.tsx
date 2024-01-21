@@ -55,9 +55,9 @@ const FormexEditorContext = createContext<{
       values: FormexFormValues['items'],
       errors: React.BaseSyntheticEvent<object> | undefined,
     ) => void,
-  ) => void;
+  ) => (e?: React.BaseSyntheticEvent) => void;
 }>({
-  onSave: async (cb) => {
+  onSave: (cb) => () => {
     return cb([], undefined);
   },
 });
@@ -201,12 +201,15 @@ const FormexProvider = <TAvailable extends Elements = Elements>({
     setActiveId(nanoid());
   };
 
-  const handleSave = (
-    cb: (
-      values: FormexFormValues['items'],
-      errors: React.BaseSyntheticEvent<object> | undefined,
-    ) => void,
-  ) => form.handleSubmit((values, errors) => cb(values.items, errors))();
+  const handleSave =
+    (
+      cb: (
+        values: FormexFormValues['items'],
+        errors: React.BaseSyntheticEvent<object> | undefined,
+      ) => void,
+    ) =>
+    (e?: React.BaseSyntheticEvent) =>
+      form.handleSubmit((values, errors) => cb(values.items, errors))(e);
 
   return (
     <FormexFieldsContext.Provider value={{ ...fields }}>
