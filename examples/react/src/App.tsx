@@ -45,8 +45,10 @@ const configs = {
 };
 
 function App() {
+  const handleSave = (values: any) => console.log(values);
+
   return (
-    <FormexProvider configs={configs}>
+    <FormexProvider configs={configs} handleSave={handleSave}>
       <FormBuilder />
     </FormexProvider>
   );

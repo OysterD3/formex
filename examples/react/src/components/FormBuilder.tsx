@@ -3,7 +3,6 @@ import {
   ConfigurationPanel,
   Editor,
   ElementPicker,
-  useFormexEditor,
 } from '@formex/builder-react';
 import ElementPickerContainer from './ElementPicker/Container.tsx';
 import ElementPickerWrapper from './ElementPicker/Wrapper.tsx';
@@ -14,16 +13,6 @@ import ConfigsContainer from './Configs/Container.tsx';
 import ConfigsWrapper from './Configs/Wrapper.tsx';
 
 const FormBuilder = () => {
-  const { onSave } = useFormexEditor();
-
-  const handleSave = (values, errors) => {
-    if (errors) {
-      console.error(errors);
-    } else {
-      console.log(values);
-    }
-  };
-
   return (
     <Stack>
       <Grid container>
@@ -47,7 +36,7 @@ const FormBuilder = () => {
           />
         </Grid>
       </Grid>
-      <Button onClick={onSave(handleSave)}>Save</Button>
+      <Button type="submit">Save</Button>
     </Stack>
   );
 };

@@ -1,8 +1,9 @@
-import { ControllerRenderProps } from 'react-hook-form';
+import { ControllerFieldState, ControllerRenderProps } from 'react-hook-form';
 import type {
   AllValue,
   ElementProps,
   Elements,
+  FormexFormValues,
   InputGroupElements,
 } from '../types';
 import { EditorComponentProps, ValuesOf } from '../types/utils.ts';
@@ -29,6 +30,8 @@ import {
   DEFAULT_TIME_PICKER_PROPS,
   DEFAULT_URL_PROPS,
 } from './props';
+import { UseControllerReturn } from 'react-hook-form/dist/types/controller';
+import { UseFormStateReturn } from 'react-hook-form/dist/types';
 
 export const INPUTS = {
   address: 'ADDRESS',
@@ -324,14 +327,17 @@ export type ConfigurationPanelAttributeInputElement =
   | typeof INPUTS.number
   | typeof INPUTS.singleLineText;
 
-export type InputAttributeConfigurationProps = {
+export type InputAttributeConfigurationProps<
+  TElements extends Elements = Elements,
+> = {
   label: string;
   placeholder: string;
   tooltip?: string;
   description?: string;
   options?: readonly Option[];
-  onChange: ControllerRenderProps['onChange'];
-  value: unknown;
+  field: ControllerRenderProps<FormexFormValues<TElements>>;
+  fieldState: ControllerFieldState;
+  formState: UseFormStateReturn<FormexFormValues<TElements>>;
 };
 
 export type InputAttributeConfiguration = {

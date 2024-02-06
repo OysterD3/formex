@@ -1,18 +1,20 @@
-import { FormControl, TextField as MuiTextField } from '@mui/material';
-import { forwardRef } from 'react';
+import { TextField as MuiTextField } from '@mui/material';
 import { InputAttributeConfigurationProps } from '@formex/builder-react';
 
-const TextField = forwardRef<
-  HTMLInputElement,
-  InputAttributeConfigurationProps
->((props, ref) => {
+const TextField = ({
+  field,
+  fieldState: { error },
+  formState: _,
+  ...props
+}: InputAttributeConfigurationProps) => {
   return (
-    <FormControl fullWidth>
-      <MuiTextField {...props} ref={ref} />
-    </FormControl>
+    <MuiTextField
+      {...field}
+      {...props}
+      error={!!error}
+      helperText={error?.message}
+    />
   );
-});
-
-TextField.displayName = 'TextField';
+};
 
 export default TextField;

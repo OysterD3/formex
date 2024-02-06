@@ -107,3 +107,4 @@ export type ElementPickerComponent<TAvailable extends Elements = Elements> = {
 
 export * from './editor.ts';
 export * from './utils.ts';
+export * from './formex.ts';

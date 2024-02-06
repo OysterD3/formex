@@ -3,7 +3,6 @@ import {
   DragAndDropData,
   InputDragAndDropData,
   InputGroupDragAndDropData,
-  StaticDragAndDropData,
 } from './editor.ts';
 import { Elements } from './index.ts';
 

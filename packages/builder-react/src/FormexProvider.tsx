@@ -1,9 +1,11 @@
 import {
   FormProvider,
+  type SubmitErrorHandler,
+  type SubmitHandler,
   useFieldArray,
   UseFieldArrayReturn,
   useForm,
-  UseFormProps,
+  UseFormHandleSubmit,
 } from 'react-hook-form';
 import {
   DndContext,
@@ -13,27 +15,21 @@ import {
 } from '@dnd-kit/core';
 import { createContext, useContext, useState } from 'react';
 import { nanoid } from 'nanoid';
-import {
+import type {
   DragAndDropData,
-  ElementPickerComponent,
   ElementProps,
   Elements,
   FormexFormValues,
+  Configs,
 } from '../types';
 import {
   isInputDragAndDropData,
   isInputGroupDragAndDropData,
 } from '../types/guard';
-import { EditorComponentProps } from '../types/utils.ts';
-import {
-  ConfigurationPanelAttributeInputElement,
-  ELEMENT_PICKER_ELEMENTS,
-  ElementAttributeConfiguration,
-  INPUT_ATTRIBUTES_INPUT_MAP,
-  InputAttributeConfiguration,
-  InputAttributeConfigurationProps,
-  INPUTS_ATTRIBUTES_MAP,
-} from './constants';
+import type { EditorComponentProps } from '../types/utils.ts';
+import { ELEMENT_PICKER_ELEMENTS } from './constants';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ZodSchema } from 'zod';
 
 const FormexFieldsContext = createContext<
   UseFieldArrayReturn<FormexFormValues, 'items', 'id'>
@@ -49,93 +45,35 @@ const FormexFieldsContext = createContext<
   replace: () => {},
 });
 
-const FormexEditorContext = createContext<{
-  onSave: (
-    cb: (
-      values: FormexFormValues['items'],
-      errors: React.BaseSyntheticEvent<object> | undefined,
-    ) => void,
-  ) => (e?: React.BaseSyntheticEvent) => void;
-}>({
-  onSave: (cb) => () => {
-    return cb([], undefined);
-  },
-});
+const FormexConfigurationContext = createContext<Configs | null>(null);
 
 const useFormexFields = () => useContext(FormexFieldsContext);
 
-const useFormexEditor = () => useContext(FormexEditorContext);
-
-type ConfigurationPanelConfig = {
-  inputAttributesEditorConfig?: InputAttributeConfiguration;
-  elementAttributesConfig?: ElementAttributeConfiguration;
-  elementComponents:
-    | {
-        [key in ConfigurationPanelAttributeInputElement]: React.ForwardRefExoticComponent<InputAttributeConfigurationProps>;
-      }
-    | null;
-};
-
-type Configs<TAvailable extends Elements = Elements> = {
-  configurationPanel: ConfigurationPanelConfig;
-  elementPicker: {
-    config:
-      | TAvailable[]
-      | {
-          wrapper: (props: { children: React.ReactNode }) => React.ReactNode;
-          elements: TAvailable[];
-        }[];
-    elementComponents: ElementPickerComponent<TAvailable> | null;
-  };
-  editor: {
-    elementComponents:
-      | {
-          [key in TAvailable]: (
-            props: EditorComponentProps<ElementProps<key>>,
-          ) => React.ReactNode;
-        }
-      | null;
-  };
-};
-
-const FormexConfigurationContext = createContext<Configs>({
-  configurationPanel: {
-    inputAttributesEditorConfig: INPUT_ATTRIBUTES_INPUT_MAP,
-    elementAttributesConfig: INPUTS_ATTRIBUTES_MAP,
-    elementComponents: null,
-  },
-  elementPicker: {
-    elementComponents: null,
-    config: [],
-  },
-  editor: {
-    elementComponents: null,
-  },
-});
-export const useFormexConfig = () => useContext(FormexConfigurationContext);
-const FormexProvider = <TAvailable extends Elements = Elements>({
+export const useFormexConfig = <
+  TElements extends Elements = Elements,
+>(): Configs<TElements> =>
+  useContext(FormexConfigurationContext) as Configs<TElements>;
+const FormexProvider = <TElements extends Elements = Elements>({
   children,
-  reactHookFormProps,
   configs,
+  zodSchema,
+  defaultValues,
+  handleSave,
 }: {
   children: React.ReactNode;
-  reactHookFormProps?: Omit<UseFormProps<FormexFormValues>, 'defaultValues'>;
-  configs: Configs<TAvailable>;
+  handleSave?: SubmitHandler<FormexFormValues<TElements>>;
+  configs: Configs<TElements>;
+  zodSchema?: ZodSchema;
+  defaultValues?: FormexFormValues<TElements>;
 }) => {
-  if (
-    !configs.configurationPanel.elementComponents ||
-    !configs.elementPicker.elementComponents ||
-    !configs.editor.elementComponents
-  ) {
-    throw new Error('Formex: must provide element components');
-  }
-
   const [activeId, setActiveId] = useState<string | null>(null);
-  const form = useForm<FormexFormValues>({
-    ...reactHookFormProps,
-    defaultValues: {
-      items: [],
-    },
+
+  const form = useForm<FormexFormValues<TElements>>({
+    // @ts-expect-error defaultValues can't accept generic
+    defaultValues: defaultValues
+      ? (defaultValues as FormexFormValues<TElements>)
+      : undefined,
+    resolver: zodSchema ? zodResolver(zodSchema) : undefined,
   });
 
   const fields = useFieldArray({
@@ -143,7 +81,7 @@ const FormexProvider = <TAvailable extends Elements = Elements>({
     name: 'items',
   });
 
-  const { insert, move } = fields;
+  const { move, insert } = fields;
 
   const handleDragEnd = (e: DragEndEvent) => {
     setActiveId(null);
@@ -180,18 +118,24 @@ const FormexProvider = <TAvailable extends Elements = Elements>({
       'type' in activeEvent.data.current &&
       'element' in activeEvent.data.current
     ) {
-      const data = activeEvent.data.current as DragAndDropData;
+      const data = activeEvent.data.current as DragAndDropData<TElements>;
       if (isInputDragAndDropData(data)) {
         insert(overIndex, {
           ...data,
           nanoId: activeId,
-          props: ELEMENT_PICKER_ELEMENTS[data.element].defaultComponentProps,
+          props: ELEMENT_PICKER_ELEMENTS[data.element]
+            .defaultComponentProps as EditorComponentProps<
+            ElementProps<TElements>
+          >,
         });
       } else if (isInputGroupDragAndDropData(data)) {
         insert(overIndex, {
           ...data,
           nanoId: activeId,
-          props: ELEMENT_PICKER_ELEMENTS[data.element].defaultComponentProps,
+          props: ELEMENT_PICKER_ELEMENTS[data.element]
+            .defaultComponentProps as EditorComponentProps<
+            ElementProps<TElements>
+          >,
         });
       }
     }
@@ -201,35 +145,30 @@ const FormexProvider = <TAvailable extends Elements = Elements>({
     setActiveId(nanoid());
   };
 
-  const handleSave =
-    (
-      cb: (
-        values: FormexFormValues['items'],
-        errors: React.BaseSyntheticEvent<object> | undefined,
-      ) => void,
-    ) =>
-    (e?: React.BaseSyntheticEvent) =>
-      form.handleSubmit((values, errors) => cb(values.items, errors))(e);
+  const handleSubmit: SubmitHandler<FormexFormValues<TElements>> = (
+    onValid,
+    onInvalid,
+  ) => {
+    handleSave?.(onValid, onInvalid);
+  };
 
   return (
     <FormexFieldsContext.Provider value={{ ...fields }}>
-      <FormexEditorContext.Provider value={{ onSave: handleSave }}>
-        {/*@ts-expect-error Configs can't accept generic*/}
-        <FormexConfigurationContext.Provider value={configs}>
-          <FormProvider {...form}>
-            <DndContext
-              onDragEnd={handleDragEnd}
-              onDragOver={handleDragOver}
-              onDragStart={handleDragStart}
-              collisionDetection={pointerWithin}
-            >
-              {children}
-            </DndContext>
-          </FormProvider>
-        </FormexConfigurationContext.Provider>
-      </FormexEditorContext.Provider>
+      {/*@ts-expect-error Configs can't accept generic*/}
+      <FormexConfigurationContext.Provider value={configs}>
+        <FormProvider {...form}>
+          <DndContext
+            onDragEnd={handleDragEnd}
+            onDragOver={handleDragOver}
+            onDragStart={handleDragStart}
+            collisionDetection={pointerWithin}
+          >
+            <form onSubmit={form.handleSubmit(handleSubmit)}>{children}</form>
+          </DndContext>
+        </FormProvider>
+      </FormexConfigurationContext.Provider>
     </FormexFieldsContext.Provider>
   );
 };
 
-export { FormexProvider, useFormexEditor, useFormexFields };
+export { FormexProvider, useFormexFields };

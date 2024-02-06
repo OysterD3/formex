@@ -56,8 +56,15 @@ const InputAttributeConfigureInput = <TElement extends Elements>({
           <Wrapper key={f.key}>
             <Controller
               key={f.key}
-              render={({ field, fieldState }) => (
-                <InputComponent {...field} {...fieldState} {...props} />
+              render={({ field, fieldState, formState }) => (
+                <InputComponent
+                  // @ts-expect-error TODO: fix this
+                  field={field}
+                  fieldState={fieldState}
+                  // @ts-expect-error TODO: fix this
+                  formState={formState}
+                  {...props}
+                />
               )}
               // @ts-expect-error TODO: fix this
               name={`items.${index}.props.${f.key}`}
