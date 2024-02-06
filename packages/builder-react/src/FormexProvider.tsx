@@ -67,7 +67,6 @@ const FormexProvider = <TElements extends Elements = Elements>({
   const [activeId, setActiveId] = useState<string | null>(null);
 
   const form = useForm<FormexFormValues<TElements>>({
-    // @ts-expect-error defaultValues can't accept generic
     defaultValues: defaultValues
       ? (defaultValues as FormexFormValues<TElements>)
       : undefined,
