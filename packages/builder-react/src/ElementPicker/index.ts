@@ -1,3 +1,3 @@
-import ElementPicker from './ElementPicker.tsx';
+import ElementPicker from './ElementPicker';
 
 export { ElementPicker };

@@ -1,9 +1,9 @@
 import { useFormContext, useWatch } from 'react-hook-form';
-import React, { type HTMLAttributes } from 'react';
+import { type HTMLAttributes } from 'react';
 import type { FormexFormValues } from '@formex/core';
 import { getElementAttribute } from '../utils/dom';
 import { useFormexFields } from '../FormexProvider';
-import InputAttributeConfigureInput from './InputAttributeConfigureInput.tsx';
+import InputAttributeConfigureInput from './InputAttributeConfigureInput';
 
 const ConfigurationPanel = ({
   onRemove,

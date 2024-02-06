@@ -1,7 +1,7 @@
 import { useDraggable } from '@dnd-kit/core';
 import { type HTMLAttributes, useId } from 'react';
 import { CSS } from '@dnd-kit/utilities';
-import { useFormexConfig } from '../FormexProvider.tsx';
+import { useFormexConfig } from '../FormexProvider';
 import type { Elements, DragAndDropData } from '@formex/core';
 
 function ElementPickerElement({

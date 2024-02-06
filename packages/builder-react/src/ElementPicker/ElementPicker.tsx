@@ -1,8 +1,8 @@
 import type { HTMLAttributes } from 'react';
-import { useFormexConfig } from '../FormexProvider.tsx';
+import { useFormexConfig } from '../FormexProvider';
 import type { Elements, InputElements, InputGroupElements } from '@formex/core';
 import { DRAG_AND_DROP_DATA_TYPE, INPUT_GROUPS, INPUTS } from '@formex/core';
-import ElementPickerElement from './ElementPickerElement.tsx';
+import ElementPickerElement from './ElementPickerElement';
 
 const getType = (element: Elements) => {
   if (Object.values(INPUTS).includes(element as InputElements))

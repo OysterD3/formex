@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/formex-react.umd.js",
   "module": "dist/formex-react.es.js",
-  "types": "dist/src/index.d.ts",
+  "types": "dist/index.d.ts",
   "typings": "dist/src/index.d.ts",
   "exports": {
     ".": {
@@ -17,7 +17,7 @@
     "dist"
   ],
   "scripts": {
-    "build:packages": "tsc --noEmit && vite build",
+    "build:packages": "tsc --p ./tsconfig.build.json --noEmit && vite build",
     "lint": "tsc --noEmit --skipLibCheck && eslint --fix --quiet --ext .tsx,.ts,.js src"
   },
   "keywords": [],

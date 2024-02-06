@@ -13,11 +13,11 @@ import {
 } from '@dnd-kit/core';
 import { createContext, useContext, useState } from 'react';
 import { nanoid } from 'nanoid';
-import type { Configs } from '../types';
+import type { Configs } from './types';
 import {
   isInputDragAndDropData,
   isInputGroupDragAndDropData,
-} from '../types/guard';
+} from './types/guard';
 import type {
   EditorComponentProps,
   ElementProps,
@@ -50,7 +50,7 @@ const useFormexFields = () => useContext(FormexFieldsContext);
 export const useFormexConfig = <
   TElements extends Elements = Elements,
 >(): Configs<TElements> =>
-  useContext(FormexConfigurationContext) as Configs<TElements>;
+  useContext(FormexConfigurationContext) as unknown as Configs<TElements>;
 const FormexProvider = <TElements extends Elements = Elements>({
   children,
   configs,
