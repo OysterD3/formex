@@ -58,10 +58,10 @@ const FormexProvider = <TElements extends Elements = Elements>({
   configs,
   zodSchema,
   defaultValues,
-  handleSave,
+  onSave,
 }: {
   children: React.ReactNode;
-  handleSave?: SubmitHandler<FormexFormValues<TElements>>;
+  onSave?: SubmitHandler<FormexFormValues<TElements>>;
   configs: Configs<TElements>;
   zodSchema?: ZodSchema;
   defaultValues?: FormexFormValues<TElements>;
@@ -149,7 +149,7 @@ const FormexProvider = <TElements extends Elements = Elements>({
     onValid,
     onInvalid,
   ) => {
-    handleSave?.(onValid, onInvalid);
+    onSave?.(onValid, onInvalid);
   };
 
   return (
