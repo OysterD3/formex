@@ -1,13 +1,22 @@
-import { DRAG_AND_DROP_DATA_TYPE } from '../src/constants.ts';
-import {
-  AllValue,
-  ElementProps,
-  Elements,
-  InputElements,
-  InputGroupElements,
-  StaticElements,
-} from './index.ts';
-import { EditorComponentProps } from './utils.ts';
+import type { Elements, InputElements, InputGroupElements } from './elements';
+import type { ElementProps, Option, EditorComponentProps } from './props';
+import { DRAG_AND_DROP_DATA_TYPE } from '../elements';
+
+export type ElementPickerConfig<TValue extends Elements> = {
+  label: string;
+  icon: string;
+  description: string;
+  value: TValue;
+  defaultComponentProps: EditorComponentProps<ElementProps<TValue>>;
+};
+
+export type CommonInputAttributeConfigurationProps = {
+  label: string;
+  placeholder: string;
+  tooltip?: string;
+  description?: string;
+  options?: readonly Option[];
+};
 
 export interface InputDragAndDropData<TElement extends Elements> {
   type: typeof DRAG_AND_DROP_DATA_TYPE.input;
@@ -21,15 +30,6 @@ export interface InputGroupDragAndDropData<TElement extends Elements> {
   element: InputGroupElements;
   nanoId?: string | null;
   props: EditorComponentProps<ElementProps<TElement>>;
-}
-
-export interface StaticDragAndDropData<
-  T extends object = Record<string, unknown>,
-> {
-  type: typeof DRAG_AND_DROP_DATA_TYPE.static;
-  element: StaticElements;
-  nanoId?: string | null;
-  props: T;
 }
 
 export type DragAndDropData<TElement extends Elements = Elements> =

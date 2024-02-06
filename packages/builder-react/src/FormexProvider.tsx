@@ -1,11 +1,9 @@
 import {
   FormProvider,
-  type SubmitErrorHandler,
   type SubmitHandler,
   useFieldArray,
   UseFieldArrayReturn,
   useForm,
-  UseFormHandleSubmit,
 } from 'react-hook-form';
 import {
   DndContext,
@@ -15,19 +13,19 @@ import {
 } from '@dnd-kit/core';
 import { createContext, useContext, useState } from 'react';
 import { nanoid } from 'nanoid';
-import type {
-  DragAndDropData,
-  ElementProps,
-  Elements,
-  FormexFormValues,
-  Configs,
-} from '../types';
+import type { Configs } from '../types';
 import {
   isInputDragAndDropData,
   isInputGroupDragAndDropData,
 } from '../types/guard';
-import type { EditorComponentProps } from '../types/utils.ts';
-import { ELEMENT_PICKER_ELEMENTS } from './constants';
+import type {
+  EditorComponentProps,
+  ElementProps,
+  Elements,
+  DragAndDropData,
+  FormexFormValues,
+} from '@formex/core';
+import { ELEMENT_PICKER_ELEMENTS } from '@formex/core';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ZodSchema } from 'zod';
 

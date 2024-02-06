@@ -1,6 +1,6 @@
 import { useFormContext, useWatch } from 'react-hook-form';
-import React, { HTMLAttributes } from 'react';
-import { FormexFormValues } from '../../types';
+import React, { type HTMLAttributes } from 'react';
+import type { FormexFormValues } from '@formex/core';
 import { getElementAttribute } from '../utils/dom';
 import { useFormexFields } from '../FormexProvider';
 import InputAttributeConfigureInput from './InputAttributeConfigureInput.tsx';

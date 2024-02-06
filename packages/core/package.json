@@ -2,7 +2,7 @@
   "name": "@formex/core",
   "version": "0.0.0",
   "description": "",
-  "main": "dist/index.es.js",
+  "main": "dist/formex-core.es.js",
   "types": "dist/index.d.ts",
   "files": ["dist"],
   "scripts": {

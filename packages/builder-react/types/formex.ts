@@ -1,15 +1,19 @@
+import type { ElementPickerComponent } from './index.ts';
 import type {
   ConfigurationPanelAttributeInputElement,
   ElementAttributeConfiguration,
   InputAttributeConfiguration,
-  InputAttributeConfigurationProps,
-} from '../src';
-import type {
-  EditorComponentProps,
-  ElementPickerComponent,
-  ElementProps,
   Elements,
-} from './index.ts';
+  EditorComponentProps,
+  ElementProps,
+  FormexFormValues,
+  CommonInputAttributeConfigurationProps,
+} from '@formex/core';
+import type {
+  ControllerFieldState,
+  ControllerRenderProps,
+  UseFormStateReturn,
+} from 'react-hook-form';
 
 type ConfigurationPanelConfig<TElements extends Elements = Elements> = {
   inputAttributesEditorConfig?: InputAttributeConfiguration;
@@ -43,4 +47,12 @@ export type Configs<TElements extends Elements = Elements> = {
         }
       | null;
   };
+};
+
+export type InputAttributeConfigurationProps<
+  TElements extends Elements = Elements,
+> = CommonInputAttributeConfigurationProps & {
+  field: ControllerRenderProps<FormexFormValues<TElements>>;
+  fieldState: ControllerFieldState;
+  formState: UseFormStateReturn<FormexFormValues<TElements>>;
 };

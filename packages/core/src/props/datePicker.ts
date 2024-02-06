@@ -1,13 +1,5 @@
-import type { EditorComponentProps } from '../../types/utils.ts';
-import type { CommonProps } from '../../types/props/common.ts';
-
-export type DatePickerProps = CommonProps & {
-  defaultValue: string;
-  disablePast: boolean;
-  format: string;
-  onChange: (value: string) => void;
-  value: string;
-};
+import type { EditorComponentProps } from '../types';
+import type { DatePickerProps } from '../types';
 
 export const DEFAULT_DATE_PICKER_PROPS: EditorComponentProps<DatePickerProps> =
   {

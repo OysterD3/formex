@@ -4,11 +4,17 @@ import dts from 'vite-plugin-dts';
 
 export default defineConfig({
   build: {
+    emptyOutDir: true,
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
-      name: 'formex',
-      fileName: (format) => `index.${format}.js`,
+      name: 'formex-core',
+      fileName: (format) => `formex-core.${format}.js`,
     },
   },
-  plugins: [dts()],
+  plugins: [
+    dts({
+      rollupTypes: true,
+      tsconfigPath: resolve(__dirname, 'tsconfig.build.json'),
+    }),
+  ],
 });

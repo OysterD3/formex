@@ -1,7 +1,7 @@
-import { HTMLAttributes } from 'react';
+import type { HTMLAttributes } from 'react';
 import { useFormexConfig } from '../FormexProvider.tsx';
-import { Elements, InputElements, InputGroupElements } from '../../types';
-import { DRAG_AND_DROP_DATA_TYPE, INPUT_GROUPS, INPUTS } from '../constants.ts';
+import type { Elements, InputElements, InputGroupElements } from '@formex/core';
+import { DRAG_AND_DROP_DATA_TYPE, INPUT_GROUPS, INPUTS } from '@formex/core';
 import ElementPickerElement from './ElementPickerElement.tsx';
 
 const getType = (element: Elements) => {

@@ -1,6 +1,6 @@
 import { useFormContext, useWatch } from 'react-hook-form';
-import { DragAndDropData, Elements, FormexFormValues } from '../../types';
 import { useFormexConfig } from '../FormexProvider.tsx';
+import type { Elements, DragAndDropData, FormexFormValues } from '@formex/core';
 
 const EditorElement = <TElement extends Elements>({
   element,

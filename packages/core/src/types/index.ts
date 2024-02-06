@@ -1,4 +1,4 @@
+export * from './props';
 export * from './elements';
 export * from './attributes';
-export * from './props';
-export * from './types';
+export * from './formex';

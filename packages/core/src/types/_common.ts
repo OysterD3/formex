@@ -9,3 +9,7 @@ export type CommonProps = {
   required: boolean;
   tooltip: string;
 };
+
+export type ValuesOf<T extends Record<string, unknown>> = T[keyof T];
+
+export type AllValue = 'all';

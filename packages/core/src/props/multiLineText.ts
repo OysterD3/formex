@@ -1,14 +1,5 @@
-import type { EditorComponentProps } from '../../types/utils.ts';
-import type { CommonProps } from '../../types/props/common.ts';
-
-export type MultiLineTextProps = CommonProps & {
-  autoFocus: boolean;
-  defaultValue: string;
-  maxRows: number;
-  minRows: number;
-  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  value: string;
-};
+import type { EditorComponentProps } from '../types';
+import type { MultiLineTextProps } from '../types';
 
 export const DEFAULT_MULTI_LINE_TEXT_PROPS: EditorComponentProps<MultiLineTextProps> =
   {

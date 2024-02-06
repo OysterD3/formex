@@ -1,7 +1,7 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { HTMLAttributes } from 'react';
-import { DragAndDropData } from '../../types';
+import type { HTMLAttributes } from 'react';
+import type { DragAndDropData } from '@formex/core';
 import EditorElement from './EditorElement.tsx';
 
 const DraggableElement = ({

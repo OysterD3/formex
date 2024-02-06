@@ -1,14 +1,5 @@
-import type { EditorComponentProps } from '../../types/utils.ts';
-import type { CommonProps } from '../../types/props/common.ts';
-
-export type SingleLineTextProps = CommonProps & {
-  autoFocus: boolean;
-  defaultValue: string | undefined;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  prefix: string;
-  suffix: string;
-  value: string;
-};
+import type { EditorComponentProps } from '../types';
+import type { SingleLineTextProps } from '../types';
 
 export const DEFAULT_SINGLE_LINE_TEXT_PROPS: EditorComponentProps<SingleLineTextProps> =
   {

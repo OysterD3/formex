@@ -4,9 +4,9 @@ import {
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { useDroppable } from '@dnd-kit/core';
-import { HTMLAttributes } from 'react';
+import type { HTMLAttributes } from 'react';
 import { getElementAttribute } from '../utils/dom';
-import { FormexFormValues } from '../../types';
+import type { FormexFormValues } from '@formex/core';
 import { useFormexFields } from '../FormexProvider';
 import DraggableElement from './DraggableElement';
 

@@ -1,11 +1,5 @@
-import type { EditorComponentProps } from '../../types/utils.ts';
-import type { CommonProps } from '../../types/props/common.ts';
-
-export type RichTextProps = CommonProps & {
-  defaultValue: string;
-  onChange: (value: string) => void;
-  value: string;
-};
+import type { EditorComponentProps } from '../types';
+import type { RichTextProps } from '../types';
 
 export const DEFAULT_RICH_TEXT_PROPS: EditorComponentProps<RichTextProps> = {
   defaultValue: '',

@@ -1,14 +1,5 @@
-import type { EditorComponentProps } from '../../types/utils.ts';
-import type { CommonProps } from '../../types/props/common.ts';
-
-export type TimePickerProps = CommonProps & {
-  defaultValue: string;
-  disablePast: boolean;
-  format: string;
-  interval: 1 | 15 | 30;
-  onChange: (value: string) => void;
-  value: string;
-};
+import type { EditorComponentProps } from '../types';
+import type { TimePickerProps } from '../types';
 
 export const DEFAULT_TIME_PICKER_PROPS: EditorComponentProps<TimePickerProps> =
   {

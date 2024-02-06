@@ -1,8 +1,7 @@
 import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import { HTMLAttributes, useMemo } from 'react';
-import { Elements, FormexFormValues } from '../../types';
 import { useFormexConfig } from '../FormexProvider.tsx';
-import { InputAttribute } from '../constants.ts';
+import type { InputAttribute, Elements, FormexFormValues } from '@formex/core';
 
 const InputAttributeConfigureInput = <TElement extends Elements>({
   element,
