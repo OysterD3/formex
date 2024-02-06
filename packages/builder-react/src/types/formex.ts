@@ -15,20 +15,20 @@ import type {
   UseFormStateReturn,
 } from 'react-hook-form';
 
-type ConfigurationPanelConfig<TElements extends Elements = Elements> = {
+type ConfigurationPanelConfig = {
   inputAttributesEditorConfig?: InputAttributeConfiguration;
   elementAttributesConfig?: ElementAttributeConfiguration;
   elementComponents:
     | {
         [key in ConfigurationPanelAttributeInputElement]: (
-          props: InputAttributeConfigurationProps<TElements>,
+          props: InputAttributeConfigurationProps,
         ) => React.ReactNode;
       }
     | null;
 };
 
 export type Configs<TElements extends Elements = Elements> = {
-  configurationPanel: ConfigurationPanelConfig<TElements>;
+  configurationPanel: ConfigurationPanelConfig;
   elementPicker: {
     config:
       | TElements[]
@@ -49,10 +49,9 @@ export type Configs<TElements extends Elements = Elements> = {
   };
 };
 
-export type InputAttributeConfigurationProps<
-  TElements extends Elements = Elements,
-> = CommonInputAttributeConfigurationProps & {
-  field: ControllerRenderProps<FormexFormValues<TElements>>;
-  fieldState: ControllerFieldState;
-  formState: UseFormStateReturn<FormexFormValues<TElements>>;
-};
+export type InputAttributeConfigurationProps =
+  CommonInputAttributeConfigurationProps & {
+    field: ControllerRenderProps<FormexFormValues>;
+    fieldState: ControllerFieldState;
+    formState: UseFormStateReturn<FormexFormValues>;
+  };
