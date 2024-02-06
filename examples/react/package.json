@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
-    "lint": "tsc --noEmit --skipLibCheck && eslint --quiet --ext .tsx,.ts,.js src",
+    "lint": "tsc --noEmit --skipLibCheck && eslint --fix --quiet --ext .tsx,.ts,.js src",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -30,13 +30,13 @@
     "@julr/unocss-preset-forms": "^0.0.5",
     "@types/react": "^18.2.15",
     "@types/react-dom": "^18.2.7",
-    "@typescript-eslint/eslint-plugin": "^6.0.0",
-    "@typescript-eslint/parser": "^6.0.0",
     "@vitejs/plugin-react": "^4.0.3",
-    "eslint": "^8.45.0",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "eslint-plugin-react-refresh": "^0.4.3",
-    "typescript": "^5.2.2",
     "vite": "^4.5.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:react-hooks/recommended"
+    ]
   }
 }
