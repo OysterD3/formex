@@ -13,30 +13,21 @@
   "author": "Oyster Lee <oysterd3@gmail.com> (https://linktr.ee/OysterD3)",
   "license": "ISC",
   "devDependencies": {
-    "@iconify-json/ri": "^1.1.12",
-    "@types/node": "^20.8.3",
-    "@typescript-eslint/eslint-plugin": "^6.19.0",
-    "@typescript-eslint/parser": "^6.19.0",
-    "@unocss/eslint-config": "^0.57.2",
-    "@unocss/preset-icons": "^0.57.2",
-    "@unocss/reset": "^0.57.2",
-    "@unocss/transformer-directives": "^0.57.2",
-    "@vitejs/plugin-react": "^4.1.0",
-    "eslint": "^8.46.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-import": "^2.29.1",
-    "eslint-plugin-prettier": "^5.1.3",
-    "prettier": "^3.0.1",
-    "sass": "^1.69.5",
-    "turbo": "^1.10.15",
-    "typescript": "^5.3.3",
-    "unocss": "^0.57.2",
-    "vite": "^4.5.0",
-    "vite-plugin-dts": "^3.6.0"
+    "@types/node": "18.19.14",
+    "@typescript-eslint/eslint-plugin": "6.21.0",
+    "@typescript-eslint/parser": "6.21.0",
+    "eslint": "8.56.0",
+    "eslint-config-prettier": "9.1.0",
+    "eslint-plugin-import": "2.29.1",
+    "eslint-plugin-prettier": "5.1.3",
+    "prettier": "3.2.5",
+    "turbo": "^1.12.2",
+    "typescript": "5.3.3",
+    "vite": "5.0.12",
+    "vite-plugin-dts": "3.7.2"
   },
   "dependencies": {
-    "dayjs": "^1.11.10",
-    "nanoid": "^5.0.1"
+    "nanoid": "5.0.5"
   },
   "eslintConfig": {
     "root": true,
