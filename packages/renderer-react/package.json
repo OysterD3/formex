@@ -1,0 +1,34 @@
+{
+  "name": "@formex/renderer-react",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/formex-react.umd.js",
+  "module": "dist/formex-react.es.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build:packages": "tsc --p ./tsconfig.build.json --noEmit && vite build",
+    "lint": "tsc --noEmit --skipLibCheck && eslint --fix --quiet --ext .tsx,.ts,.js src"
+  },
+  "keywords": [],
+  "author": "Oyster Lee <oysterd3@gmail.com> (https://linktr.ee/OysterD3)",
+  "license": "ISC",
+  "dependencies": {
+    "@formex/core": "workspace:*",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "18.2.55",
+    "@types/react-dom": "18.2.18",
+    "@vitejs/plugin-react": "4.2.1",
+    "eslint-plugin-react-hooks": "4.6.0"
+  },
+  "eslintConfig": {
+    "extends": [
+      "plugin:react-hooks/recommended"
+    ]
+  }
+}
