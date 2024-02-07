@@ -5,6 +5,7 @@ import {
   ElementPickerComponent,
   INPUT_ATTRIBUTES_INPUT_MAP,
   INPUTS_ATTRIBUTES_MAP,
+  FormexFormValues,
 } from '@formex/builder-react';
 import TextField from './components/Configs/TextField.tsx';
 import Switch from './components/Configs/Switch.tsx';
@@ -13,6 +14,9 @@ import Radio from './components/Configs/Radio.tsx';
 import ElementPickerElementComponent from './components/ElementPicker.tsx';
 import SingleLineTextInput from './components/Editor/SingleLineTextInput.tsx';
 import FormBuilder from './components/FormBuilder.tsx';
+import { createTheme, ThemeProvider } from '@mui/material';
+import SwitchInput from './components/Editor/SwitchInput.tsx';
+import NumberInput2 from './components/Editor/NumberInput.tsx';
 
 const elementPickersComponent = [
   ...Object.values(INPUTS),
@@ -34,23 +38,34 @@ const configs = {
     },
   },
   elementPicker: {
-    config: [INPUTS.singleLineText],
+    config: [INPUTS.singleLineText, INPUTS.switch, INPUTS.number],
     elementComponents: elementPickersComponent,
   },
   editor: {
     elementComponents: {
       [INPUTS.singleLineText]: SingleLineTextInput,
+      [INPUTS.switch]: SwitchInput,
+      [INPUTS.number]: NumberInput2,
     },
   },
 };
 
+const theme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
+
 function App() {
-  const handleSave = (values: any) => console.log(values);
+  const handleSave = (values: FormexFormValues<typeof INPUTS.singleLineText>) =>
+    console.log(values);
 
   return (
-    <FormexProvider configs={configs} handleSave={handleSave}>
-      <FormBuilder />
-    </FormexProvider>
+    <ThemeProvider theme={theme}>
+      <FormexProvider configs={configs} onSave={handleSave}>
+        <FormBuilder />
+      </FormexProvider>
+    </ThemeProvider>
   );
 }
 
