@@ -10,6 +10,11 @@
   "scripts": {
     "build:packages": "tsc --p ./tsconfig.build.json --noEmit && vite build"
   },
+  "publishConfig": {
+    "access": "public"
+  },
+  "homepage": "https://github.com/OysterD3/formex#readme",
+  "repository": "oyster/formex",
   "keywords": [],
   "author": "Oyster Lee <oysterd3@gmail.com> (https://linktr.ee/OysterD3)",
   "license": "MIT"
