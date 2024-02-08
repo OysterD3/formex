@@ -139,6 +139,7 @@ const FormexProvider = <TElements extends Elements = Elements>({
   };
 
   const handleDragStart = () => {
+    form.setValue('activeIndex', -1);
     setActiveId(nanoid());
   };
 
