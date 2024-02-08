@@ -1,10 +1,12 @@
 {
   "name": "@formex/core",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "dist/formex-core.es.js",
   "types": "dist/index.d.ts",
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build:packages": "tsc --p ./tsconfig.build.json --noEmit && vite build"
   },

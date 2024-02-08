@@ -1,6 +1,6 @@
 {
   "name": "@formex/renderer-react",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "",
   "main": "dist/formex-react.umd.js",
   "module": "dist/formex-react.es.js",
@@ -15,7 +15,14 @@
   "publishConfig": {
     "access": "public"
   },
-  "keywords": ["formex", "form", "react", "renderer", "formex-react", "formex-react-renderer"],
+  "keywords": [
+    "formex",
+    "form",
+    "react",
+    "renderer",
+    "formex-react",
+    "formex-react-renderer"
+  ],
   "author": "Oyster Lee <oysterd3@gmail.com> (https://linktr.ee/OysterD3)",
   "license": "ISC",
   "dependencies": {
