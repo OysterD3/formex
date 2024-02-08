@@ -15,6 +15,8 @@
   "publishConfig": {
     "access": "public"
   },
+  "homepage": "https://github.com/OysterD3/formex#readme",
+  "repository": "oyster/formex",
   "keywords": [
     "formex",
     "form",
@@ -24,7 +26,7 @@
     "formex-react-renderer"
   ],
   "author": "Oyster Lee <oysterd3@gmail.com> (https://linktr.ee/OysterD3)",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@formex/core": "workspace:*",
     "react": "18.2.0",
