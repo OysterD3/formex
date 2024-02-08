@@ -12,7 +12,10 @@
     "build:packages": "tsc --p ./tsconfig.build.json --noEmit && vite build",
     "lint": "tsc --noEmit --skipLibCheck && eslint --fix --quiet --ext .tsx,.ts,.js src"
   },
-  "keywords": [],
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": ["formex", "react", "builder", "form-builder", "form-generator", "form-creator", "form-editor", "form-designer", "form-creator", "form-generator", "form-editor", "form-designer", "form-builder", "formex", "react"],
   "author": "Oyster Lee <oysterd3@gmail.com> (https://linktr.ee/OysterD3)",
   "license": "ISC",
   "dependencies": {
