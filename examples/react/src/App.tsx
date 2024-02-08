@@ -17,6 +17,8 @@ import FormBuilder from './components/FormBuilder.tsx';
 import { createTheme, ThemeProvider } from '@mui/material';
 import SwitchInput from './components/Editor/SwitchInput.tsx';
 import NumberInput2 from './components/Editor/NumberInput.tsx';
+import { useState } from 'react';
+import FormRenderer from './components/FormRenderer.tsx';
 
 const elementPickersComponent = [
   ...Object.values(INPUTS),
@@ -57,14 +59,17 @@ const theme = createTheme({
 });
 
 function App() {
-  const handleSave = (values: FormexFormValues<typeof INPUTS.singleLineText>) =>
-    console.log(values);
+  const [formData, setFormData] = useState<FormexFormValues['items']>([]);
+  const handleSave = (values: FormexFormValues) => {
+    setFormData(values.items);
+  };
 
   return (
     <ThemeProvider theme={theme}>
       <FormexProvider configs={configs} onSave={handleSave}>
         <FormBuilder />
       </FormexProvider>
+      {formData.length > 0 && <FormRenderer items={formData} />}
     </ThemeProvider>
   );
 }
