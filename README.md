@@ -34,3 +34,52 @@ pnpm add @formex/renderer-react
 
 ## Usage
 View example with MUI [here](https://github.com/OysterD3/formex/tree/main/examples/react)
+
+## Available components
+### `<FormexProvider />`
+A provider to provide the formex context to the children. It's required to wrap the `Formex`'s components with `FormexProvider` to make the formex builder work.
+
+**Props**
+
+| Name            | Type                                                                                  | Default     | Description                                                                                                                                                                                                                                                                               |
+|-----------------|---------------------------------------------------------------------------------------|-------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `children`*     | `React.ReactNode`                                                                     | `undefined` | The children to be rendered                                                                                                                                                                                                                                                               |
+| `configs`*      | `Configs<TElements>`                                                                  | `undefined` | The configs for formex. View types [here](https://github.com/OysterD3/formex/blob/eb8ff32602943e3f7cd97c6ae77e5ce1d0351678/packages/builder-react/src/types/formex.ts#L30)                                                                                                                |
+| `zodSchema`     | `ZodSchema`                                                                           | `undefined` | The [zod schema](https://zod.dev/) for form builder validation (It's not for the renderer). We use [react-hook-form](https://react-hook-form.com/) under the hood.                                                                                                                        |
+| `onSave`        | `(onValid: FormexFormValues<TElements>, onInvalid?: Record<string, unknown>) => void` | `undefined` | The function to be called when the form is saved. Which will trigger the `react-hook-form` validation as well. View the `FormexFormValues<TElements>` type [here](https://github.com/OysterD3/formex/blob/eb8ff32602943e3f7cd97c6ae77e5ce1d0351678/packages/core/src/types/formex.ts#L39) |
+| `defaultValues` | `FormexFormValues<TElements>`                                                         | `undefined` | The default values for the form. View the type [here](https://github.com/OysterD3/formex/blob/eb8ff32602943e3f7cd97c6ae77e5ce1d0351678/packages/core/src/types/formex.ts#L39)                                                                                                             |
+
+### `<ConfigurationPanel />`
+
+A configuration panel to configure each of the form elements' props.
+
+**Props**
+
+| Name        | Type                                                           | Default     | Description                                                        |
+|-------------|----------------------------------------------------------------|-------------|--------------------------------------------------------------------|
+| `onRemove`  | `(index: number) => void`                                      | `undefined` | The function to be called when the element is removed              |
+| `container` | `React.ForwardRefExoticComponent<HTMLAttributes<HTMLElement>>` | `undefined` | The container for the configuration panel                          |
+| `wrapper`   | `React.ForwardRefExoticComponent<HTMLAttributes<HTMLElement>>` | `undefined` | The wrapper for each input elements within the configuration panel |
+
+### `<Editor />`
+
+An editor to edit the form elements. Which allows you to drag and drop the elements from `<ElementPicker />`. and drag the `dragHandler` to reorder the elements.
+
+**Props**
+
+| Name          | Type                                                           | Default     | Description                                                                                                            |
+|---------------|----------------------------------------------------------------|-------------|------------------------------------------------------------------------------------------------------------------------|
+| `container`   | `React.ForwardRefExoticComponent<HTMLAttributes<HTMLElement>>` | `undefined` | The container for the editor                                                                                           |
+| `wrapper`     | `React.ForwardRefExoticComponent<HTMLAttributes<HTMLElement>>` | `undefined` | The wrapper for the each input elements within the editor                                                              |
+| `dragHandler` | `React.ForwardRefExoticComponent<HTMLAttributes<HTMLElement>>` | `undefined` | The drag handler for each input elements within the editor. We are using [dnd-kit](https://dndkit.com/) under the hood |
+
+### `<ElementPicker />`
+
+An element picker to pick the form elements to be added to the form builder.
+
+**Props**
+
+| Name        | Type                                                           | Default     | Description                                                   |
+|-------------|----------------------------------------------------------------|-------------|---------------------------------------------------------------|
+| `container` | `React.ForwardRefExoticComponent<HTMLAttributes<HTMLElement>>` | `undefined` | The container for the element picker                          |
+| `wrapper`   | `React.ForwardRefExoticComponent<HTMLAttributes<HTMLElement>>` | `undefined` | The wrapper for each input elements within the element picker |
