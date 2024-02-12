@@ -33,7 +33,7 @@ pnpm add @formex/renderer-react
 ```
 
 ## Usage
-View example with MUI [here](https://github.com/OysterD3/formex/tree/main/examples/react)
+View example with MUI [GitHub](https://github.com/OysterD3/formex/tree/main/examples/react) | [Stackblitz](https://stackblitz.com/edit/formex-react-mui)
 
 ## Available components
 ### `<FormexProvider />`
